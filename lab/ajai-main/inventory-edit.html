@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Equipment - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar"></aside>
+
+        <!-- MAIN PANEL -->
+        <main class="main-content">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                    <div class="page-title-area">
+                        <h1 class="page-title" id="pageMainTitle">Edit Equipment</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="inventory.html">Lab Asset Management</a></li>
+                            <li>Inventory Details</li>
+                            <li id="breadcrumbActionName">Edit Equipment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-icon-btn">
+                        <span class="icon">&#128276;</span>
+                        <span class="icon-badge">3</span>
+                    </button>
+                    <div class="header-date-widget"></div>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <div class="page-content-wrapper">
+
+                <!-- FORM CONTAINER CARD -->
+                <div class="content-card">
+                    <div class="card-header-icon">
+                        <div class="circle-icon-wrapper">
+                            <!-- Inline icon of a folder/check page -->
+                            &#10065;
+                        </div>
+                        <div class="card-header-text">
+                            <span class="card-title">Asset Information</span>
+                            <span class="card-subtitle" id="formSubtitle">Update the equipment details below.</span>
+                        </div>
+                    </div>
+
+                    <form id="equipmentForm" novalidate>
+                        <!-- Hidden input for ID -->
+                        <input type="hidden" name="id" id="equipId">
+
+
+
+                        <div class="form-grid" id="dynamicFormFields">
+                        </div>
+
+
+
+                        <!-- Buttons bar -->
+                        <div class="form-actions">
+                            <!-- Cancel is a reset button so it triggers our custom confirm cancel window! -->
+                            <button type="button" class="btn btn-secondary" id="cancelFormBtn">
+                                &times; Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="submitFormBtn">
+                                &#128190; Update Equipment
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+                &copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/validation.js"></script>
+    <script>
+        renderBaseLayout("inventory");
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const db = getDB();
+            const params = new URLSearchParams(window.location.search);
+            const itemId = params.get("id");
+            const action = params.get("action");
+            const assetType = params.get("type") || "Equipment";
+
+            const isNew = action === "new";
+            let currentItem = null;
+
+            const formMainTitle = document.querySelector(".page-title") || document.getElementById("pageMainTitle");
+            const breadcrumbActionName = document.getElementById("breadcrumbActionName");
+            const formSubtitle = document.getElementById("formSubtitle");
+            const submitFormBtn = document.getElementById("submitFormBtn");
+
+            renderForm(assetType);
+
+            if (isNew) {
+                if (formMainTitle) formMainTitle.textContent = `Add ${assetType}`;
+                if (breadcrumbActionName) breadcrumbActionName.textContent = `Add ${assetType}`;
+                if (formSubtitle) formSubtitle.textContent = `Create new ${assetType}`;
+                if (submitFormBtn) submitFormBtn.innerHTML = `＋ Create ${assetType}`;
+            } else {
+                if (formMainTitle) formMainTitle.textContent = `Edit ${assetType}`;
+                if (breadcrumbActionName) breadcrumbActionName.textContent = `Edit ${assetType}`;
+                if (formSubtitle) formSubtitle.textContent = `Update ${assetType} details below.`;
+                if (submitFormBtn) submitFormBtn.innerHTML = `💾 Update ${assetType}`;
+            }
+
+            // Load form details if edit action
+            if (action === "edit") {
+                if (assetType === "Equipment") {
+                    currentItem = db.equipment.find(item => item.eqpid === itemId);
+                } else if (assetType === "Component") {
+                    currentItem = db.components.find(item => item.cid === itemId);
+                } else if (assetType === "Tool") {
+                    currentItem = db.tools.find(item => item.toolid === itemId);
+                }
+
+                if (!currentItem) {
+                    showToast("Item not found", "error");
+                    window.location.href = "inventory.html";
+                    return;
+                }
+
+                // Pre-populate fields
+                if (assetType === "Equipment") {
+                    if (document.getElementById("eqpid")) document.getElementById("eqpid").value = currentItem.eqpid || "";
+                    if (document.getElementById("name")) document.getElementById("name").value = currentItem.name || currentItem.componentName || "";
+                    if (document.getElementById("avail")) document.getElementById("avail").value = currentItem.totalCount || currentItem.avail || "";
+                    if (document.getElementById("make")) document.getElementById("make").value = currentItem.make || "";
+                    if (document.getElementById("specification")) document.getElementById("specification").value = currentItem.specification || "";
+                    if (document.getElementById("componentType")) document.getElementById("componentType").value = currentItem.componentType || "";
+                    if (document.getElementById("lab")) document.getElementById("lab").value = currentItem.lab || "";
+                    if (document.getElementById("remarks")) document.getElementById("remarks").value = currentItem.remarks || "";
+                } else if (assetType === "Component") {
+                    if (document.getElementById("cid")) document.getElementById("cid").value = currentItem.cid || "";
+                    if (document.getElementById("componentName")) document.getElementById("componentName").value = currentItem.componentName || "";
+                    if (document.getElementById("make")) document.getElementById("make").value = currentItem.make || "";
+                    if (document.getElementById("specification")) document.getElementById("specification").value = currentItem.specification || "";
+                    if (document.getElementById("cost")) document.getElementById("cost").value = currentItem.cost || "";
+                    if (document.getElementById("returnTimeline")) document.getElementById("returnTimeline").value = currentItem.returnTimeline || "";
+                    if (document.getElementById("totalCount")) document.getElementById("totalCount").value = currentItem.totalCount || "";
+                    if (document.getElementById("componentType")) document.getElementById("componentType").value = currentItem.componentType || "";
+                    if (document.getElementById("lab")) document.getElementById("lab").value = currentItem.lab || "";
+                    if (document.getElementById("cupboard")) document.getElementById("cupboard").value = currentItem.cupboard || "";
+                    if (document.getElementById("shelf1")) document.getElementById("shelf1").value = currentItem.shelf1 || "";
+                    if (document.getElementById("count1")) document.getElementById("count1").value = currentItem.count1 || "";
+                    if (document.getElementById("shelf2")) document.getElementById("shelf2").value = currentItem.shelf2 || "";
+                    if (document.getElementById("count2")) document.getElementById("count2").value = currentItem.count2 || "";
+                    if (document.getElementById("purpose")) document.getElementById("purpose").value = currentItem.purpose || "";
+                    if (document.getElementById("comments")) document.getElementById("comments").value = currentItem.comments || "";
+                } else if (assetType === "Tool") {
+                    if (document.getElementById("toolid")) document.getElementById("toolid").value = currentItem.toolid || "";
+                    if (document.getElementById("componentName")) document.getElementById("componentName").value = currentItem.componentName || "";
+                    if (document.getElementById("make")) document.getElementById("make").value = currentItem.make || "";
+                    if (document.getElementById("specification")) document.getElementById("specification").value = currentItem.specification || "";
+                    if (document.getElementById("totalCount")) document.getElementById("totalCount").value = currentItem.totalCount || "";
+                    if (document.getElementById("componentType")) document.getElementById("componentType").value = currentItem.componentType || "";
+                    if (document.getElementById("lab")) document.getElementById("lab").value = currentItem.lab || "";
+                    if (document.getElementById("remarks")) document.getElementById("remarks").value = currentItem.remarks || currentItem.comments || "";
+                }
+            }
+
+            // Schema for validation
+            const schema = {};
+            if (assetType === "Equipment") {
+                schema.eqpid = { required: true };
+                schema.name = { required: true, charLimit: 100 };
+                schema.avail = { required: true };
+                schema.make = { required: true, charLimit: 50 };
+                schema.specification = { charLimit: 100 };
+                schema.componentType = { charLimit: 50 };
+                schema.lab = { required: true, charLimit: 50 };
+                schema.remarks = { charLimit: 200 };
+            } else if (assetType === "Component") {
+                schema.cid = { required: true };
+                schema.componentName = { required: true, charLimit: 100 };
+                schema.make = { required: true, charLimit: 50 };
+                schema.lab = { required: true, charLimit: 50 };
+                schema.comments = { charLimit: 200 };
+            } else if (assetType === "Tool") {
+                schema.toolid = { required: true };
+                schema.componentName = { required: true, charLimit: 100 };
+                schema.make = { required: true, charLimit: 50 };
+                schema.lab = { required: true, charLimit: 50 };
+                schema.remarks = { charLimit: 200 };
+            }
+
+            function renderForm(type) {
+                const container = document.getElementById("dynamicFormFields");
+                const isFormEdit = (action === "edit");
+                if (type === "Equipment") {
+                    container.innerHTML = `
+                        <div class="form-group">
+                            <label>EQP TYPE ID*</label>
+                            <input type="text" id="eqpid" name="eqpid" class="form-control" ${isFormEdit ? "readonly" : ""}>
+                        </div>
+                        <div class="form-group">
+                            <label>Name *</label>
+                            <input type="text" id="name" name="name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Available Quantity *</label>
+                            <input type="text" id="avail" name="avail" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Make *</label>
+                            <input type="text" id="make" name="make" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Specification/Version</label>
+                            <input type="text" id="specification" name="specification" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Component Type</label>
+                            <input type="text" id="componentType" name="componentType" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Lab *</label>
+                            <input type="text" id="lab" name="lab" class="form-control">
+                        </div>
+                        <div class="form-group form-group-full">
+                            <label>Remarks</label>
+                            <textarea id="remarks" name="remarks" class="form-control"></textarea>
+                        </div>
+                    `;
+                } else if (type === "Component") {
+                    container.innerHTML = `
+                        <div class="form-group">
+                            <label>CID *</label>
+                            <input type="text" id="cid" name="cid" class="form-control" ${isFormEdit ? "readonly" : ""}>
+                        </div>
+                        <div class="form-group">
+                            <label>Component Name *</label>
+                            <input type="text" id="componentName" name="componentName" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Make *</label>
+                            <input type="text" id="make" name="make" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Specification/Version</label>
+                            <input type="text" id="specification" name="specification" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Cost</label>
+                            <input type="number" id="cost" name="cost" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Return Timeline</label>
+                            <input type="text" id="returnTimeline" name="returnTimeline" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Total Count</label>
+                            <input type="number" id="totalCount" name="totalCount" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Component Type</label>
+                            <input type="text" id="componentType" name="componentType" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Lab</label>
+                            <input type="text" id="lab" name="lab" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Cupboard</label>
+                            <input type="text" id="cupboard" name="cupboard" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Shelf 1</label>
+                            <input type="text" id="shelf1" name="shelf1" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Count 1</label>
+                            <input type="number" id="count1" name="count1" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Shelf 2</label>
+                            <input type="text" id="shelf2" name="shelf2" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Count 2</label>
+                            <input type="number" id="count2" name="count2" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Purpose</label>
+                            <input type="text" id="purpose" name="purpose" class="form-control">
+                        </div>
+                        <div class="form-group form-group-full">
+                            <label>Comments</label>
+                            <textarea id="comments" name="comments" class="form-control"></textarea>
+                        </div>
+                    `;
+                } else if (type === "Tool") {
+                    container.innerHTML = `
+                        <div class="form-group">
+                            <label>Tool ID *</label>
+                            <input type="text" id="toolid" name="toolid" class="form-control" ${isFormEdit ? "readonly" : ""}>
+                        </div>
+                        <div class="form-group">
+                            <label>Tool Name *</label>
+                            <input type="text" id="componentName" name="componentName" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Make *</label>
+                            <input type="text" id="make" name="make" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Specification</label>
+                            <input type="text" id="specification" name="specification" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Total Count</label>
+                            <input type="number" id="totalCount" name="totalCount" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Tool Type</label>
+                            <input type="text" id="componentType" name="componentType" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Lab</label>
+                            <input type="text" id="lab" name="lab" class="form-control">
+                        </div>
+                        <div class="form-group form-group-full">
+                            <label>Remarks</label>
+                            <textarea id="remarks" name="remarks" class="form-control"></textarea>
+                        </div>
+                    `;
+                }
+            }
+
+            // Autosave draft key
+            const draftKey = isNew ? `rplms_draft_new_${assetType}` : `rplms_draft_edit_${assetType}_${itemId}`;
+
+            const validator = new RPLMSFormValidator("equipmentForm", schema, (formData) => {
+                if (isNew) {
+                    if (assetType === "Equipment") {
+                        const newEquipment = {
+                            sno: db.equipment.length + 1,
+                            eqpid: formData.eqpid,
+                            name: formData.name,
+                            componentName: formData.name,
+                            avail: formData.avail,
+                            make: formData.make,
+                            specification: formData.specification || "",
+                            totalCount: parseInt(formData.avail) || 1,
+                            componentType: formData.componentType || "Equipment",
+                            lab: formData.lab,
+                            remarks: formData.remarks || "",
+                            status: "Available"
+                        };
+                        db.equipment.push(newEquipment);
+                    } else if (assetType === "Component") {
+                        const newComponent = {
+                            sno: db.components.length + 1,
+                            cid: formData.cid,
+                            componentName: formData.componentName,
+                            make: formData.make,
+                            specification: formData.specification || "",
+                            cost: parseFloat(formData.cost) || 0,
+                            returnTimeline: formData.returnTimeline || "Project Completion",
+                            totalCount: parseInt(formData.totalCount) || 1,
+                            componentType: formData.componentType || "Electronics",
+                            lab: formData.lab,
+                            cupboard: formData.cupboard || "",
+                            shelf1: formData.shelf1 || "",
+                            count1: parseInt(formData.count1) || 0,
+                            shelf2: formData.shelf2 || "",
+                            count2: parseInt(formData.count2) || 0,
+                            purpose: formData.purpose || "",
+                            comments: formData.comments || "",
+                            status: "Available"
+                        };
+                        db.components.push(newComponent);
+                    } else if (assetType === "Tool") {
+                        const newTool = {
+                            sno: db.tools.length + 1,
+                            toolid: formData.toolid,
+                            componentName: formData.componentName,
+                            make: formData.make,
+                            specification: formData.specification || "",
+                            totalCount: parseInt(formData.totalCount) || 1,
+                            componentType: formData.componentType || "Tool",
+                            lab: formData.lab,
+                            remarks: formData.remarks || "",
+                            comments: formData.remarks || "",
+                            status: "Available"
+                        };
+                        db.tools.push(newTool);
+                    }
+                    setDB(db);
+                    showToast(`${formData.name || formData.componentName || "Item"} created successfully!`, "success");
+                } else {
+                    // Update item in place
+                    if (assetType === "Equipment") {
+                        const index = db.equipment.findIndex(item => item.eqpid === itemId);
+                        if (index > -1) {
+                            db.equipment[index] = {
+                                ...db.equipment[index],
+                                eqpid: formData.eqpid,
+                                name: formData.name,
+                                componentName: formData.name,
+                                avail: formData.avail,
+                                totalCount: parseInt(formData.avail) || 1,
+                                make: formData.make,
+                                specification: formData.specification || "",
+                                componentType: formData.componentType || "Equipment",
+                                lab: formData.lab,
+                                remarks: formData.remarks
+                            };
+                        }
+                    } else if (assetType === "Component") {
+                        const index = db.components.findIndex(item => item.cid === itemId);
+                        if (index > -1) {
+                            db.components[index] = {
+                                ...db.components[index],
+                                cid: formData.cid,
+                                componentName: formData.componentName,
+                                make: formData.make,
+                                specification: formData.specification || "",
+                                cost: parseFloat(formData.cost) || 0,
+                                returnTimeline: formData.returnTimeline || "",
+                                totalCount: parseInt(formData.totalCount) || 1,
+                                componentType: formData.componentType || "",
+                                lab: formData.lab,
+                                cupboard: formData.cupboard || "",
+                                shelf1: formData.shelf1 || "",
+                                count1: parseInt(formData.count1) || 0,
+                                shelf2: formData.shelf2 || "",
+                                count2: parseInt(formData.count2) || 0,
+                                purpose: formData.purpose || "",
+                                comments: formData.comments
+                            };
+                        }
+                    } else if (assetType === "Tool") {
+                        const index = db.tools.findIndex(item => item.toolid === itemId);
+                        if (index > -1) {
+                            db.tools[index] = {
+                                ...db.tools[index],
+                                toolid: formData.toolid,
+                                componentName: formData.componentName,
+                                make: formData.make,
+                                specification: formData.specification || "",
+                                totalCount: parseInt(formData.totalCount) || 1,
+                                componentType: formData.componentType || "",
+                                lab: formData.lab,
+                                remarks: formData.remarks,
+                                comments: formData.remarks
+                            };
+                        }
+                    }
+                    setDB(db);
+                    showToast("Specifications updated successfully!", "success");
+                }
+
+                setTimeout(() => {
+                    window.location.href = "inventory.html";
+                }, 1000);
+            }, draftKey);
+
+            // Cancel button: warn if form is dirty, else go straight back
+            document.getElementById("cancelFormBtn").addEventListener("click", () => {
+                if (validator.isDirty) {
+                    createConfirmationModal(
+                        "Discard Unsaved Changes",
+                        "You have unsaved form entries. Are you sure you want to discard them and return to inventory list?",
+                        () => {
+                            validator.isDirty = false; // reset flag
+                            window.location.href = "inventory.html";
+                        },
+                        "Discard & Exit",
+                        true
+                    );
+                } else {
+                    window.location.href = "inventory.html";
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

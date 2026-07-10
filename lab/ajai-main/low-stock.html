@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="js/common.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low Stock Alerts · RPLMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --navy: #10182B;
+            --navy-soft: #1B2440;
+            --nav-inactive: #9AA3C0;
+            --grad-a: #4E6EF2;
+            --grad-b: #7C5CFA;
+            --primary: #4A5FE8;
+            --primary-dark: #3B4FD1;
+            --bg: #F3F4F9;
+            --card: #FFFFFF;
+            --border: #E9EAF2;
+            --ink: #171B2E;
+            --muted: #8B92A6;
+            --muted-2: #AAB0C2;
+
+            --red: #EF4444;
+            --red-bg: #FDE8E8;
+            --orange: #F5A524;
+            --orange-bg: #FFF1DE;
+            --amber: #CA8A04;
+            --amber-bg: #FEF9E7;
+            --green: #16A34A;
+            --green-bg: #DCFCE7;
+            --blue: #1D4ED8;
+            --blue-bg: #DBEAFE;
+            --purple: #7C3AED;
+            --purple-bg: #EDE9FF;
+
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 1px 2px rgba(16, 24, 64, .04), 0 8px 24px rgba(16, 24, 64, .06);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        .num,
+        .brand,
+        .btn,
+        .tab,
+        .nav-item span {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        ::selection {
+            background: #c9d3ff;
+        }
+
+        .app {
+            display: grid;
+            grid-template-columns: 264px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ---------- SIDEBAR ---------- */
+        .sidebar {
+            background: var(--navy);
+            padding: 26px 18px 22px;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 4px 10px 22px;
+        }
+
+        .brand .mark {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: .5px;
+        }
+
+        .brand .sub {
+            color: var(--nav-inactive);
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+        }
+
+        .portal-label {
+            color: #7C89FF;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.1px;
+            padding: 14px 10px 10px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 12px;
+            border-radius: 12px;
+            color: var(--nav-inactive);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background .15s, color .15s;
+        }
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .05);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(90deg, var(--grad-a), var(--grad-b));
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 6px 16px rgba(78, 110, 242, .35);
+        }
+
+        .nav-logout {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 12px;
+            color: #F87171;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            padding-top: 16px;
+        }
+
+        .nav-logout svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ---------- MAIN ---------- */
+        .main {
+            padding: 24px 30px 120px;
+            max-width: 1500px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 22px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .topbar-left {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .hamburger {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .hamburger svg {
+            width: 18px;
+            height: 18px;
+            color: var(--ink);
+        }
+
+        .titles h1 {
+            margin: 0;
+            font-size: 25px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .titles p {
+            margin: 4px 0 0;
+            font-size: 13.5px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn svg {
+            width: 18px;
+            height: 18px;
+            color: var(--ink);
+        }
+
+        .badge-dot {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            border: 2px solid var(--bg);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #8B5CF6, #6366F1);
+            color: #fff;
+            font-weight: 700;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile .who {
+            line-height: 1.25;
+        }
+
+        .profile .who .name {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .profile .who .role {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--muted);
+            letter-spacing: .4px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            padding: 11px 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: transform .1s, box-shadow .15s, background .15s;
+        }
+
+        .btn:active {
+            transform: scale(.98);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 6px 16px rgba(74, 95, 232, .32);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            background: #C7CCEE;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--ink);
+            border: 1.5px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: #c8ccdf;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .btn-ghost:hover {
+            color: var(--ink);
+        }
+
+        .btn-sm {
+            padding: 7px 12px;
+            font-size: 12.5px;
+            border-radius: 9px;
+        }
+
+        /* ---------- KPI CARDS ---------- */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .kpi-card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            padding: 20px 20px 18px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            border: 1.5px solid transparent;
+            transition: border-color .15s, transform .12s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .kpi-card.active-filter {
+            border-color: var(--primary);
+        }
+
+        .kpi-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+
+        .kpi-icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .kpi-num {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .kpi-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+            margin-top: 8px;
+        }
+
+        .kpi-sub {
+            font-size: 12px;
+            color: var(--muted-2);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        /* ---------- TOOLBAR ---------- */
+        .toolbar {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .search-wrap {
+            flex: 1 1 260px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--bg);
+            border-radius: 11px;
+            padding: 10px 14px;
+            border: 1.5px solid transparent;
+        }
+
+        .search-wrap:focus-within {
+            border-color: var(--primary);
+            background: #fff;
+        }
+
+        .search-wrap svg {
+            width: 16px;
+            height: 16px;
+            color: var(--muted);
+            flex-shrink: 0;
+        }
+
+        .search-wrap input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 13.5px;
+            width: 100%;
+            color: var(--ink);
+        }
+
+        .search-wrap input::placeholder {
+            color: var(--muted-2);
+        }
+
+        select.filter-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background: var(--bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="%238B92A6" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat right 12px center;
+            border: 1.5px solid transparent;
+            border-radius: 11px;
+            padding: 10px 32px 10px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ink);
+            min-width: 130px;
+            outline: none;
+        }
+
+        select.filter-select:focus {
+            border-color: var(--primary);
+            background-color: #fff;
+        }
+
+        .clear-filters {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            white-space: nowrap;
+            padding: 10px 10px;
+            border-radius: 9px;
+            border: none;
+            background: transparent;
+        }
+
+        .clear-filters:hover {
+            color: var(--red);
+        }
+
+        /* ---------- PRIORITY GROUPS ---------- */
+        .groups {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .group {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .group-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: none;
+            border: none;
+            text-align: left;
+        }
+
+        .group-header:hover {
+            background: #FAFAFD;
+        }
+
+        .gh-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .gh-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .gh-title {
+            font-size: 15.5px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .gh-count {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .gh-selected {
+            font-size: 12.5px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .gh-chevron {
+            width: 18px;
+            height: 18px;
+            color: var(--muted);
+            transition: transform .2s;
+            flex-shrink: 0;
+        }
+
+        .group.expanded .gh-chevron {
+            transform: rotate(180deg);
+        }
+
+        .group-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .25s ease;
+        }
+
+        .group.expanded .group-body {
+            max-height: 6000px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 32px 2.1fr 1.35fr 1fr .9fr 96px;
+            gap: 14px;
+            align-items: center;
+            padding: 14px 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .row:hover {
+            background: #FAFAFD;
+        }
+
+        .cb {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            border: 1.8px solid #C7CCDF;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .cb-placeholder {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted-2);
+        }
+
+        .cb-placeholder svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .r-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .r-meta {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .r-loc {
+            font-size: 13px;
+            color: var(--ink);
+            font-weight: 500;
+        }
+
+        .r-loc-tag {
+            font-size: 11.5px;
+            color: var(--muted-2);
+            margin-top: 1px;
+        }
+
+        .gauge-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .gauge-nums {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .gauge-nums .min {
+            font-weight: 500;
+            color: var(--muted-2);
+        }
+
+        .gauge-track {
+            position: relative;
+            height: 6px;
+            background: #EFF0F6;
+            border-radius: 6px;
+            overflow: visible;
+        }
+
+        .gauge-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            border-radius: 6px;
+        }
+
+        .gauge-tick {
+            position: absolute;
+            top: -3px;
+            width: 2px;
+            height: 12px;
+            background: #B8BDD1;
+            border-radius: 2px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 5px 11px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .badge svg {
+            width: 11px;
+            height: 11px;
+        }
+
+        .status-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .status-cell .pr-id {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .view-link {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--primary);
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 4px;
+        }
+
+        .view-link svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .view-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .empty-group {
+            padding: 34px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13.5px;
+        }
+
+        /* ---------- STICKY FOOTER ---------- */
+        .sticky-footer {
+            position: fixed;
+            left: 264px;
+            right: 0;
+            bottom: 0;
+            background: var(--navy);
+            color: #fff;
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, .18);
+            transform: translateY(120%);
+            transition: transform .25s ease;
+            z-index: 40;
+        }
+
+        .sticky-footer.show {
+            transform: translateY(0);
+        }
+
+        .sf-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .sf-count {
+            background: linear-gradient(90deg, var(--grad-a), var(--grad-b));
+            font-weight: 800;
+            font-size: 14px;
+            border-radius: 10px;
+            padding: 8px 14px;
+        }
+
+        .sf-text b {
+            font-weight: 700;
+        }
+
+        .sf-text {
+            font-size: 13.5px;
+            color: #C6CBE8;
+        }
+
+        .sf-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .sf-clear {
+            color: #C6CBE8;
+            font-size: 13px;
+            font-weight: 600;
+            background: none;
+            border: none;
+        }
+
+        .sf-clear:hover {
+            color: #fff;
+        }
+
+        /* ---------- MODALS ---------- */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 24, 64, .45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+            backdrop-filter: blur(2px);
+        }
+
+        .overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 640px;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 64px rgba(16, 24, 64, .28);
+        }
+
+        .modal.wide {
+            max-width: 760px;
+        }
+
+        .modal-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-head h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .modal-head p {
+            margin: 4px 0 0;
+            font-size: 12.5px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            border: none;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .modal-close svg {
+            width: 15px;
+            height: 15px;
+            color: var(--muted);
+        }
+
+        .modal-body {
+            padding: 20px 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-foot {
+            padding: 16px 24px 22px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .mini-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mini-row:last-child {
+            border-bottom: none;
+        }
+
+        .mini-name {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .mini-meta {
+            font-size: 11.5px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .qty-input {
+            width: 78px;
+            padding: 8px 10px;
+            border-radius: 9px;
+            border: 1.5px solid var(--border);
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+        }
+
+        .qty-input:focus {
+            border-color: var(--primary);
+        }
+
+        .qty-label {
+            font-size: 10.5px;
+            color: var(--muted-2);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        .field-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink);
+            margin: 16px 0 7px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        textarea.notes {
+            width: 100%;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            padding: 12px 14px;
+            font-size: 13px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 70px;
+            outline: none;
+            color: var(--ink);
+        }
+
+        textarea.notes:focus {
+            border-color: var(--primary);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 20px;
+        }
+
+        .detail-item .k {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        .detail-item .v {
+            font-size: 14px;
+            color: var(--ink);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .success-box {
+            background: var(--green-bg);
+            border: 1.5px solid #B9F0CC;
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+
+        .success-box svg {
+            width: 20px;
+            height: 20px;
+            color: var(--green);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .success-box .t {
+            font-size: 14px;
+            font-weight: 700;
+            color: #15803D;
+        }
+
+        .success-box .d {
+            font-size: 12.5px;
+            color: #166534;
+            margin-top: 3px;
+        }
+
+        /* ---------- REQUESTS PANEL (slide-over) ---------- */
+        .panel-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 24, 64, .4);
+            display: none;
+            z-index: 90;
+        }
+
+        .panel-overlay.show {
+            display: block;
+        }
+
+        .panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 420px;
+            max-width: 92vw;
+            background: #fff;
+            box-shadow: -16px 0 40px rgba(16, 24, 64, .18);
+            transform: translateX(100%);
+            transition: transform .25s ease;
+            z-index: 95;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel.show {
+            transform: translateX(0);
+        }
+
+        .panel-head {
+            padding: 22px 22px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .panel-head h2 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .panel-head p {
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px 30px;
+        }
+
+        .req-card {
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+
+        .req-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .req-id {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .req-date {
+            font-size: 11px;
+            color: var(--muted-2);
+            margin-top: 2px;
+        }
+
+        .steps {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin: 12px 0;
+        }
+
+        .step {
+            flex: 1;
+            height: 5px;
+            border-radius: 4px;
+            background: #EEF0F6;
+        }
+
+        .step.done {
+            background: var(--primary);
+        }
+
+        .req-status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .req-items {
+            font-size: 11.5px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .req-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .demo-note {
+            font-size: 10px;
+            color: var(--muted-2);
+            text-align: center;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 26px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--navy);
+            color: #fff;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s, transform .2s;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast svg {
+            width: 16px;
+            height: 16px;
+            color: #4ADE80;
+            flex-shrink: 0;
+        }
+
+        @media(max-width:1180px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .row {
+                grid-template-columns: 26px 1.6fr 1fr 60px;
+            }
+
+            .row .r-loc,
+            .row .badge-cell {
+                display: none;
+            }
+        }
+
+        @media(max-width:860px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                height: auto;
+            }
+
+            .sticky-footer {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="mark">ILP</div>
+                <div class="sub">RAPID PROTOTYPING LAB</div>
+            </div>
+            <div class="portal-label">Lab In-Charge Portal</div>
+            <nav class="nav">
+                <a class="nav-item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                        <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                        <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                        <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                    </svg><span>Dashboard</span></a>
+                <a class="nav-item" href="teams.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg><span>Team Workspace</span></a>
+                <a class="nav-item" href="inventory.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path
+                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                        <line x1="12" y1="22.08" x2="12" y2="12" />
+                    </svg><span>Lab Asset Management</span></a>
+                <a class="nav-item" href="material-requests.html"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8z" />
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    </svg><span>Component Requests</span></a>
+                <a class="nav-item" href="material-returns.html"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg><span>Component Returns</span></a>
+                <a class="nav-item" href="equipment-tracking.html"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="10" r="3" />
+                        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
+                    </svg><span>Equipment Tracking</span></a>
+                <a class="nav-item active" href="low-stock.html"><svg viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="10" r="3" />
+                        <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
+                    </svg><span>Low Stock Alerts</span></a>
+                <a class="nav-item" href="tickets.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path
+                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                    </svg><span>Ticket Management</span></a>
+                <a class="nav-item" href="myprofile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg><span>Profile</span></a>
+            </nav>
+            <a class="nav-logout" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg><span>Logout</span></a>
+        </aside>
+
+        <!-- ================= MAIN ================= -->
+        <main class="main">
+
+            <div class="topbar">
+                <div class="topbar-left">
+                    <div class="hamburger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg></div>
+                    <div class="titles">
+                        <h1>Low Stock Alerts</h1>
+                        <p>Assets that require inventory replenishment</p>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="btn btn-primary" id="headerCta">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" width="15"
+                            height="15">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Create Procurement Request
+                    </button>
+                    <button class="icon-btn" id="openRequestsPanel" title="Procurement requests">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="8" y1="13" x2="16" y2="13" />
+                            <line x1="8" y1="17" x2="13" y2="17" />
+                        </svg>
+                        <span class="badge-dot" id="reqBadge">0</span>
+                    </button>
+                    <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg><span class="badge-dot">3</span></button>
+                    <div class="profile">
+                        <div class="avatar">PS</div>
+                        <div class="who">
+                            <div class="name">Dr. Priya S.</div>
+                            <div class="role">LAB IN-CHARGE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI CARDS -->
+            <div class="kpi-grid">
+                <div class="kpi-card" data-kpi="all">
+                    <div class="kpi-icon" style="background:var(--purple-bg);"><svg viewBox="0 0 24 24" fill="none"
+                            stroke="var(--purple)" stroke-width="2">
+                            <path
+                                d="M20.5 7.28a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4a2 2 0 0 0-1 1.73v9.44a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z" />
+                            <polyline points="3.3 6.96 12 12.01 20.7 6.96" />
+                            <line x1="12" y1="22.08" x2="12" y2="12" />
+                        </svg></div>
+                    <div class="kpi-num" id="kpiTotal">0</div>
+                    <div class="kpi-label">Total Low Stock Assets</div>
+                    <div class="kpi-sub">Across all labs &amp; categories</div>
+                </div>
+                <div class="kpi-card" data-kpi="critical">
+                    <div class="kpi-icon" style="background:var(--red-bg);"><svg viewBox="0 0 24 24" fill="none"
+                            stroke="var(--red)" stroke-width="2">
+                            <path
+                                d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg></div>
+                    <div class="kpi-num" id="kpiCritical">0</div>
+                    <div class="kpi-label">Critical</div>
+                    <div class="kpi-sub">Needs immediate action</div>
+                </div>
+                <div class="kpi-card" data-kpi="high">
+                    <div class="kpi-icon" style="background:var(--orange-bg);"><svg viewBox="0 0 24 24" fill="none"
+                            stroke="var(--orange)" stroke-width="2">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                            <polyline points="17 6 23 6 23 12" />
+                        </svg></div>
+                    <div class="kpi-num" id="kpiHigh">0</div>
+                    <div class="kpi-label">High Priority</div>
+                    <div class="kpi-sub">Order within a few days</div>
+                </div>
+                <div class="kpi-card" data-kpi="medium">
+                    <div class="kpi-icon" style="background:var(--amber-bg);"><svg viewBox="0 0 24 24" fill="none"
+                            stroke="var(--amber)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg></div>
+                    <div class="kpi-num" id="kpiMedium">0</div>
+                    <div class="kpi-label">Medium Priority</div>
+                    <div class="kpi-sub">Plan for next cycle</div>
+                </div>
+            </div>
+
+            <!-- TOOLBAR / FILTERS -->
+            <div class="toolbar">
+                <div class="search-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Search asset name...">
+                </div>
+                <select class="filter-select" id="priorityFilter">
+                    <option value="all">All Priorities</option>
+                    <option value="critical">Critical</option>
+                    <option value="high">High Priority</option>
+                    <option value="medium">Medium Priority</option>
+                </select>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="all">All Categories</option>
+                </select>
+                <select class="filter-select" id="labFilter">
+                    <option value="all">All Labs</option>
+                </select>
+                <button class="clear-filters" id="clearFilters">Clear Filters</button>
+            </div>
+
+            <!-- PRIORITY GROUPS -->
+            <div class="groups" id="groups"></div>
+
+        </main>
+    </div>
+
+    <!-- STICKY FOOTER -->
+    <div class="sticky-footer" id="stickyFooter">
+        <div class="sf-left">
+            <div class="sf-count" id="sfCount">0</div>
+            <div class="sf-text"><b id="sfCountText">0 assets</b> selected · Ready to create procurement request</div>
+        </div>
+        <div class="sf-right">
+            <button class="sf-clear" id="sfClear">Clear selection</button>
+            <button class="btn btn-primary" id="sfCreate">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" width="15" height="15">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Create Procurement Request
+            </button>
+        </div>
+    </div>
+
+    <!-- CREATE REQUEST MODAL -->
+    <div class="overlay" id="createModal">
+        <div class="modal wide">
+            <div class="modal-head">
+                <div>
+                    <h2>Create Procurement Request</h2>
+                    <p id="createSubtitle">Review order quantities before sending to Admin</p>
+                </div>
+                <button class="modal-close" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg></button>
+            </div>
+            <div class="modal-body">
+                <div id="createItemsList"></div>
+                <div class="field-label">Notes for Admin (optional)</div>
+                <textarea class="notes" id="requestNotes"
+                    placeholder="e.g. Vendor preference, urgency context, delivery instructions..."></textarea>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-outline" data-close>Cancel</button>
+                <button class="btn btn-primary" id="submitRequest">Submit to Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div class="overlay" id="successModal">
+        <div class="modal">
+            <div class="modal-head">
+                <div>
+                    <h2>Request Submitted</h2>
+                    <p>Admin has been notified</p>
+                </div>
+                <button class="modal-close" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg></button>
+            </div>
+            <div class="modal-body">
+                <div class="success-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                        <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <div>
+                        <div class="t" id="successReqId">Request PR-000 created</div>
+                        <div class="d" id="successDesc">0 assets have been sent for approval. These assets will no
+                            longer appear as selectable until restocked.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-outline" id="exportExcelBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Export Excel
+                </button>
+                <button class="btn btn-primary" data-close>Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW DETAILS MODAL -->
+    <div class="overlay" id="detailModal">
+        <div class="modal">
+            <div class="modal-head">
+                <div>
+                    <h2 id="detailName">Asset name</h2>
+                    <p id="detailSub">Category · Lab</p>
+                </div>
+                <button class="modal-close" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg></button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-grid" id="detailGrid"></div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-outline" data-close>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- REQUESTS PANEL -->
+    <div class="panel-overlay" id="panelOverlay"></div>
+    <div class="panel" id="requestsPanel">
+        <div class="panel-head">
+            <div>
+                <h2>Procurement Requests</h2>
+                <p>Track approval &amp; restock progress</p>
+            </div>
+            <button class="modal-close" id="closePanel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg></button>
+        </div>
+        <div class="panel-body" id="panelBody"></div>
+    </div>
+
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <polyline points="20 6 9 17 4 12" />
+        </svg>
+        <span id="toastText">Done</span>
+    </div>
+
+    <script>
+        /* =========================================================
+           DATA MODEL
+           ========================================================= */
+        function mulberry32(seed) {
+            return function () {
+                seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+                let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+                t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+        const rnd = mulberry32(20260709);
+        function pick(arr) { return arr[Math.floor(rnd() * arr.length)]; }
+        function randInt(min, max) { return Math.floor(rnd() * (max - min + 1)) + min; }
+
+        const LABS = ["Electronics Lab", "Mechanical Lab", "Robotics Lab", "Fabrication Lab", "IoT Lab"];
+        const LOCATIONS = ["Rack A-1", "Rack A-3", "Cabinet B-1", "Cabinet B-4", "Shelf C-2", "Bin D-4", "Store Room E-1", "Drawer F-2"];
+
+        const ITEM_TEMPLATES = [
+            { name: "PLA Filament (Black) 1kg", cat: "3D Printing", unit: "spools" },
+            { name: "PETG Filament (White) 1kg", cat: "3D Printing", unit: "spools" },
+            { name: "Resin — Standard Clear 500ml", cat: "3D Printing", unit: "bottles" },
+            { name: "3D Printer Nozzle 0.4mm Brass", cat: "3D Printing", unit: "pcs" },
+            { name: "Build Plate Adhesive Spray", cat: "3D Printing", unit: "cans" },
+            { name: "Arduino Uno R3", cat: "Electronics", unit: "pcs" },
+            { name: "ESP32 DevKit V1", cat: "Electronics", unit: "pcs" },
+            { name: "Raspberry Pi 4 (4GB)", cat: "Electronics", unit: "pcs" },
+            { name: "Resistor Kit (1/4W Assorted)", cat: "Electronics", unit: "kits" },
+            { name: "Jumper Wires (M-M) 40pc Pack", cat: "Electronics", unit: "packs" },
+            { name: "Breadboard Full-size", cat: "Electronics", unit: "pcs" },
+            { name: "Soldering Wire 60/40 100g", cat: "Electronics", unit: "rolls" },
+            { name: "Ultrasonic Sensor (HC-SR04)", cat: "Sensors", unit: "pcs" },
+            { name: "IR Proximity Sensor", cat: "Sensors", unit: "pcs" },
+            { name: "Load Cell 5kg", cat: "Sensors", unit: "pcs" },
+            { name: "IMU Module MPU6050", cat: "Sensors", unit: "pcs" },
+            { name: "Servo Motor SG90", cat: "Mechanical", unit: "pcs" },
+            { name: "M3 Hex Bolts (20mm) Pack", cat: "Mechanical", unit: "packs" },
+            { name: "Ball Bearing 608ZZ", cat: "Mechanical", unit: "pcs" },
+            { name: "Aluminium Extrusion 2020 (1m)", cat: "Mechanical", unit: "pcs" },
+            { name: "Timing Belt GT2 (1m)", cat: "Mechanical", unit: "pcs" },
+            { name: "Linear Rod 8mm (300mm)", cat: "Mechanical", unit: "pcs" },
+            { name: "Nitrile Gloves (M) Box", cat: "Safety", unit: "boxes" },
+            { name: "Safety Goggles", cat: "Safety", unit: "pcs" },
+            { name: "First Aid Kit Refill", cat: "Safety", unit: "kits" },
+            { name: "Hot Glue Sticks (7mm)", cat: "Consumables", unit: "packs" },
+            { name: "Sandpaper 220 Grit Sheets", cat: "Consumables", unit: "sheets" },
+            { name: "Craft Knife Blades (Pack of 10)", cat: "Consumables", unit: "packs" },
+            { name: "Cutting Mat A3", cat: "Consumables", unit: "pcs" },
+            { name: "Double-Sided Tape 18mm", cat: "Consumables", unit: "rolls" },
+        ];
+
+        let assets = [];
+        let idCounter = 1;
+        ITEM_TEMPLATES.forEach(t => {
+            const labCount = randInt(2, 4);
+            const shuffledLabs = [...LABS].sort(() => rnd() - 0.5).slice(0, labCount);
+            shuffledLabs.forEach(lab => {
+                const min = randInt(10, t.unit === "pcs" ? 60 : 30);
+                const tier = rnd();
+                let available, priority;
+                if (tier < 0.22) { available = Math.round(min * rnd() * 0.3); priority = "critical"; }
+                else if (tier < 0.52) { available = Math.round(min * (0.31 + rnd() * 0.29)); priority = "high"; }
+                else { available = Math.round(min * (0.6 + rnd() * 0.38)); priority = "medium"; }
+                if (available >= min) available = Math.max(0, min - 1); // ensure it stays "low stock"
+                assets.push({
+                    id: "AST-" + String(idCounter++).padStart(3, "0"),
+                    name: t.name, category: t.cat, unit: t.unit, lab,
+                    location: pick(LOCATIONS) + ", " + lab,
+                    available, min, priority,
+                    requestId: null,
+                    supplier: pick(["TechSource Supplies", "MakerHub Distributors", "PrimeParts India", "CircuitBay Traders", "FabWorks Vendor Co."]),
+                    lastRestocked: `${randInt(1, 28)} ${pick(["Jan", "Feb", "Mar", "Apr", "May", "Jun"])} 2026`
+                });
+            });
+        });
+
+        /* Seed a few active procurement requests so some rows show status instead of checkbox */
+        let requests = [];
+        let prCounter = 1;
+        function newReqId() { return "PR-" + String(prCounter++).padStart(3, "0"); }
+
+        function seedRequest(status, itemCount, priorityPref) {
+            const pool = assets.filter(a => !a.requestId && (!priorityPref || a.priority === priorityPref));
+            const chosen = pool.sort(() => rnd() - 0.5).slice(0, itemCount);
+            if (!chosen.length) return;
+            const id = newReqId();
+            chosen.forEach(a => { a.requestId = id; });
+            requests.push({
+                id, status, createdDate: `${randInt(1, 8)} Jul 2026`,
+                items: chosen.map(a => ({ assetId: a.id, orderQty: Math.max(a.min * 2 - a.available, a.min) })),
+                notes: "Routine replenishment for active projects."
+            });
+        }
+        seedRequest("Pending Approval", 3, "critical");
+        seedRequest("Approved", 4, "high");
+        seedRequest("Procured", 2, "high");
+        seedRequest("Pending Approval", 2, "medium");
+
+        /* =========================================================
+           STATE
+           ========================================================= */
+        const state = {
+            search: "", priority: "all", category: "all", lab: "all",
+            expanded: { critical: true, high: false, medium: false },
+            selected: new Set(),
+        };
+
+        const PRIORITY_META = {
+            critical: { label: "Critical", dot: "var(--red)", badgeBg: "var(--red-bg)", badgeFg: "var(--red)", gauge: "var(--red)" },
+            high: { label: "High Priority", dot: "var(--orange)", badgeBg: "var(--orange-bg)", badgeFg: "#B4600F", gauge: "var(--orange)" },
+            medium: { label: "Medium Priority", dot: "var(--amber)", badgeBg: "var(--amber-bg)", badgeFg: "var(--amber)", gauge: "var(--amber)" },
+        };
+        const STATUS_META = {
+            "Pending Approval": { bg: "var(--amber-bg)", fg: "var(--amber)" },
+            "Approved": { bg: "var(--blue-bg)", fg: "var(--blue)" },
+            "Procured": { bg: "var(--purple-bg)", fg: "var(--purple)" },
+            "Restocked": { bg: "var(--green-bg)", fg: "var(--green)" },
+        };
+        const STATUS_ORDER = ["Pending Approval", "Approved", "Procured", "Restocked"];
+
+        /* =========================================================
+           POPULATE FILTER DROPDOWNS
+           ========================================================= */
+        function initFilters() {
+            const cats = [...new Set(ITEM_TEMPLATES.map(t => t.cat))].sort();
+            const catSel = document.getElementById('categoryFilter');
+            cats.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; catSel.appendChild(o); });
+
+            const labSel = document.getElementById('labFilter');
+            LABS.forEach(l => { const o = document.createElement('option'); o.value = l; o.textContent = l; labSel.appendChild(o); });
+        }
+
+        /* =========================================================
+           HELPERS
+           ========================================================= */
+        function requestById(id) { return requests.find(r => r.id === id); }
+        function isLowStock(a) { return a.available < a.min; }
+        function visibleAssets() {
+            return assets.filter(a => {
+                if (!isLowStock(a)) return false;
+                if (state.search && !a.name.toLowerCase().includes(state.search.toLowerCase())) return false;
+                if (state.priority !== "all" && a.priority !== state.priority) return false;
+                if (state.category !== "all" && a.category !== state.category) return false;
+                if (state.lab !== "all" && a.lab !== state.lab) return false;
+                return true;
+            });
+        }
+
+        /* =========================================================
+           RENDER: KPIs
+           ========================================================= */
+        function renderKpis() {
+            const low = assets.filter(isLowStock);
+            document.getElementById('kpiTotal').textContent = low.length;
+            document.getElementById('kpiCritical').textContent = low.filter(a => a.priority === "critical").length;
+            document.getElementById('kpiHigh').textContent = low.filter(a => a.priority === "high").length;
+            document.getElementById('kpiMedium').textContent = low.filter(a => a.priority === "medium").length;
+
+            document.querySelectorAll('.kpi-card').forEach(c => {
+                const k = c.dataset.kpi;
+                const match = (k === "all" && state.priority === "all") || (k === state.priority);
+                c.classList.toggle('active-filter', match);
+            });
+        }
+
+        /* =========================================================
+           RENDER: GROUPS
+           ========================================================= */
+        function gaugeHtml(a) {
+            const meta = PRIORITY_META[a.priority];
+            const scaleMax = Math.max(a.min * 1.3, a.available * 1.15, 1);
+            const fillPct = Math.min(100, (a.available / scaleMax) * 100);
+            const tickPct = Math.min(100, (a.min / scaleMax) * 100);
+            return `
+    <div class="gauge-wrap">
+      <div class="gauge-nums"><span>${a.available} ${a.unit}</span><span class="min">min ${a.min}</span></div>
+      <div class="gauge-track">
+        <div class="gauge-fill" style="width:${fillPct}%;background:${meta.gauge};"></div>
+        <div class="gauge-tick" style="left:calc(${tickPct}% - 1px);"></div>
+      </div>
+    </div>`;
+        }
+
+        function rowHtml(a) {
+            const meta = PRIORITY_META[a.priority];
+            const req = a.requestId ? requestById(a.requestId) : null;
+
+            let leftCell, statusCell;
+            if (req) {
+                leftCell = `<div class="cb-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>`;
+                const sm = STATUS_META[req.status];
+                statusCell = `<div class="status-cell">
+        <span class="badge" style="background:${sm.bg};color:${sm.fg};">${req.status}</span>
+        <span class="pr-id">${req.id}</span>
+      </div>`;
+            } else {
+                leftCell = `<input type="checkbox" class="cb" data-id="${a.id}" ${state.selected.has(a.id) ? 'checked' : ''}>`;
+                statusCell = `<span class="badge" style="background:${meta.badgeBg};color:${meta.badgeFg};">${meta.label.replace(' Priority', '')}</span>`;
+            }
+
+            return `
+    <div class="row" data-asset="${a.id}">
+      ${leftCell}
+      <div>
+        <div class="r-name">${a.name}</div>
+        <div class="r-meta">${a.category} • ${a.lab}</div>
+      </div>
+      <div>
+        <div class="r-loc">${a.location.split(', ')[0]}</div>
+        <div class="r-loc-tag">${a.lab}</div>
+      </div>
+      ${gaugeHtml(a)}
+      <div class="badge-cell">${statusCell}</div>
+      <button class="view-link" data-view="${a.id}">
+        View <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>`;
+        }
+
+        function renderGroups() {
+            const container = document.getElementById('groups');
+            const list = visibleAssets();
+            const order = ["critical", "high", "medium"];
+            container.innerHTML = order.map(p => {
+                const items = list.filter(a => a.priority === p).sort((a, b) => (a.available / a.min) - (b.available / b.min));
+                const meta = PRIORITY_META[p];
+                const selectableCount = items.filter(a => !a.requestId).length;
+                const selectedInGroup = items.filter(a => state.selected.has(a.id)).length;
+                return `
+      <div class="group ${state.expanded[p] ? 'expanded' : ''}" data-group="${p}">
+        <button class="group-header" data-toggle="${p}">
+          <div class="gh-left">
+            <span class="gh-dot" style="background:${meta.dot};"></span>
+            <span class="gh-title">${meta.label}</span>
+            <span class="gh-count" style="background:${meta.badgeBg};color:${meta.badgeFg};">${items.length}</span>
+            ${selectedInGroup ? `<span class="gh-selected">${selectedInGroup} selected</span>` : ''}
+          </div>
+          <svg class="gh-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="group-body">
+          ${items.length ? items.map(rowHtml).join('') : `<div class="empty-group">No ${meta.label.toLowerCase()} assets match your filters.</div>`}
+        </div>
+      </div>`;
+            }).join('');
+
+            container.querySelectorAll('[data-toggle]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const p = btn.dataset.toggle;
+                    state.expanded[p] = !state.expanded[p];
+                    renderGroups();
+                });
+            });
+            container.querySelectorAll('.cb').forEach(cb => {
+                cb.addEventListener('click', e => e.stopPropagation());
+                cb.addEventListener('change', () => {
+                    const id = cb.dataset.id;
+                    if (cb.checked) state.selected.add(id); else state.selected.delete(id);
+                    renderFooter();
+                    renderGroups();
+                });
+            });
+            container.querySelectorAll('[data-view]').forEach(btn => {
+                btn.addEventListener('click', () => openDetail(btn.dataset.view));
+            });
+        }
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+        function renderFooter() {
+            const n = state.selected.size;
+            const footer = document.getElementById('stickyFooter');
+            footer.classList.toggle('show', n > 0);
+            document.getElementById('sfCount').textContent = n;
+            document.getElementById('sfCountText').textContent = `${n} asset${n === 1 ? '' : 's'}`;
+        }
+
+        /* =========================================================
+           DETAIL MODAL
+           ========================================================= */
+        function openDetail(id) {
+            const a = assets.find(x => x.id === id);
+            if (!a) return;
+            document.getElementById('detailName').textContent = a.name;
+            document.getElementById('detailSub').textContent = `${a.category} · ${a.lab}`;
+            const req = a.requestId ? requestById(a.requestId) : null;
+            document.getElementById('detailGrid').innerHTML = `
+    <div class="detail-item"><div class="k">Asset ID</div><div class="v">${a.id}</div></div>
+    <div class="detail-item"><div class="k">Storage Location</div><div class="v">${a.location}</div></div>
+    <div class="detail-item"><div class="k">Available Quantity</div><div class="v">${a.available} ${a.unit}</div></div>
+    <div class="detail-item"><div class="k">Minimum Threshold</div><div class="v">${a.min} ${a.unit}</div></div>
+    <div class="detail-item"><div class="k">Priority</div><div class="v">${PRIORITY_META[a.priority].label}</div></div>
+    <div class="detail-item"><div class="k">Preferred Supplier</div><div class="v">${a.supplier}</div></div>
+    <div class="detail-item"><div class="k">Last Restocked</div><div class="v">${a.lastRestocked}</div></div>
+    <div class="detail-item"><div class="k">Procurement Status</div><div class="v">${req ? req.status + " (" + req.id + ")" : "Not requested yet"}</div></div>
+  `;
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        /* =========================================================
+           CREATE REQUEST MODAL
+           ========================================================= */
+        function openCreateModal() {
+            if (state.selected.size === 0) {
+                showToast("Select at least one asset to create a request.", false);
+                return;
+            }
+            const items = [...state.selected].map(id => assets.find(a => a.id === id));
+            document.getElementById('createSubtitle').textContent = `${items.length} asset${items.length === 1 ? '' : 's'} selected for replenishment`;
+            document.getElementById('createItemsList').innerHTML = items.map(a => {
+                const suggested = Math.max(a.min * 2 - a.available, a.min);
+                return `
+      <div class="mini-row">
+        <div>
+          <div class="mini-name">${a.name}</div>
+          <div class="mini-meta">${a.category} • ${a.lab} · Available ${a.available}/${a.min} ${a.unit}</div>
+        </div>
+        <div>
+          <input type="number" class="qty-input" id="qty-${a.id}" value="${suggested}" min="1">
+          <div class="qty-label">Order qty</div>
+        </div>
+      </div>`;
+            }).join('');
+            document.getElementById('createModal').classList.add('show');
+        }
+
+        document.getElementById('submitRequest').addEventListener('click', () => {
+            const ids = [...state.selected];
+            if (!ids.length) return;
+            const id = newReqId();
+            const items = ids.map(aid => {
+                const qtyEl = document.getElementById('qty-' + aid);
+                return { assetId: aid, orderQty: parseInt(qtyEl.value) || 1 };
+            });
+            requests.push({
+                id, status: "Pending Approval", createdDate: "9 Jul 2026",
+                items, notes: document.getElementById('requestNotes').value.trim()
+            });
+            ids.forEach(aid => { const a = assets.find(x => x.id === aid); a.requestId = id; });
+            state.selected.clear();
+            document.getElementById('requestNotes').value = "";
+
+            document.getElementById('createModal').classList.remove('show');
+            document.getElementById('successReqId').textContent = `${id} created`;
+            document.getElementById('successDesc').textContent = `${items.length} asset${items.length === 1 ? '' : 's'} sent to Admin for approval. They're now marked as pending and won't create duplicate requests.`;
+            document.getElementById('successModal').classList.add('show');
+            document.getElementById('successModal').dataset.reqId = id;
+
+            renderAll();
+        });
+
+        document.getElementById('exportExcelBtn').addEventListener('click', () => {
+            const id = document.getElementById('successModal').dataset.reqId;
+            exportRequestExcel(id);
+        });
+
+        function exportRequestExcel(reqId) {
+            const req = requestById(reqId);
+            if (!req) return;
+            const rows = req.items.map(it => {
+                const a = assets.find(x => x.id === it.assetId);
+                return {
+                    "Request ID": req.id,
+                    "Asset ID": a.id,
+                    "Asset Name": a.name,
+                    "Category": a.category,
+                    "Lab": a.lab,
+                    "Storage Location": a.location,
+                    "Available Qty": a.available,
+                    "Min Threshold": a.min,
+                    "Order Qty": it.orderQty,
+                    "Unit": a.unit,
+                    "Priority": PRIORITY_META[a.priority].label,
+                    "Status": req.status,
+                    "Preferred Supplier": a.supplier
+                };
+            });
+            const ws = XLSX.utils.json_to_sheet(rows);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, req.id);
+            XLSX.writeFile(wb, `${req.id}_procurement_request.xlsx`);
+            showToast(`${req.id} exported to Excel.`, true);
+        }
+
+        /* =========================================================
+           REQUESTS PANEL / LIFECYCLE
+           ========================================================= */
+        function renderPanel() {
+            document.getElementById('reqBadge').textContent = requests.filter(r => r.status !== "Restocked").length;
+            const body = document.getElementById('panelBody');
+            if (!requests.length) {
+                body.innerHTML = `<div class="empty-group">No procurement requests yet.</div>`;
+                return;
+            }
+            body.innerHTML = [...requests].reverse().map(r => {
+                const stepIdx = STATUS_ORDER.indexOf(r.status);
+                const sm = STATUS_META[r.status];
+                const stepsHtml = STATUS_ORDER.map((s, i) => `<div class="step ${i <= stepIdx ? 'done' : ''}"></div>`).join('');
+                const itemNames = r.items.map(it => {
+                    const a = assets.find(x => x.id === it.assetId);
+                    return a ? a.name : it.assetId;
+                }).join(', ');
+
+                let actions = `<button class="btn btn-outline btn-sm" data-export="${r.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Excel
+      </button>`;
+                let demoNote = "";
+                if (r.status === "Procured") {
+                    actions += `<button class="btn btn-primary btn-sm" data-restock="${r.id}">Restock Now</button>`;
+                } else if (r.status !== "Restocked") {
+                    actions += `<button class="btn btn-outline btn-sm" data-advance="${r.id}">Advance Status →</button>`;
+                    demoNote = `<div class="demo-note">Demo control — simulates Admin / Procurement team action</div>`;
+                }
+
+                return `
+      <div class="req-card">
+        <div class="req-top">
+          <div><div class="req-id">${r.id}</div><div class="req-date">Created ${r.createdDate} · ${r.items.length} item${r.items.length === 1 ? '' : 's'}</div></div>
+          <span class="badge" style="background:${sm.bg};color:${sm.fg};">${r.status}</span>
+        </div>
+        <div class="steps">${stepsHtml}</div>
+        <div class="req-status-row">
+          <span style="font-size:11px;color:var(--muted-2);font-weight:600;">Pending</span>
+          <span style="font-size:11px;color:var(--muted-2);font-weight:600;">Approved</span>
+          <span style="font-size:11px;color:var(--muted-2);font-weight:600;">Procured</span>
+          <span style="font-size:11px;color:var(--muted-2);font-weight:600;">Restocked</span>
+        </div>
+        <div class="req-items">${itemNames}</div>
+        <div class="req-actions">${actions}</div>
+        ${demoNote}
+      </div>`;
+            }).join('');
+
+            body.querySelectorAll('[data-advance]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const r = requestById(btn.dataset.advance);
+                    const idx = STATUS_ORDER.indexOf(r.status);
+                    if (idx < STATUS_ORDER.length - 2) { // stop before auto-jumping to Restocked; that's a real action
+                        r.status = STATUS_ORDER[idx + 1];
+                        showToast(`${r.id} moved to "${r.status}".`, true);
+                        renderAll();
+                    }
+                });
+            });
+            body.querySelectorAll('[data-restock]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const r = requestById(btn.dataset.restock);
+                    r.items.forEach(it => {
+                        const a = assets.find(x => x.id === it.assetId);
+                        if (a) {
+                            a.available += it.orderQty;
+                            if (a.available >= a.min) { a.requestId = null; }
+                        }
+                    });
+                    r.status = "Restocked";
+                    showToast(`${r.id} restocked — inventory updated.`, true);
+                    renderAll();
+                });
+            });
+            body.querySelectorAll('[data-export]').forEach(btn => {
+                btn.addEventListener('click', () => exportRequestExcel(btn.dataset.export));
+            });
+        }
+
+        /* =========================================================
+           TOAST
+           ========================================================= */
+        let toastTimer;
+        function showToast(msg, ok = true) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastText').textContent = msg;
+            t.querySelector('svg').style.color = ok ? '#4ADE80' : '#F87171';
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+        }
+
+        /* =========================================================
+           EVENTS
+           ========================================================= */
+        document.getElementById('searchInput').addEventListener('input', e => {
+            state.search = e.target.value;
+            if (state.search) { state.expanded = { critical: true, high: true, medium: true }; }
+            renderGroups();
+        });
+        document.getElementById('priorityFilter').addEventListener('change', e => { state.priority = e.target.value; renderKpis(); renderGroups(); });
+        document.getElementById('categoryFilter').addEventListener('change', e => { state.category = e.target.value; renderGroups(); });
+        document.getElementById('labFilter').addEventListener('change', e => { state.lab = e.target.value; renderGroups(); });
+        document.getElementById('clearFilters').addEventListener('click', () => {
+            state.search = ""; state.priority = "all"; state.category = "all"; state.lab = "all";
+            document.getElementById('searchInput').value = "";
+            document.getElementById('priorityFilter').value = "all";
+            document.getElementById('categoryFilter').value = "all";
+            document.getElementById('labFilter').value = "all";
+            renderKpis(); renderGroups();
+        });
+        document.querySelectorAll('.kpi-card').forEach(c => {
+            c.addEventListener('click', () => {
+                const k = c.dataset.kpi;
+                state.priority = k === "all" ? "all" : k;
+                document.getElementById('priorityFilter').value = state.priority;
+                if (k !== "all") state.expanded[k] = true;
+                renderKpis(); renderGroups();
+            });
+        });
+
+        document.getElementById('headerCta').addEventListener('click', openCreateModal);
+        document.getElementById('sfCreate').addEventListener('click', openCreateModal);
+        document.getElementById('sfClear').addEventListener('click', () => { state.selected.clear(); renderFooter(); renderGroups(); });
+
+        document.querySelectorAll('[data-close]').forEach(b => {
+            b.addEventListener('click', () => b.closest('.overlay').classList.remove('show'));
+        });
+        document.querySelectorAll('.overlay').forEach(o => {
+            o.addEventListener('click', e => { if (e.target === o) o.classList.remove('show'); });
+        });
+
+        document.getElementById('openRequestsPanel').addEventListener('click', () => {
+            document.getElementById('requestsPanel').classList.add('show');
+            document.getElementById('panelOverlay').classList.add('show');
+        });
+        document.getElementById('closePanel').addEventListener('click', closePanel);
+        document.getElementById('panelOverlay').addEventListener('click', closePanel);
+        function closePanel() {
+            document.getElementById('requestsPanel').classList.remove('show');
+            document.getElementById('panelOverlay').classList.remove('show');
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === "Escape") {
+                document.querySelectorAll('.overlay.show').forEach(o => o.classList.remove('show'));
+                closePanel();
+            }
+        });
+
+        /* =========================================================
+           INIT
+           ========================================================= */
+        function renderAll() {
+            renderKpis();
+            renderGroups();
+            renderFooter();
+            renderPanel();
+        }
+        initFilters();
+        renderAll();
+
+    </script>
+</body>
+
+</html>
