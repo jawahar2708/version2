@@ -1,0 +1,672 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILP Rapid Prototyping Lab - Add Profiles</title>
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Style sheets -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/add_profiles.css">
+</head>
+
+<body>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="app-wrapper" id="appWrapper">
+
+        <!-- ==========================================================
+         SIDEBAR NAVIGATION
+         ========================================================== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <h1 class="brand-title">ILP</h1>
+                <p class="brand-subtitle">RAPID PROTOTYPING LAB</p>
+            </div>
+
+            <p class="sidebar-section-label">ADMIN PORTAL</p>
+
+                    <nav class="sidebar-nav" id="sidebarNav">
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add_profiles.html" class="nav-item active">
+                    <i data-lucide="user-plus"></i>
+                    <span>Add Profiles</span>
+                </a>
+                <div class="nav-group">
+                    <button class="nav-item dropdown-toggle" aria-expanded="false" aria-controls="manageTeamsDropdown">
+                        <i data-lucide="users"></i>
+                        <span>Manage Team</span>
+                        <i data-lucide="chevron-down" class="dropdown-icon" style="margin-left:auto;transition:transform 0.3s;"></i>
+                    </button>
+                    <div class="dropdown-menu" id="manageTeamsDropdown">
+                        <a href="create_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+                            <span>Create Team</span>
+                        </a>
+                        <a href="edit_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="edit" style="width:18px;height:18px;"></i>
+                            <span>Edit Team</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="faculty.html" class="nav-item">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>Faculty List</span>
+                </a>
+                <a href="trainee.html" class="nav-item">
+                    <i data-lucide="users-2"></i>
+                    <span>Trainee List</span>
+                </a>
+                <a href="lab_asset_management.html" class="nav-item">
+                    <i data-lucide="package"></i>
+                    <span>Lab Asset Management</span>
+                </a>
+                <a href="component_verification.html" class="nav-item">
+                    <i data-lucide="check-square"></i>
+                    <span>Component Verification</span>
+                </a>
+                <a href="low_stock_management.html" class="nav-item">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Low Stock Management</span>
+                </a>
+                <a href="project_details.html" class="nav-item">
+                    <i data-lucide="folder"></i>
+                    <span>Project Details</span>
+                </a>
+                
+            </nav>
+     <button class="sign-out-btn" id="signOutBtn" >
+               <a href="../../faculty-main final version/login1.html" class="nav-item">
+                     <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+                </a>
+               
+            </button>
+        </aside>
+
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ==========================================================
+         MAIN CONTENT AREA
+         ========================================================== -->
+        <main class="main-content" id="mainContent">
+
+            <!-- Top header with title + subtitle -->
+            <header class="top-header">
+                <div class="header-left">
+                    <div class="header-title-group">
+                        <h2 class="header-page-title">Add Profiles</h2>
+                        <p class="header-page-subtitle">Add new trainees, faculty, or senior faculty to the lab
+                            database.</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="icon-btn" id="notificationBtn" aria-label="Notifications">
+                            <i data-lucide="bell"></i>
+                            <span class="notification-badge" id="notificationBadge">3</span>
+                        </button>
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <button class="text-btn" id="markAllReadBtn">Mark all read</button>
+                            </div>
+                            <ul class="notification-list" id="notificationList"></ul>
+                        </div>
+                    </div>
+
+                    <button class="user-profile-btn" id="profileBtn">
+                        <div class="user-info">
+                            <span class="user-name" id="headerUserName">Admin Name</span>
+                            <span class="user-role" id="headerUserRole">Administrator</span>
+                        </div>
+                        <div class="user-avatar" id="headerAvatar">
+                            <i data-lucide="user"></i>
+                        </div>
+                    </button>
+                </div>
+            </header>
+
+            <section class="add-profiles-content">
+
+                <!-- Hidden file input -->
+                <input type="file" id="excelFileInput" style="display: none;" accept=".xlsx,.xls,.csv">
+
+                <!-- Two Column Grid: Forms + Preview -->
+                <div class="profiles-container-grid">
+
+                    <!-- Column 1: Tabs & Form -->
+                    <div class="form-card">
+                        <div class="tabs-nav">
+                            <button type="button" class="tab-btn active" data-tab="trainee">
+                                <i data-lucide="user" class="tab-icon"></i>
+                                <span>Add New Trainee</span>
+                            </button>
+                            <button type="button" class="tab-btn" data-tab="faculty">
+                                <i data-lucide="presentation" class="tab-icon"></i>
+                                <span>Add New Faculty</span>
+                            </button>
+                            <button type="button" class="tab-btn" data-tab="seniorFaculty">
+                                <i data-lucide="star" class="tab-icon"></i>
+                                <span>Add New Senior Faculty</span>
+                            </button>
+                        </div>
+
+                        <form id="profileForm" novalidate>
+
+                            <!-- ==========================================
+                               TRAINEE FORM
+                               Field order: ID, Name, Email, Phone, DOB, Gender, Role
+                               ========================================== -->
+                            <div class="form-fields-container tab-content active" id="traineeForm">
+                                <h3 class="form-section-title">
+                                    <i data-lucide="user" class="section-icon"></i>
+                                    Trainee Information
+                                </h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="traineeId">Trainee ID <span class="info-icon"
+                                                title="Unique Trainee ID"></span></label>
+                                        <input type="text" id="traineeId" placeholder="Auto-generated if left blank">
+                                        <span class="error-msg" id="traineeIdError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="traineeName">Full Name <span class="required">*</span></label>
+                                        <input type="text" id="traineeName" placeholder="Enter full name" required>
+                                        <span class="error-msg" id="traineeNameError"></span>
+                                    </div>
+                                    <div class="form-group form-group-full">
+                                        <label for="traineeEmail">Email <span class="required">*</span></label>
+                                        <input type="email" id="traineeEmail" placeholder="Enter email address"
+                                            required>
+                                        <span class="error-msg" id="traineeEmailError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="traineePhone">Mobile Number <span class="required">*</span></label>
+                                        <input type="tel" id="traineePhone" placeholder="Enter mobile number" required>
+                                        <span class="error-msg" id="traineePhoneError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="traineeDob">Date of Birth <span class="required">*</span></label>
+                                        <input type="date" id="traineeDob" required>
+                                        <span class="error-msg" id="traineeDobError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="traineeGender">Gender <span class="required">*</span></label>
+                                        <select id="traineeGender" required>
+                                            <option value="" disabled selected>Select gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <span class="error-msg" id="traineeGenderError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="traineeRole">Role <span class="required">*</span></label>
+                                        <select id="traineeRole" required>
+                                            <option value="" disabled selected>Select role</option>
+                                            <option value="Trainee Analyst">Trainee Analyst</option>
+                                            <option value="Intern">Intern</option>
+                                            <option value="Graduate Trainee">Graduate Trainee</option>
+                                        </select>
+                                        <span class="error-msg" id="traineeRoleError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="traineePassword">Password (Default) <span
+                                                class="required">*</span></label>
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="traineePassword" value="trainee123"
+                                                placeholder="Enter password" required>
+                                            <button type="button" class="pwd-toggle"
+                                                aria-label="Toggle password visibility">
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </div>
+                                        <span class="error-msg" id="traineePasswordError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="traineeConfirmPassword">Confirm Password <span
+                                                class="required">*</span></label>
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="traineeConfirmPassword" value="trainee123"
+                                                placeholder="Confirm password" required>
+                                            <button type="button" class="pwd-toggle"
+                                                aria-label="Toggle password visibility">
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </div>
+                                        <span class="error-msg" id="traineeConfirmPasswordError"></span>
+                                    </div>
+                                </div>
+                                <div class="excel-actions-inline">
+                                    <span class="excel-inline-label">Or upload bulk profiles:</span>
+                                    <div class="excel-inline-buttons">
+                                        <button type="button" class="excel-btn excel-upload-btn">
+                                            <i data-lucide="upload"></i>
+                                            <span>Upload Excel</span>
+                                        </button>
+                                        <button type="button" class="excel-btn excel-download-btn">
+                                            <i data-lucide="download"></i>
+                                            <span>Download Template</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                               FACULTY FORM (NO DEPARTMENT)
+                               Field order: ID, Name, Email, Phone, DOB, Gender, Role
+                               ========================================== -->
+                            <div class="form-fields-container tab-content" id="facultyForm">
+                                <h3 class="form-section-title">
+                                    <i data-lucide="presentation" class="section-icon"></i>
+                                    Faculty Information
+                                </h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="facultyId">Faculty ID <span class="info-icon"
+                                                title="Unique Faculty ID"></span></label>
+                                        <input type="text" id="facultyId" placeholder="Auto-generated if left blank">
+                                        <span class="error-msg" id="facultyIdError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="facultyName">Full Name <span class="required">*</span></label>
+                                        <input type="text" id="facultyName" placeholder="Enter full name" required>
+                                        <span class="error-msg" id="facultyNameError"></span>
+                                    </div>
+                                    <div class="form-group form-group-full">
+                                        <label for="facultyEmail">Email <span class="required">*</span></label>
+                                        <input type="email" id="facultyEmail" placeholder="Enter email address"
+                                            required>
+                                        <span class="error-msg" id="facultyEmailError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="facultyPhone">Mobile Number <span class="required">*</span></label>
+                                        <input type="tel" id="facultyPhone" placeholder="Enter mobile number" required>
+                                        <span class="error-msg" id="facultyPhoneError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="facultyDob">Date of Birth <span class="required">*</span></label>
+                                        <input type="date" id="facultyDob" required>
+                                        <span class="error-msg" id="facultyDobError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="facultyGender">Gender <span class="required">*</span></label>
+                                        <select id="facultyGender" required>
+                                            <option value="" disabled selected>Select gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <span class="error-msg" id="facultyGenderError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="facultyDesignation">Role <span class="required">*</span></label>
+                                        <select id="facultyDesignation" required>
+                                            <option value="" disabled selected>Select role</option>
+                                            <option value="Lab Engineer">Lab Engineer</option>
+                                            <option value="Technical Assistant">Technical Assistant</option>
+                                            <option value="Senior Technician">Senior Technician</option>
+                                            <option value="Systems Administrator">Systems Administrator</option>
+                                        </select>
+                                        <span class="error-msg" id="facultyDesignationError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="facultyPassword">Password (Default) <span
+                                                class="required">*</span></label>
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="facultyPassword" value="faculty123"
+                                                placeholder="Enter password" required>
+                                            <button type="button" class="pwd-toggle"
+                                                aria-label="Toggle password visibility">
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </div>
+                                        <span class="error-msg" id="facultyPasswordError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="facultyConfirmPassword">Confirm Password <span
+                                                class="required">*</span></label>
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="facultyConfirmPassword" value="faculty123"
+                                                placeholder="Confirm password" required>
+                                            <button type="button" class="pwd-toggle"
+                                                aria-label="Toggle password visibility">
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </div>
+                                        <span class="error-msg" id="facultyConfirmPasswordError"></span>
+                                    </div>
+                                </div>
+                                <div class="excel-actions-inline">
+                                    <span class="excel-inline-label">Or upload bulk profiles:</span>
+                                    <div class="excel-inline-buttons">
+                                        <button type="button" class="excel-btn excel-upload-btn">
+                                            <i data-lucide="upload"></i>
+                                            <span>Upload Excel</span>
+                                        </button>
+                                        <button type="button" class="excel-btn excel-download-btn">
+                                            <i data-lucide="download"></i>
+                                            <span>Download Template</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                               SENIOR FACULTY FORM
+                               Field order: ID, Name, Email, Phone, DOB, Gender, Role
+                               ========================================== -->
+                            <div class="form-fields-container tab-content" id="seniorFacultyForm">
+                                <h3 class="form-section-title">
+                                    <i data-lucide="star" class="section-icon"></i>
+                                    Senior Faculty Information
+                                </h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="seniorFacultyId">Employee ID <span class="info-icon"
+                                                title="Unique Employee ID"></span></label>
+                                        <input type="text" id="seniorFacultyId"
+                                            placeholder="Auto-generated if left blank">
+                                        <span class="error-msg" id="seniorFacultyIdError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seniorFacultyName">Full Name <span class="required">*</span></label>
+                                        <input type="text" id="seniorFacultyName" placeholder="Enter full name"
+                                            required>
+                                        <span class="error-msg" id="seniorFacultyNameError"></span>
+                                    </div>
+                                    <div class="form-group form-group-full">
+                                        <label for="seniorFacultyEmail">Email <span class="required">*</span></label>
+                                        <input type="email" id="seniorFacultyEmail" placeholder="Enter email address"
+                                            required>
+                                        <span class="error-msg" id="seniorFacultyEmailError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seniorFacultyPhone">Mobile Number <span
+                                                class="required">*</span></label>
+                                        <input type="tel" id="seniorFacultyPhone" placeholder="Enter mobile number"
+                                            required>
+                                        <span class="error-msg" id="seniorFacultyPhoneError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seniorFacultyDob">Date of Birth <span
+                                                class="required">*</span></label>
+                                        <input type="date" id="seniorFacultyDob" required>
+                                        <span class="error-msg" id="seniorFacultyDobError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seniorFacultyGender">Gender <span class="required">*</span></label>
+                                        <select id="seniorFacultyGender" required>
+                                            <option value="" disabled selected>Select gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <span class="error-msg" id="seniorFacultyGenderError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seniorFacultyDesignation">Role <span
+                                                class="required">*</span></label>
+                                        <select id="seniorFacultyDesignation" required>
+                                            <option value="" disabled selected>Select role</option>
+                                            <option value="Senior Professor">Senior Professor</option>
+                                            <option value="Professor">Professor</option>
+                                            <option value="Associate Professor">Associate Professor</option>
+                                            <option value="Professor &amp; HOD">Professor &amp; HOD</option>
+                                        </select>
+                                        <span class="error-msg" id="seniorFacultyDesignationError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seniorFacultyPassword">Password (Default) <span
+                                                class="required">*</span></label>
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="seniorFacultyPassword" value="faculty123"
+                                                placeholder="Enter password" required>
+                                            <button type="button" class="pwd-toggle"
+                                                aria-label="Toggle password visibility">
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </div>
+                                        <span class="error-msg" id="seniorFacultyPasswordError"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="seniorFacultyConfirmPassword">Confirm Password <span
+                                                class="required">*</span></label>
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="seniorFacultyConfirmPassword" value="faculty123"
+                                                placeholder="Confirm password" required>
+                                            <button type="button" class="pwd-toggle"
+                                                aria-label="Toggle password visibility">
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </div>
+                                        <span class="error-msg" id="seniorFacultyConfirmPasswordError"></span>
+                                    </div>
+                                </div>
+                                <div class="excel-actions-inline">
+                                    <span class="excel-inline-label">Or upload bulk profiles:</span>
+                                    <div class="excel-inline-buttons">
+                                        <button type="button" class="excel-btn excel-upload-btn">
+                                            <i data-lucide="upload"></i>
+                                            <span>Upload Excel</span>
+                                        </button>
+                                        <button type="button" class="excel-btn excel-download-btn">
+                                            <i data-lucide="download"></i>
+                                            <span>Download Template</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions-submit">
+                                <button type="submit" class="btn btn-primary" id="saveDetailsBtn">
+                                    <i data-lucide="save" class="btn-icon"></i>
+                                    Save Details
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Column 2: Live Preview Card -->
+                    <div class="preview-card">
+                        <h3 class="preview-title">Preview Details</h3>
+                        <div class="preview-content">
+                            <div class="preview-avatar">
+                                <i data-lucide="user"></i>
+                            </div>
+
+                            <div class="preview-details">
+                                <div class="preview-row">
+                                    <span class="preview-label">Full Name</span>
+                                    <span class="preview-value" id="previewName">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Email ID</span>
+                                    <span class="preview-value" id="previewEmail">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Mobile Number</span>
+                                    <span class="preview-value" id="previewPhone">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Date of Birth</span>
+                                    <span class="preview-value" id="previewDob">-</span>
+                                </div>
+                                <div class="preview-row" id="previewField3Row">
+                                    <span class="preview-label" id="previewField3Label">Gender</span>
+                                    <span class="preview-value" id="previewField3Value">-</span>
+                                </div>
+                                <div class="preview-row" id="previewField1Row">
+                                    <span class="preview-label" id="previewField1Label">Role</span>
+                                    <span class="preview-value" id="previewField1Value">-</span>
+                                </div>
+                                <div class="preview-row" id="previewField2Row">
+                                    <span class="preview-label" id="previewField2Label">ID</span>
+                                    <span class="preview-value" id="previewField2Value">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <footer class="site-footer">
+                <p>&copy; 2026 ILP Rapid Prototyping Lab Management System. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>My Profile</h2>
+                <button class="modal-close" id="closeProfileModal" aria-label="Close">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-header">
+                    <div class="profile-avatar-large" id="modalAvatar">
+                        <i data-lucide="user"></i>
+                    </div>
+                    <div class="profile-header-info">
+                        <h3 id="modalUserName">Admin Name</h3>
+                        <p id="modalUserRole">Administrator</p>
+                        <span class="status-badge status-active">Active</span>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Employee ID</span>
+                        <span class="detail-value" id="modalEmployeeId">ADM-001</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Email ID</span>
+                        <span class="detail-value" id="modalEmail">admin@ilp.com</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Phone Number</span>
+                        <span class="detail-value" id="modalPhone">9876543210</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Department</span>
+                        <span class="detail-value" id="modalDepartment">Rapid Prototyping Lab</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Joined On</span>
+                        <span class="detail-value" id="modalJoined">January 2026</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeProfileBtn">Close</button>
+                <button class="btn btn-primary" id="editProfileBtn">Edit Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="modal-close" id="closeEditProfileModal" aria-label="Close">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form class="modal-body" id="editProfileForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="editName">Full Name</label>
+                        <input type="text" id="editName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Phone Number</label>
+                        <input type="tel" id="editPhone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDepartment">Department</label>
+                        <input type="text" id="editDepartment" name="department">
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelEditProfile">Cancel</button>
+                <button class="btn btn-primary" id="saveEditProfile">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="signOutModal">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h2>Sign Out</h2>
+                <button class="modal-close" id="closeSignOutModal" aria-label="Close">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to sign out of the admin portal?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelSignOut">Cancel</button>
+                <button class="btn btn-danger" id="confirmSignOut">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="login-screen hidden" id="loginScreen">
+        <div class="login-card">
+            <div class="login-brand">
+                <h1>ILP</h1>
+                <p>RAPID PROTOTYPING LAB</p>
+            </div>
+            <h2>Admin Portal Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" value="admin@ilp.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" value="admin123" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/add_profiles.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+

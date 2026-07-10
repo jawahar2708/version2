@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Meta tags for responsive layout and character encoding -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ILP Rapid Prototyping Lab - Dashboard</title>
+
+  <!-- Google Fonts - Inter for modern clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN for sidebar and UI icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- External stylesheet -->
+  <link rel="stylesheet" href="../css/low_stock_management.css">
+</head>
+
+<body>
+
+  <!-- ============================================================
+       MAIN APP WRAPPER - Contains sidebar + main content area
+       ============================================================ -->
+  <div class="app-wrapper" id="appWrapper">
+
+    <!-- ==========================================================
+         SIDEBAR NAVIGATION - Dashboard only
+         ========================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <h1 class="brand-title">ILP</h1>
+        <p class="brand-subtitle">RAPID PROTOTYPING LAB</p>
+      </div>
+
+      <p class="sidebar-section-label">ADMIN PORTAL</p>
+
+      <!-- Sidebar nav items -->
+              <nav class="sidebar-nav" id="sidebarNav">
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add_profiles.html" class="nav-item">
+                    <i data-lucide="user-plus"></i>
+                    <span>Add Profiles</span>
+                </a>
+                <div class="nav-group">
+                    <button class="nav-item dropdown-toggle" aria-expanded="false" aria-controls="manageTeamsDropdown">
+                        <i data-lucide="users"></i>
+                        <span>Manage Team</span>
+                        <i data-lucide="chevron-down" class="dropdown-icon" style="margin-left:auto;transition:transform 0.3s;"></i>
+                    </button>
+                    <div class="dropdown-menu" id="manageTeamsDropdown">
+                        <a href="create_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+                            <span>Create Team</span>
+                        </a>
+                        <a href="edit_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="edit" style="width:18px;height:18px;"></i>
+                            <span>Edit Team</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="faculty.html" class="nav-item">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>Faculty List</span>
+                </a>
+                <a href="trainee.html" class="nav-item">
+                    <i data-lucide="users-2"></i>
+                    <span>Trainee List</span>
+                </a>
+                <a href="lab_asset_management.html" class="nav-item">
+                    <i data-lucide="package"></i>
+                    <span>Lab Asset Management</span>
+                </a>
+                <a href="component_verification.html" class="nav-item">
+                    <i data-lucide="check-square"></i>
+                    <span>Component Verification</span>
+                </a>
+                <a href="low_stock_management.html" class="nav-item active">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Low Stock Management</span>
+                </a>
+                <a href="project_details.html" class="nav-item">
+                    <i data-lucide="folder"></i>
+                    <span>Project Details</span>
+                </a>
+                
+            </nav>
+
+      <!-- Sign out button pinned to bottom of sidebar -->
+        <button class="sign-out-btn" id="signOutBtn" >
+               <a href="../../faculty-main final version/login1.html" class="nav-item">
+                     <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+                </a>
+               
+            </button>
+    </aside>
+
+    <!-- Mobile overlay - dims background when sidebar is open on small screens -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ==========================================================
+         MAIN CONTENT AREA - Header + dashboard + footer
+         ========================================================== -->
+    <main class="main-content" id="mainContent">
+
+      <!-- Top header bar with breadcrumbs and user actions -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="page-top-header">
+            <div class="header-icon-box">
+              <!-- <i data-lucide="alert-triangle"></i> -->
+            </div>
+            <div>
+              <h2 class="header-page-title" id="mainHeaderTitle">Low Stock Management</h2>
+              <p class="header-page-subtitle" id="mainHeaderSubtitle">Monitor procurement requests raised by Lab Incharges and update their processing status.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Notification bell with badge count -->
+          <div class="notification-wrapper">
+            <button class="icon-btn" id="notificationBtn" aria-label="Notifications">
+              <i data-lucide="bell"></i>
+              <span class="notification-badge" id="notificationBadge">3</span>
+            </button>
+            <div class="notification-dropdown" id="notificationDropdown">
+              <div class="dropdown-header">
+                <h3>Notifications</h3>
+                <button class="text-btn" id="markAllReadBtn">Mark all read</button>
+              </div>
+              <ul class="notification-list" id="notificationList"></ul>
+            </div>
+          </div>
+
+          <!-- User profile - click opens My Profile modal -->
+          <button class="user-profile-btn" id="profileBtn">
+            <div class="user-info">
+              <span class="user-name" id="headerUserName">Admin Name</span>
+              <span class="user-role" id="headerUserRole">Administrator</span>
+            </div>
+            <div class="user-avatar" id="headerAvatar">
+              <i data-lucide="user"></i>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <section class="page-content" id="pageContent">
+
+        <!-- ======================================================
+             VIEW 1: FACULTY SELECTION
+             ====================================================== -->
+        <div id="lowStockDashboardView">
+    <!-- Summary Cards -->
+    <div class="stats-grid" style="margin-top: 20px;">
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-purple">
+                <i data-lucide="layers"></i>
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">Total Requests</p>
+                <h3 class="stat-value" id="statTotal">0</h3>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-orange">
+                <i data-lucide="clock"></i>
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">Pending</p>
+                <h3 class="stat-value" id="statPending">0</h3>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-blue">
+                <i data-lucide="inbox"></i>
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">Received</p>
+                <h3 class="stat-value" id="statReceived">0</h3>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-green">
+                <i data-lucide="check-circle-2"></i>
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">Resolved</p>
+                <h3 class="stat-value" id="statResolved">0</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="toolbar-card">
+        <div class="search-wrapper">
+            <div class="search-icon">
+                <i data-lucide="search"></i>
+            </div>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by request ID, component, lab, or raised by...">
+        </div>
+        <div class="filter-wrapper">
+            <select id="labFilter" class="filter-select">
+                <option value="All">All Labs</option>
+                <option value="Mechanical Lab">Mechanical Lab</option>
+                <option value="Embedded Lab">Embedded Lab</option>
+                <option value="IoT Lab">IoT Lab</option>
+                <option value="Manufacturing Lab">Manufacturing Lab</option>
+                <option value="AI Lab">AI Lab</option>
+                <option value="Fabrication Lab">Fabrication Lab</option>
+            </select>
+            <select id="statusFilter" class="filter-select">
+                <option value="All">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Received">Received</option>
+                <option value="Resolved">Resolved</option>
+            </select>
+            <button id="clearFiltersBtn" class="btn btn-secondary text-btn">Clear Filters</button>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card" style="margin-top: 20px;">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width:60px;">Sl No</th>
+                        <th>Request ID</th>
+                        <th>Component Name</th>
+                        <th style="text-align:right;">Requested Qty</th>
+                        <th style="text-align:right;">Available Qty</th>
+                        <th>Lab</th>
+                        <th>Raised By</th>
+                        <th>Raised Date</th>
+                        <th>Status</th>
+                        <th style="text-align:center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="lowStockTbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+      </section>
+
+      <!-- Site footer -->
+      <footer class="site-footer">
+        <p>2026 ILP Rapid Prototyping Lab Management System. All rights reserved.</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ============================================================
+       MODALS 
+       ============================================================ -->
+
+    <!-- Low Stock View Modal -->
+  <div class="modal-overlay" id="viewRequestModal">
+      <div class="modal modal-lg">
+          <div class="modal-header">
+              <h2>Low Stock Request Details</h2>
+              <button class="modal-close" id="closeRequestModal" aria-label="Close">
+                  <i data-lucide="x"></i>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p class="modal-subheading">Procurement request raised by Lab Incharge</p>
+              
+              <div class="request-details-grid">
+                  <div class="req-detail">
+                      <span class="detail-label">Request ID:</span>
+                      <span class="detail-value fw-600" id="mReqId"></span>
+                  </div>
+                  <div class="req-detail">
+                      <span class="detail-label">Raised By:</span>
+                      <span class="detail-value" id="mRaisedBy"></span>
+                  </div>
+                  <div class="req-detail">
+                      <span class="detail-label">Faculty ID:</span>
+                      <span class="detail-value" id="mFacultyId"></span>
+                  </div>
+                  <div class="req-detail">
+                      <span class="detail-label">Lab:</span>
+                      <span class="detail-value" id="mLab"></span>
+                  </div>
+                  <div class="req-detail">
+                      <span class="detail-label">Raised Date:</span>
+                      <span class="detail-value" id="mRaisedDate"></span>
+                  </div>
+                  <div class="req-detail">
+                      <span class="detail-label">Priority:</span>
+                      <span class="detail-value" id="mPriority"><span class="badge badge-danger">Critical</span></span>
+                  </div>
+                  <div class="req-detail">
+                      <span class="detail-label">Status:</span>
+                      <span class="detail-value" id="mStatus"></span>
+                  </div>
+              </div>
+
+              <div class="modal-components-list form-section-title" style="margin-top:20px; font-size:14px; color:var(--text-secondary);">
+                  REQUESTED COMPONENTS
+              </div>
+              <div id="modalComponentsContainer" class="components-container">
+                  <!-- Dynamically populated component cards -->
+              </div>
+
+              <div class="modal-components-list form-section-title" style="margin-top:24px; font-size:14px; color:var(--text-secondary);">
+                  NOTES FOR ADMIN
+              </div>
+              <div class="admin-notes-box">
+                  <p id="mNotes" style="font-size:14px; color:var(--text-primary); margin:0; line-height:1.5;"></p>
+              </div>
+          </div>
+          
+          <div class="modal-footer" id="modalFooter" style="justify-content: flex-end; gap: 12px; padding-top: 20px; background:#f8fafc; border-top:1px solid var(--border-color);">
+              <button class="btn btn-secondary" id="modalBtnClose">Close</button>
+              <button class="btn btn-primary" id="modalBtnAction">Action</button>
+          </div>
+      </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="confirmModal">
+      <div class="modal modal-sm">
+          <div class="modal-header">
+              <h2>Confirm Action</h2>
+              <button class="modal-close" id="closeConfirmModal" aria-label="Close">
+                  <i data-lucide="x"></i>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p id="confirmMessage" style="font-size:16px; margin:10px 0;"></p>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-secondary" id="confirmBtnCancel">Cancel</button>
+              <button class="btn btn-primary" id="confirmBtnYes">Yes</button>
+          </div>
+      </div>
+  </div>
+
+  <!-- Toast notification container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="../js/low_stock_management.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+

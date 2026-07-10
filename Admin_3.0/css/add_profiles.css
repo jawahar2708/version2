@@ -1,0 +1,490 @@
+﻿/* ============================================================
+   ILP RAPID PROTOTYPING LAB - ADD PROFILES STYLESHEET
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   HEADER TITLE GROUP
+   ------------------------------------------------------------ */
+.header-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.header-page-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e1b4b;
+    margin: 0;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+}
+
+.header-page-subtitle {
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ------------------------------------------------------------
+   MAIN GRID CONTAINER
+   ------------------------------------------------------------ */
+.profiles-container-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 28px;
+    align-items: start;
+    margin-bottom: 32px;
+}
+
+@media (max-width: 1024px) {
+    .profiles-container-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+.form-card {
+    background: var(--bg-card, #ffffff);
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: var(--shadow, 0 1px 3px rgba(0, 0, 0, 0.08)), 0 4px 12px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color, #e2e8f0);
+}
+
+/* Right Preview Card */
+.preview-card {
+    background: var(--bg-card, #ffffff);
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: var(--shadow, 0 1px 3px rgba(0, 0, 0, 0.08)), 0 4px 12px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color, #e2e8f0);
+    position: sticky;
+    top: calc(var(--header-height, 70px) + 24px);
+}
+
+/* ------------------------------------------------------------
+   TABS NAV BAR WITH ICONS
+   ------------------------------------------------------------ */
+.tabs-nav {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid #f3f4f6;
+    margin-bottom: 28px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.tabs-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 18px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #6b7280;
+    border: none;
+    background: none;
+    border-bottom: 2.5px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: #4f46e5;
+}
+
+.tab-btn.active {
+    color: #4f46e5;
+    font-weight: 600;
+    border-bottom-color: #4f46e5;
+}
+
+.tab-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------
+   FORM FIELDS & INPUTS
+   ------------------------------------------------------------ */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: slideUpFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    color: #111827;
+    letter-spacing: -0.01em;
+}
+
+.section-icon {
+    width: 18px;
+    height: 18px;
+    color: #4f46e5;
+    flex-shrink: 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group-full {
+    grid-column: span 2;
+}
+
+@media (max-width: 640px) {
+    .form-group-full {
+        grid-column: span 1;
+    }
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 550;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.form-group label .required {
+    color: #ef4444;
+}
+
+.form-group label .info-icon {
+    color: #9ca3af;
+    cursor: help;
+    font-size: 12px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px 14px;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: var(--bg-card, #ffffff);
+    color: var(--text-primary, #1e293b);
+    transition: border-color var(--transition, 0.25s), box-shadow var(--transition, 0.25s);
+    outline: none;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted, #94a3b8);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary, #4f46e5);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+/* Validation */
+.form-group input.error,
+.form-group select.error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.08) !important;
+}
+
+.error-msg {
+    color: #ef4444;
+    font-size: 11px;
+    display: none;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* Password */
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    padding-right: 42px;
+}
+
+.pwd-toggle {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 7px;
+    color: #6b7280;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pwd-toggle:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.pwd-toggle svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Submit */
+.form-actions-submit {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #4f46e5;
+    color: #ffffff;
+    padding: 11px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-primary:hover {
+    background: #4338ca;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.btn-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* ------------------------------------------------------------
+   PREVIEW PANEL
+   ------------------------------------------------------------ */
+.preview-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.preview-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.preview-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4f46e5;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+}
+
+.preview-avatar svg {
+    width: 30px;
+    height: 30px;
+}
+
+.preview-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+}
+
+.preview-row:last-child {
+    border-bottom: none;
+}
+
+.preview-row.hidden {
+    display: none !important;
+}
+
+.preview-label {
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.preview-value {
+    color: #111827;
+    font-weight: 600;
+    text-align: right;
+    max-width: 55%;
+    word-break: break-all;
+}
+
+/* ------------------------------------------------------------
+   INLINE EXCEL ACTIONS (INSIDE CARDS)
+   ------------------------------------------------------------ */
+.excel-actions-inline {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-color, #e2e8f0);
+}
+
+.excel-inline-label {
+    font-size: 13.5px;
+    font-weight: 550;
+    color: var(--text-secondary, #64748b);
+    margin-right: auto;
+    /* Push buttons to the right */
+}
+
+.excel-inline-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+@media (max-width: 640px) {
+    .excel-actions-inline {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .excel-inline-label {
+        margin-right: 0;
+        margin-bottom: 4px;
+    }
+
+    .excel-inline-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .excel-btn {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+/* Action buttons (Upload / Download) */
+.excel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 24px;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    min-width: 170px;
+    font-family: 'Inter', sans-serif;
+}
+
+.excel-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.excel-upload-btn {
+    background-color: #4f46e5;
+    color: #ffffff;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
+}
+
+.excel-upload-btn:hover {
+    background-color: #4338ca;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.excel-download-btn {
+    background-color: transparent;
+    color: #4f46e5;
+    border: 1.5px solid #4f46e5;
+}
+
+.excel-download-btn:hover {
+    background-color: rgba(79, 70, 229, 0.05);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.05);
+}
+
+.sidebar-nav::-webkit-scrollbar { display: none; }
+
+
+
+

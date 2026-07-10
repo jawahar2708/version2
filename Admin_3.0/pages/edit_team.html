@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILP Rapid Prototyping Lab - Edit Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/edit_team.css">
+</head>
+
+<body>
+    <div class="app-wrapper" id="appWrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <h1 class="brand-title">ILP</h1>
+                <p class="brand-subtitle">RAPID PROTOTYPING LAB</p>
+            </div>
+            <p class="sidebar-section-label">ADMIN PORTAL</p>
+                    <nav class="sidebar-nav" id="sidebarNav">
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add_profiles.html" class="nav-item">
+                    <i data-lucide="user-plus"></i>
+                    <span>Add Profiles</span>
+                </a>
+                <div class="nav-group">
+                    <button class="nav-item dropdown-toggle active" aria-expanded="false" aria-controls="manageTeamsDropdown">
+                        <i data-lucide="users"></i>
+                        <span>Manage Team</span>
+                        <i data-lucide="chevron-down" class="dropdown-icon" style="margin-left:auto;transition:transform 0.3s;"></i>
+                    </button>
+                    <div class="dropdown-menu active" id="manageTeamsDropdown">
+                        <a href="create_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+                            <span>Create Team</span>
+                        </a>
+                        <a href="edit_team.html" class="nav-item sub-nav-item active">
+                            <i data-lucide="edit" style="width:18px;height:18px;"></i>
+                            <span>Edit Team</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="faculty.html" class="nav-item">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>Faculty List</span>
+                </a>
+                <a href="trainee.html" class="nav-item">
+                    <i data-lucide="users-2"></i>
+                    <span>Trainee List</span>
+                </a>
+                <a href="lab_asset_management.html" class="nav-item">
+                    <i data-lucide="package"></i>
+                    <span>Lab Asset Management</span>
+                </a>
+                <a href="component_verification.html" class="nav-item">
+                    <i data-lucide="check-square"></i>
+                    <span>Component Verification</span>
+                </a>
+                <a href="low_stock_management.html" class="nav-item">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Low Stock Management</span>
+                </a>
+                <a href="project_details.html" class="nav-item">
+                    <i data-lucide="folder"></i>
+                    <span>Project Details</span>
+                </a>
+                
+            </nav>
+              <button class="sign-out-btn" id="signOutBtn" >
+               <a href="../../faculty-main final version/login1.html" class="nav-item">
+                     <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+                </a>
+               
+            </button>
+        </aside>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <main class="main-content" id="mainContent">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu"><i
+                            data-lucide="menu"></i></button>
+                    <div class="page-top-header">
+                    <div>
+                    <h2 class="header-page-title" id="mainHeaderTitle">Edit Team</h2>
+                    <p class="header-page-subtitle" id="mainHeaderSubtitle">Search, view, and update existing teams.</p>
+                    </div>
+                </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="icon-btn" id="notificationBtn" aria-label="Notifications">
+                            <i data-lucide="bell"></i>
+                            <span class="notification-badge hidden" id="notificationBadge"></span>
+                        </button>
+                        <!-- notification dropdown snipped for brevity (same logic) -->
+                    </div>
+                    <button class="user-profile-btn" id="profileBtn">
+                        <div class="user-info">
+                            <span class="user-name" id="headerUserName">Admin Name</span>
+                            <span class="user-role" id="headerUserRole">Administrator</span>
+                        </div>
+                        <div class="user-avatar" id="headerAvatar"><i data-lucide="user"></i></div>
+                    </button>
+                </div>
+            </header>
+
+            <section class="page-content">
+
+                <!-- Default View: Search and Table -->
+                <div id="teamListView">
+                    <!-- Search Section -->
+                    <div class="search-card card">
+                        <form id="teamSearchForm" class="search-form">
+                            <div class="form-group search-group">
+                                <label for="searchTeamId">Team ID</label>
+                                <input type="text" id="searchTeamId" placeholder="e.g. TEAM-001">
+                            </div>
+                            <div class="search-separator">OR</div>
+                            <div class="form-group search-group">
+                                <label for="searchTeamName">Team Name</label>
+                                <input type="text" id="searchTeamName" placeholder="e.g. Alpha">
+                            </div>
+                            <div class="search-actions">
+                                <button type="submit" class="btn btn-primary btn-icon"><i data-lucide="search"></i>
+                                    Search</button>
+                                <button type="button" id="resetSearchBtn" class="btn btn-secondary btn-icon"><i
+                                        data-lucide="x"></i> Clear</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Team List -->
+                    <div class="table-card card">
+                        <div class="table-header-controls">
+                            <h3>Existing Teams</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Team ID</th>
+                                        <th>Team Name</th>
+                                        <th>Team Lead</th>
+                                        <th>Members</th>
+                                        <th>Created Date</th>
+                                        <th>Status</th>
+                                        <th class="actions-col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teamTableBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                            <div id="emptyState" class="empty-state hidden">
+                                <div class="empty-icon"><i data-lucide="folder-search"></i></div>
+                                <h4>No teams found</h4>
+                                <p>Try adjusting your search filters.</p>
+                            </div>
+                        </div>
+                        <div class="pagination">
+                            <!-- Mock pagination -->
+                            <button class="page-btn disabled" disabled><i data-lucide="chevron-left"></i></button>
+                            <span class="page-info">Page 1 of 1</span>
+                            <button class="page-btn disabled" disabled><i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Mode View -->
+                <div id="editTeamView" class="hidden">
+                    <div class="edit-header">
+                        <button type="button" class="btn btn-secondary btn-icon" id="backToListBtn"><i
+                                data-lucide="arrow-left"></i> Back to List</button>
+                        <h3>Editing <span id="editingTeamNameHeader" class="highlight-text">Team Alpha</span></h3>
+                    </div>
+
+                    <div class="create-team-layout">
+                        <div class="form-column">
+                            <form id="editTeamForm">
+                                <input type="hidden" id="editItemTeamId">
+
+                                <div class="form-section">
+                                    <div class="section-indicator"><i data-lucide="hash"></i></div>
+                                    <div class="section-content">
+                                        <h3>Team Details</h3>
+                                        <div class="form-grid-2">
+                                            <div class="form-group row-group">
+                                                <label for="editTeamName">Team Name <span
+                                                        class="required">*</span></label>
+                                                <input type="text" id="editTeamName" required>
+                                            </div>
+                                            <div class="form-group row-group">
+                                                <label for="editTeamStatus">Status <span
+                                                        class="required">*</span></label>
+                                                <select id="editTeamStatus" required class="form-select">
+                                                    <option value="Active">Active</option>
+                                                    <option value="Completed">Completed</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Team Leader -->
+                                <div class="form-section">
+                                    <div class="section-indicator"><i data-lucide="user"></i></div>
+                                    <div class="section-content">
+                                        <h3>Team Leader</h3>
+                                        <div class="form-group row-group">
+                                            <label for="editTeamLeader">Team Leader <span
+                                                    class="required">*</span></label>
+                                            <input type="text" id="editTeamLeader" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Team Members -->
+                                <div class="form-section">
+                                    <div class="section-indicator"><i data-lucide="users"></i></div>
+                                    <div class="section-content">
+                                        <div class="member-header-row">
+                                            <div>
+                                                <h3>Team Members</h3>
+                                            </div>
+                                            <span class="members-count" id="editMembersCountText">0 / 15 members</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <div id="editMembersContainer" class="members-list">
+                                                <!-- Dynamic via JS -->
+                                            </div>
+                                            <button type="button" id="editAddMemberBtn" class="add-text-btn">+ Add
+                                                Members</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Technical Staff & Deadline -->
+                                <div class="form-section">
+                                    <div class="section-indicator"><i data-lucide="settings"></i></div>
+                                    <div class="section-content">
+                                        <div class="form-grid-2">
+                                            <div class="form-group">
+                                                <label for="editTechStaff">Technical Staff <span
+                                                        class="required">*</span></label>
+                                                <input type="text" id="editTechStaff" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="editProjectDeadline">Project Deadline <span
+                                                        class="required">*</span></label>
+                                                <input type="date" id="editProjectDeadline" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions-bottom">
+                                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="saveChangesBtn">Save
+                                        Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals (Reused from Dashboard) -->
+    <div class="modal-overlay" id="signOutModal">
+        <div class="modal modal-sm">
+            <!-- sign out content -->
+            <div class="modal-header">
+                <h2>Sign Out</h2><button class="modal-close" id="closeSignOutModal"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-footer"><button class="btn btn-secondary" id="cancelSignOut">Cancel</button><button
+                    class="btn btn-danger" id="confirmSignOut">Sign Out</button></div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <footer class="site-footer">
+                <p>&copy; 2026 ILP Rapid Prototyping Lab Management System. All rights reserved.</p>
+            </footer>
+
+    <script src="../js/edit_team.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ILP Rapid Prototyping Lab - Project Details</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/project_details.css">
+</head>
+
+<body>
+  <div class="app-wrapper" id="appWrapper">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <h1 class="brand-title">ILP</h1>
+        <p class="brand-subtitle">RAPID PROTOTYPING LAB</p>
+      </div>
+
+      <p class="sidebar-section-label">ADMIN PORTAL</p>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <a href="dashboard.html" class="nav-item">
+            <i data-lucide="layout-dashboard"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="add_profiles.html" class="nav-item">
+            <i data-lucide="user-plus"></i>
+            <span>Add Profiles</span>
+        </a>
+        <div class="nav-group">
+            <button class="nav-item dropdown-toggle" aria-expanded="false" aria-controls="manageTeamsDropdown">
+                <i data-lucide="users"></i>
+                <span>Manage Team</span>
+                <i data-lucide="chevron-down" class="dropdown-icon" style="margin-left:auto;transition:transform 0.3s;"></i>
+            </button>
+            <div class="dropdown-menu" id="manageTeamsDropdown">
+                <a href="create_team.html" class="nav-item sub-nav-item">
+                    <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+                    <span>Create Team</span>
+                </a>
+                <a href="edit_team.html" class="nav-item sub-nav-item">
+                    <i data-lucide="edit" style="width:18px;height:18px;"></i>
+                    <span>Edit Team</span>
+                </a>
+            </div>
+        </div>
+        <a href="faculty.html" class="nav-item">
+            <i data-lucide="graduation-cap"></i>
+            <span>Faculty List</span>
+        </a>
+        <a href="trainee.html" class="nav-item">
+            <i data-lucide="users-2"></i>
+            <span>Trainee List</span>
+        </a>
+        <a href="lab_asset_management.html" class="nav-item">
+            <i data-lucide="package"></i>
+            <span>Lab Asset Management</span>
+        </a>
+        <a href="component_verification.html" class="nav-item">
+            <i data-lucide="check-square"></i>
+            <span>Component Verification</span>
+        </a>
+        <a href="low_stock_management.html" class="nav-item">
+            <i data-lucide="alert-triangle"></i>
+            <span>Low Stock Management</span>
+        </a>
+        <a href="project_details.html" class="nav-item active">
+                    <i data-lucide="folder"></i>
+                    <span>Project Details</span>
+                </a>
+        
+      </nav>
+
+        <button class="sign-out-btn" id="signOutBtn" >
+               <a href="../../faculty-main final version/login1.html" class="nav-item">
+                     <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+                </a>
+               
+            </button>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="main-content" id="mainContent">
+      <header class="top-header">
+        <div class="header-left">
+          <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+            <i data-lucide="menu"></i>
+          </button>
+          <div>
+              <h2 class="header-page-title" id="mainHeaderTitle">Project Details</h2>
+              <p class="header-page-subtitle" id="mainHeaderSubtitle">Search team by Project ID and track project status.</p>
+            </div>
+        </div>
+
+        <div class="header-right">
+          <button class="icon-btn notification-btn" id="notificationBtn" aria-label="Notifications">
+            <i data-lucide="bell"></i>
+            <span class="notification-badge" id="notificationBadge">3</span>
+          </button>
+          <button class="user-profile-btn" id="userProfileBtn">
+            <div class="user-info">
+              <span class="user-name">Admin Name</span>
+              <span class="user-role">Administrator</span>
+            </div>
+            <div class="user-avatar">
+              <i data-lucide="user"></i>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <section class="page-content">
+        <!-- Top Grid -->
+        <div class="project-top-grid">
+            <div class="search-panel">
+                <h3>Search by Project ID</h3>
+                <div class="search-bar-wrap">
+                    <input type="text" placeholder="Enter Project ID (e.g., PRJ-2025-07)">
+                    <button><i data-lucide="search"></i></button>
+                </div>
+            </div>
+
+            <div class="quick-stats-panel">
+                <h3>Quick Stats</h3>
+                <div class="stats-row">
+                    <div class="p-stat-item">
+                        <div class="p-stat-icon total"><i data-lucide="folder"></i></div>
+                        <div class="p-stat-info">
+                            <span class="p-stat-label">Total Projects</span>
+                            <span class="p-stat-val">12</span>
+                        </div>
+                    </div>
+                    <div class="p-stat-item">
+                        <div class="p-stat-icon completed"><i data-lucide="check-circle"></i></div>
+                        <div class="p-stat-info">
+                            <span class="p-stat-label">Completed</span>
+                            <span class="p-stat-val">5</span>
+                        </div>
+                    </div>
+                    <div class="p-stat-item">
+                        <div class="p-stat-icon progress"><i data-lucide="clock"></i></div>
+                        <div class="p-stat-info">
+                            <span class="p-stat-label">In Progress</span>
+                            <span class="p-stat-val">4</span>
+                        </div>
+                    </div>
+                    <div class="p-stat-item">
+                        <div class="p-stat-icon notstarted"><i data-lucide="minus-circle"></i></div>
+                        <div class="p-stat-info">
+                            <span class="p-stat-label">Not Started</span>
+                            <span class="p-stat-val">3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Card -->
+        <div class="proj-main-card">
+            <div class="proj-header">
+                <div class="proj-header-left">
+                    <h3 class="proj-id">PRJ-2025-07</h3>
+                    <span class="proj-badge in-progress">In Progress</span>
+                </div>
+                <button class="btn btn-secondary" onclick="openTeamModal()">
+                    <i data-lucide="users"></i> View Team Details
+                </button>
+            </div>
+
+            <div class="proj-body">
+                <div class="proj-top-content">
+                    <div class="proj-details-list">
+                        <div class="p-detail-row">
+                            <span class="p-detail-label">Project Title</span>
+                            <span class="p-detail-value">: <span>AI-Powered Inventory Management System</span></span>
+                        </div>
+                        <div class="p-detail-row">
+                            <span class="p-detail-label">Team Leader</span>
+                            <span class="p-detail-value">: <span>Arun Kumar (22BCS001)</span></span>
+                        </div>
+                        <div class="p-detail-row">
+                            <span class="p-detail-label">Technical Staff</span>
+                            <span class="p-detail-value">: <span>Dr. Meena R</span></span>
+                        </div>
+                        <div class="p-detail-row">
+                            <span class="p-detail-label">Created On</span>
+                            <span class="p-detail-value">: <span>May 15, 2025</span></span>
+                        </div>
+                        <div class="p-detail-row">
+                            <span class="p-detail-label">Started On</span>
+                            <span class="p-detail-value">: <span>May 16, 2025</span></span>
+                        </div>
+                        <div class="p-detail-row">
+                            <span class="p-detail-label">Stage Status</span>
+                            <span class="p-detail-value">: <span>Design Phase</span></span>
+                        </div>
+                        <div class="p-detail-row">
+                            <span class="p-detail-label">Stage Deadline</span>
+                            <span class="p-detail-value">: <span>May 20, 2025</span></span>
+                        </div>
+                        <div class="p-detail-row">
+                            <span class="p-detail-label">Project Deadline</span>
+                            <span class="p-detail-value red-text">: July 15, 2025 (60 days left)</span>
+                        </div>
+                        <div class="p-detail-row" style="margin-top:8px;">
+                            <span class="p-detail-label">Project Description</span>
+                            <span style="flex:1;">
+                                :<br>
+                                <div class="desc-text">The system will automate inventory tracking, stock alerts and reporting using AI/ML models to forecast demand and reduce wastage.</div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="proj-progress-section">
+                        <h4>Project Progress</h4>
+                        <div class="donut-wrapper">
+                            <svg class="donut-svg" viewBox="0 0 160 160">
+                                <circle class="donut-bg" cx="80" cy="80" r="64"></circle>
+                                <circle class="donut-fill" id="donutFill" cx="80" cy="80" r="64"></circle>
+                            </svg>
+                            <div class="donut-text">
+                                <div class="donut-val">40%</div>
+                                <div class="donut-lbl">Overall Progress<br>Task completion</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10 Horizontal Stages -->
+                <div class="stages-section">
+                    <h4>Progress Timeline</h4>
+                    <div class="horizontal-stepper" id="stagesContainer">
+                        <!-- JS generated nodes here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      </section>
+
+      <footer class="site-footer">
+        <p>&copy; 2026 ILP Rapid Prototyping Lab Management System. All rights reserved.</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Team Details Modal -->
+  <div class="modal-overlay" id="teamModal">
+      <div class="modal modal-md">
+          <div class="modal-header">
+              <h2>Team Members</h2>
+              <button class="modal-close" id="closeTeamModal" aria-label="Close">
+                  <i data-lucide="x"></i>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p class="modal-subheading">Team ID: TM-2025-07</p>
+              
+              <div class="team-members-grid">
+                  <div class="member-card">
+                      <div class="member-avatar"><i data-lucide="user"></i></div>
+                      <div class="member-info">
+                          <span class="member-name">Arun Kumar</span>
+                          <span class="member-role">Team Leader / 22BCS001</span>
+                      </div>
+                  </div>
+                  <div class="member-card">
+                      <div class="member-avatar"><i data-lucide="user"></i></div>
+                      <div class="member-info">
+                          <span class="member-name">Ravi Shankar</span>
+                          <span class="member-role">Developer / 22BCS045</span>
+                      </div>
+                  </div>
+                  <div class="member-card">
+                      <div class="member-avatar"><i data-lucide="user"></i></div>
+                      <div class="member-info">
+                          <span class="member-name">Neha Gupta</span>
+                          <span class="member-role">Designer / 22BCS012</span>
+                      </div>
+                  </div>
+                  <div class="member-card">
+                      <div class="member-avatar"><i data-lucide="user"></i></div>
+                      <div class="member-info">
+                          <span class="member-name">Vikram Singh</span>
+                          <span class="member-role">Tester / 22BCS078</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-secondary" id="closeTeamBtn">Close</button>
+          </div>
+      </div>
+  </div>
+
+  <script src="../js/project_details.js"></script>
+</body>
+</html>
+
+

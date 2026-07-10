@@ -1,0 +1,468 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags for responsive layout and character encoding -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Asset Management â€“ ILP Rapid Prototyping Lab</title>
+
+    <!-- Google Fonts - Inter for modern clean typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Module stylesheet -->
+    <link rel="stylesheet" href="../css/lab_asset_management.css">
+</head>
+
+<body>
+
+    <!-- ============================================================
+       MAIN APP WRAPPER â€“ Sidebar + main content
+       ============================================================ -->
+    <div class="app-wrapper" id="appWrapper">
+
+        <!-- ==========================================================
+         SIDEBAR NAVIGATION
+         ========================================================== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <h1 class="brand-title">ILP</h1>
+                <p class="brand-subtitle">RAPID PROTOTYPING LAB</p>
+            </div>
+
+            <p class="sidebar-section-label">ADMIN PORTAL</p>
+
+                    <nav class="sidebar-nav" id="sidebarNav">
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add_profiles.html" class="nav-item">
+                    <i data-lucide="user-plus"></i>
+                    <span>Add Profiles</span>
+                </a>
+                <div class="nav-group">
+                    <button class="nav-item dropdown-toggle" aria-expanded="false" aria-controls="manageTeamsDropdown">
+                        <i data-lucide="users"></i>
+                        <span>Manage Team</span>
+                        <i data-lucide="chevron-down" class="dropdown-icon" style="margin-left:auto;transition:transform 0.3s;"></i>
+                    </button>
+                    <div class="dropdown-menu" id="manageTeamsDropdown">
+                        <a href="create_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+                            <span>Create Team</span>
+                        </a>
+                        <a href="edit_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="edit" style="width:18px;height:18px;"></i>
+                            <span>Edit Team</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="faculty.html" class="nav-item">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>Faculty List</span>
+                </a>
+                <a href="trainee.html" class="nav-item">
+                    <i data-lucide="users-2"></i>
+                    <span>Trainee List</span>
+                </a>
+                <a href="lab_asset_management.html" class="nav-item active">
+                    <i data-lucide="package"></i>
+                    <span>Lab Asset Management</span>
+                </a>
+                <a href="component_verification.html" class="nav-item">
+                    <i data-lucide="check-square"></i>
+                    <span>Component Verification</span>
+                </a>
+                <a href="low_stock_management.html" class="nav-item">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Low Stock Management</span>
+                </a>
+                <a href="project_details.html" class="nav-item">
+                    <i data-lucide="folder"></i>
+                    <span>Project Details</span>
+                </a>
+                
+            </nav>
+
+            <!-- Sign-out pinned to sidebar bottom -->
+             <button class="sign-out-btn" id="signOutBtn" >
+               <a href="../../faculty-main final version/login1.html" class="nav-item">
+                     <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+                </a>
+               
+            </button>
+        </aside>
+
+        <!-- Mobile overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ==========================================================
+         MAIN CONTENT AREA
+         ========================================================== -->
+        <main class="main-content" id="mainContent">
+
+            <!-- Top header bar -->
+             <header class="top-header">
+                <div class="header-left">
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="page-top-header">
+                    <div>
+                    <h2 class="header-page-title" id="mainHeaderTitle">Lab Asset Management</h2>
+                    <p class="header-page-subtitle" id="mainHeaderSubtitle">Manage laboratory equipment, components, and tools used in the Rapid Prototyping Lab.</p>
+                    </div>
+                </div>
+                </div>
+                <div class="header-right">
+                    <!-- Notification bell -->
+                    <div class="notification-wrapper">
+                        <button class="icon-btn" id="notificationBtn" aria-label="Notifications">
+                            <i data-lucide="bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                    </div>
+                    <!-- User profile -->
+                    <button class="user-profile-btn" id="profileBtn">
+                        <div class="user-info">
+                            <span class="user-name">Admin Name</span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                        <div class="user-avatar">
+                            <i data-lucide="user"></i>
+                        </div>
+                    </button>
+                </div>
+            </header>
+
+            <!-- ========================================================
+           MODULE CONTENT
+           ======================================================== -->
+            <section class="page-content">
+
+                <!-- Page header -->
+                <!-- <div class="page-header">
+                    <div class="page-header-icon">
+                        <i data-lucide="package"></i>
+                    </div>
+                    <div>
+                        <h2 class="page-title">Lab Asset Management</h2>
+                        <p class="page-subtitle">Manage laboratory equipment, components, and tools used in the Rapid
+                            Prototyping Lab.</p>
+                    </div>
+                </div> -->
+
+                <!-- ======================================================
+             SUMMARY CARDS
+             ====================================================== -->
+                <div class="stats-grid">
+                    <!-- Card 1: Total Assets -->
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-purple">
+                            <i data-lucide="package"></i>
+                        </div>
+                        <div class="stat-info">
+                            <p class="stat-label">Total Assets</p>
+                            <h3 class="stat-value" id="statTotal">85</h3>
+                            <p class="stat-desc">Total Registered Assets</p>
+                        </div>
+                    </div>
+                    <!-- Card 2: Available -->
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-green">
+                            <i data-lucide="check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <p class="stat-label">Available Assets</p>
+                            <h3 class="stat-value" id="statAvailable">72</h3>
+                            <p class="stat-desc">Ready for Allocation</p>
+                        </div>
+                    </div>
+                    <!-- Card 3: Under Maintenance -->
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-orange">
+                            <i data-lucide="wrench"></i>
+                        </div>
+                        <div class="stat-info">
+                            <p class="stat-label">Under Maintenance</p>
+                            <h3 class="stat-value" id="statMaintenance">13</h3>
+                            <p class="stat-desc">Repair / Calibration</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================================================
+             SEARCH & ACTION BAR
+             ====================================================== -->
+                <div class="toolbar-card">
+                    <div class="search-wrapper">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="searchInput" class="search-input"
+                            placeholder="Search asset by name, make, lab..." autocomplete="off" />
+                    </div>
+                    <button class="btn btn-primary" id="addAssetBtn">
+                        <i data-lucide="plus"></i>
+                        <span id="addAssetBtnText">Add Equipment</span>
+                    </button>
+                </div>
+
+                <!-- ======================================================
+             CATEGORY TOGGLE BUTTONS
+             ====================================================== -->
+                <div class="category-toggle" id="categoryToggle">
+                    <button class="toggle-btn active" data-category="equipment" id="btnEquipment">
+                        <i data-lucide="cpu"></i>
+                        Show Equipment
+                    </button>
+                    <button class="toggle-btn" data-category="components" id="btnComponents">
+                        <i data-lucide="layers"></i>
+                        Show Components
+                    </button>
+                    <button class="toggle-btn" data-category="tools" id="btnTools">
+                        <i data-lucide="wrench"></i>
+                        Show Tools
+                    </button>
+                </div>
+
+                <!-- ======================================================
+             TABLE SECTION
+             ====================================================== -->
+                <div class="table-card">
+                    <div class="table-header-row">
+                        <div>
+                            <h3 class="table-title" id="tableTitle">Equipment</h3>
+                            <p class="table-count" id="tableCount">Showing 3 records</p>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table" id="dataTable">
+                            <thead id="tableHead">
+                                <!-- Filled by JS -->
+                            </thead>
+                            <tbody id="tableBody">
+                                <!-- Filled by JS -->
+                            </tbody>
+                        </table>
+
+                        <!-- Empty state -->
+                        <div class="empty-state hidden" id="emptyState">
+                            <div class="empty-icon">
+                                <i data-lucide="inbox"></i>
+                            </div>
+                            <p class="empty-title">No records found</p>
+                            <p class="empty-desc">Try adjusting your search or adding new assets.</p>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-bar" id="paginationBar">
+                        <span class="pagination-info" id="paginationInfo"></span>
+                        <div class="pagination-controls" id="paginationControls"></div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Footer -->
+            <footer class="site-footer">
+                <p>2026 ILP Rapid Prototyping Lab Management System. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- ============================================================
+       ADD / EDIT EQUIPMENT MODAL
+       ============================================================ -->
+    <div class="modal-overlay" id="equipmentModal" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+        <div class="modal modal-lg" id="equipmentModalBox">
+
+            <!-- Modal header -->
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <div class="modal-header-icon">
+                        <i data-lucide="package-plus"></i>
+                    </div>
+                    <div>
+                        <h2 id="modalHeading">Add Equipment</h2>
+                        <p class="modal-subheading" id="modalSubheading">Asset Information Â· Create new Equipment</p>
+                    </div>
+                </div>
+                <button class="modal-close" id="closeModalBtn" aria-label="Close modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <!-- Modal body â€“ form -->
+            <div class="modal-body">
+                <form id="equipmentForm" novalidate>
+                    <div class="form-grid-three layout-eqp" id="formGridContainer">
+
+                        <!-- EQP TYPE ID -->
+                        <div class="form-group fg-id">
+                            <label for="fEqpTypeId" id="lblId">EQP TYPE ID <span class="required-star">*</span></label>
+                            <input type="text" id="fEqpTypeId" name="eqpTypeId" placeholder="e.g. EQP-001"
+                                autocomplete="off">
+                            <span class="field-error" id="errEqpTypeId"></span>
+                        </div>
+
+                        <!-- Name -->
+                        <div class="form-group fg-name">
+                            <label for="fName" id="lblName">Name <span class="required-star">*</span></label>
+                            <input type="text" id="fName" name="name" placeholder="Asset name" autocomplete="off">
+                            <span class="field-error" id="errName"></span>
+                        </div>
+
+                        <!-- Available Quantity -->
+                        <div class="form-group fg-qty">
+                            <label for="fQuantity" id="lblQuantity">Available Quantity <span
+                                    class="required-star">*</span></label>
+                            <input type="number" id="fQuantity" name="quantity" placeholder="e.g. 5" min="0"
+                                autocomplete="off">
+                            <span class="field-error" id="errQuantity"></span>
+                        </div>
+
+                        <!-- Make -->
+                        <div class="form-group fg-make">
+                            <label for="fMake">Make <span class="required-star">*</span></label>
+                            <input type="text" id="fMake" name="make" placeholder="Manufacturer / Brand"
+                                autocomplete="off">
+                            <span class="field-error" id="errMake"></span>
+                        </div>
+
+                        <!-- Specification / Version -->
+                        <div class="form-group fg-spec">
+                            <label for="fSpecification">Specification / Version</label>
+                            <input type="text" id="fSpecification" name="specification" placeholder="e.g. Ender 3 V2"
+                                autocomplete="off">
+                        </div>
+
+                        <!-- COMMON: Component Type -->
+                        <div class="form-group common-field fg-type">
+                            <label for="fComponentType" id="lblComponentType">Component Type</label>
+                            <input type="text" id="fComponentType" name="componentType"
+                                placeholder="e.g. Manufacturing Equipment" autocomplete="off">
+                        </div>
+
+                        <!-- COMMON: Lab -->
+                        <div class="form-group common-field fg-lab">
+                            <label for="fLab">Lab <span class="required-star">*</span></label>
+                            <input type="text" id="fLab" name="lab" placeholder="e.g. Mechanical Lab"
+                                autocomplete="off">
+                            <span class="field-error" id="errLab"></span>
+                        </div>
+
+                        <!-- CMP/TOOL: Cost -->
+                        <div class="form-group extra-field fg-cost">
+                            <label for="fCost">Cost (â‚¹)</label>
+                            <input type="number" id="fCost" name="cost" placeholder="e.g. 500" min="0"
+                                autocomplete="off">
+                        </div>
+
+                        <!-- CMP/TOOL: Return Timeline -->
+                        <div class="form-group extra-field fg-timeline">
+                            <label for="fReturnTimeline">Return Timeline</label>
+                            <input type="text" id="fReturnTimeline" name="returnTimeline"
+                                placeholder="e.g. Project Completion" autocomplete="off">
+                        </div>
+
+                        <!-- CMP/TOOL: Cupboard Stored in -->
+                        <div class="form-group extra-field fg-cupboard">
+                            <label for="fCupboard">Cupboard Stored in</label>
+                            <input type="text" id="fCupboard" name="cupboard" placeholder="e.g. CUP-1"
+                                autocomplete="off">
+                        </div>
+
+                        <!-- CMP/TOOL: Shelf 1 -->
+                        <div class="form-group extra-field fg-shelf1">
+                            <label for="fShelf1">Shelf 1</label>
+                            <input type="text" id="fShelf1" name="shelf1" placeholder="e.g. A1" autocomplete="off">
+                        </div>
+
+                        <!-- CMP/TOOL: Count 1 -->
+                        <div class="form-group extra-field fg-count1">
+                            <label for="fCount1">Count 1</label>
+                            <input type="number" id="fCount1" name="count1" placeholder="e.g. 10" min="0"
+                                autocomplete="off">
+                        </div>
+
+                        <!-- CMP/TOOL: Shelf 2 -->
+                        <div class="form-group extra-field fg-shelf2">
+                            <label for="fShelf2">Shelf 2</label>
+                            <input type="text" id="fShelf2" name="shelf2" placeholder="e.g. A2" autocomplete="off">
+                        </div>
+
+                        <!-- CMP/TOOL: Count 2 -->
+                        <div class="form-group extra-field fg-count2">
+                            <label for="fCount2">Count 2</label>
+                            <input type="number" id="fCount2" name="count2" placeholder="e.g. 10" min="0"
+                                autocomplete="off">
+                        </div>
+
+                        <!-- CMP/TOOL: Purpose (full-width) -->
+                        <div class="form-group form-full extra-field">
+                            <label for="fPurpose">Purpose</label>
+                            <input type="text" id="fPurpose" name="purpose" placeholder="e.g. Student Projects"
+                                autocomplete="off">
+                        </div>
+
+                        <!-- CMP/TOOL: Comments (full-width textarea) -->
+                        <div class="form-group form-full extra-field">
+                            <label for="fComments">Comments</label>
+                            <textarea id="fComments" name="comments" rows="2"
+                                placeholder="Add comments hereâ€¦"></textarea>
+                        </div>
+
+                        <!-- EQP: Remarks (full-width textarea with character counter) -->
+                        <div class="form-group form-full eqp-field fg-remarks">
+                            <label for="fRemarks">Remarks</label>
+                            <textarea id="fRemarks" name="remarks" rows="4" maxlength="200"
+                                placeholder="Add any relevant remarks about this assetâ€¦"></textarea>
+                            <div class="char-counter">
+                                <span id="charCount">0</span>/200
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelModalBtn">
+                    <i data-lucide="x-circle"></i>
+                    Cancel
+                </button>
+                <button class="btn btn-primary" id="submitModalBtn">
+                    <i data-lucide="plus-circle"></i>
+                    <span id="submitBtnLabel">Create Equipment</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JS -->
+    <script src="../js/lab_asset_management.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

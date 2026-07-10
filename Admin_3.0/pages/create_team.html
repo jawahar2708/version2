@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILP Rapid Prototyping Lab - Create Teams</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/create_team.css">
+</head>
+
+<body>
+    <div class="app-wrapper" id="appWrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <h1 class="brand-title">ILP</h1>
+                <p class="brand-subtitle">RAPID PROTOTYPING LAB</p>
+            </div>
+            <p class="sidebar-section-label">ADMIN PORTAL</p>
+                    <nav class="sidebar-nav" id="sidebarNav">
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add_profiles.html" class="nav-item">
+                    <i data-lucide="user-plus"></i>
+                    <span>Add Profiles</span>
+                </a>
+                <div class="nav-group">
+                    <button class="nav-item dropdown-toggle active" aria-expanded="false" aria-controls="manageTeamsDropdown">
+                        <i data-lucide="users"></i>
+                        <span>Manage Team</span>
+                        <i data-lucide="chevron-down" class="dropdown-icon" style="margin-left:auto;transition:transform 0.3s;"></i>
+                    </button>
+                    <div class="dropdown-menu active" id="manageTeamsDropdown">
+                        <a href="create_team.html" class="nav-item sub-nav-item active">
+                            <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+                            <span>Create Team</span>
+                        </a>
+                        <a href="edit_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="edit" style="width:18px;height:18px;"></i>
+                            <span>Edit Team</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="faculty.html" class="nav-item">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>Faculty List</span>
+                </a>
+                <a href="trainee.html" class="nav-item">
+                    <i data-lucide="users-2"></i>
+                    <span>Trainee List</span>
+                </a>
+                <a href="lab_asset_management.html" class="nav-item">
+                    <i data-lucide="package"></i>
+                    <span>Lab Asset Management</span>
+                </a>
+                <a href="component_verification.html" class="nav-item">
+                    <i data-lucide="check-square"></i>
+                    <span>Component Verification</span>
+                </a>
+                <a href="low_stock_management.html" class="nav-item">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Low Stock Management</span>
+                </a>
+                <a href="project_details.html" class="nav-item">
+                    <i data-lucide="folder"></i>
+                    <span>Project Details</span>
+                </a>
+                
+            </nav>
+             <button class="sign-out-btn" id="signOutBtn" >
+               <a href="../../faculty-main final version/login1.html" class="nav-item">
+                     <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+                </a>
+               
+            </button>
+        </aside>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <main class="main-content" id="mainContent">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu"><i
+                            data-lucide="menu"></i></button>
+                    <div class="page-top-header">
+                        <div>
+                        <h2 class="header-page-title" id="mainHeaderTitle">Create Teams</h2>
+                        <p class="header-page-subtitle" id="mainHeaderSubtitle">Create a new project team by adding team leader, members and technical faculty.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="icon-btn" id="notificationBtn" aria-label="Notifications">
+                            <i data-lucide="bell"></i>
+                            <span class="notification-badge hidden" id="notificationBadge"></span>
+                        </button>
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3><button class="text-btn" id="markAllReadBtn">Mark all
+                                    read</button>
+                            </div>
+                            <ul class="notification-list" id="notificationList"></ul>
+                        </div>
+                    </div>
+                    <button class="user-profile-btn" id="profileBtn">
+                        <div class="user-info">
+                            <span class="user-name" id="headerUserName">Admin Name</span>
+                            <span class="user-role" id="headerUserRole">Administrator</span>
+                        </div>
+                        <div class="user-avatar" id="headerAvatar"><i data-lucide="user"></i></div>
+                    </button>
+                </div>
+            </header>
+
+            <section class="page-content">
+                <div class="create-team-layout">
+                    <!-- Left Column: Form -->
+                    <div class="form-column">
+                        <form id="createTeamForm">
+                            <!-- Project Details -->
+                            <div class="form-section">
+                                <div class="section-indicator">1</div>
+                                <div class="section-content">
+                                    <h3>Project Details</h3>
+                                    <p>Enter the name of the project.</p>
+                                    <div class="form-group row-group">
+                                        <label for="projectName">Project Name <span class="required">*</span></label>
+                                        <input type="text" id="projectName" placeholder="Enter project name..."
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Team Leader -->
+                            <div class="form-section">
+                                <div class="section-indicator">2</div>
+                                <div class="section-content">
+                                    <h3>Team Leader</h3>
+                                    <p>Select a student to be the team leader.</p>
+                                    <div class="form-group row-group">
+                                        <label for="teamLeader">Select Team Leader <span
+                                                class="required">*</span></label>
+                                        <input type="text" id="teamLeader"
+                                            placeholder="Search by name or roll number..." required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Team Members -->
+                            <div class="form-section">
+                                <div class="section-indicator">3</div>
+                                <div class="section-content">
+                                    <div class="member-header-row">
+                                        <div>
+                                            <h3>Team Members</h3>
+                                            <p>Add team members (up to 15 students).</p>
+                                        </div>
+                                        <span class="members-count" id="membersCountText">0 / 15 members added</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Select Members <span class="required">*</span></label>
+                                        <div id="membersContainer" class="members-list">
+                                            <!-- Dynamic member inputs -->
+                                            <div class="member-input-row" data-index="1">
+                                                <span class="member-label">Member 1 *</span>
+                                                <input type="text" class="member-input" required
+                                                    placeholder="Search by name or roll number...">
+                                                <button type="button" class="remove-member-btn" title="Remove member"
+                                                    disabled><i data-lucide="x"></i></button>
+                                            </div>
+                                        </div>
+                                        <button type="button" id="addMemberBtn" class="add-text-btn">+ Add
+                                            Members</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Technical Staff -->
+                            <div class="form-section">
+                                <div class="section-indicator">4</div>
+                                <div class="section-content">
+                                    <h3>Technical Staff</h3>
+                                    <p>Assign a technical staff to guide the team.</p>
+                                    <div class="form-group row-group">
+                                        <label for="techStaff">Select Technical Staff <span
+                                                class="required">*</span></label>
+                                        <input type="text" id="techStaff" placeholder="Search by name or staff ID..."
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Project Deadline -->
+                            <div class="form-section">
+                                <div class="section-indicator">5</div>
+                                <div class="section-content">
+                                    <h3>Project Deadline</h3>
+                                    <p>Set the deadline for the project.</p>
+                                    <div class="form-group row-group deadline-group">
+                                        <label for="projectDeadline">Deadline <span class="required">*</span></label>
+                                        <input type="date" id="projectDeadline" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions-bottom">
+                                <button type="button" class="btn btn-secondary btn-icon" id="resetBtn"><i
+                                        data-lucide="rotate-ccw"></i> Reset</button>
+                                <button type="submit" class="btn btn-primary" id="createTeamBtn">Create Team</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right Column: Summary Card -->
+                    <div class="summary-column">
+                        <div class="summary-card">
+                            <h3>Team Summary</h3>
+                            <p>Review team details before creating.</p>
+
+                            <div class="summary-items">
+                                <div class="summary-item">
+                                    <div class="summary-icon"><i data-lucide="folder"></i></div>
+                                    <div class="summary-details">
+                                        <span class="summary-label">PROJECT NAME</span>
+                                        <span class="summary-value" id="summaryProject">Not entered</span>
+                                    </div>
+                                </div>
+
+                                <div class="summary-item">
+                                    <div class="summary-icon"><i data-lucide="user"></i></div>
+                                    <div class="summary-details">
+                                        <span class="summary-label">TEAM LEADER</span>
+                                        <span class="summary-value" id="summaryLeader">Not selected</span>
+                                    </div>
+                                </div>
+
+                                <div class="summary-item">
+                                    <div class="summary-icon"><i data-lucide="users"></i></div>
+                                    <div class="summary-details">
+                                        <span class="summary-label">TEAM MEMBERS</span>
+                                        <span class="summary-value" id="summaryMembers">No members added</span>
+                                    </div>
+                                </div>
+
+                                <div class="summary-item">
+                                    <div class="summary-icon"><i data-lucide="user-check"></i></div>
+                                    <div class="summary-details">
+                                        <span class="summary-label">TECHNICAL STAFF</span>
+                                        <span class="summary-value" id="summaryStaff">Not selected</span>
+                                    </div>
+                                </div>
+
+                                <div class="summary-item">
+                                    <div class="summary-icon"><i data-lucide="calendar"></i></div>
+                                    <div class="summary-details">
+                                        <span class="summary-label">DEADLINE</span>
+                                        <span class="summary-value" id="summaryDeadline">Not selected</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="summary-footer-note">
+                                <i data-lucide="info"></i>
+                                <span>Note: After creating the team, a unique Team ID will be generated
+                                    automatically.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals (Reused from Dashboard) -->
+    <div class="modal-overlay" id="signOutModal">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h2>Sign Out</h2><button class="modal-close" id="closeSignOutModal"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to sign out of the admin portal?</p>
+            </div>
+            <div class="modal-footer"><button class="btn btn-secondary" id="cancelSignOut">Cancel</button><button
+                    class="btn btn-danger" id="confirmSignOut">Sign Out</button></div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <footer class="site-footer">
+                <p>&copy; 2026 ILP Rapid Prototyping Lab Management System. All rights reserved.</p>
+            </footer>
+
+    <script src="../js/create_team.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+

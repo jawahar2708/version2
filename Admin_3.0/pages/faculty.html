@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILP Rapid Prototyping Lab - Faculty List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/faculty.css">
+</head>
+
+<body>
+    <div class="app-wrapper" id="appWrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <h1 class="brand-title">ILP</h1>
+                <p class="brand-subtitle">RAPID PROTOTYPING LAB</p>
+            </div>
+            <p class="sidebar-section-label">ADMIN PORTAL</p>
+                    <nav class="sidebar-nav" id="sidebarNav">
+                <a href="dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="add_profiles.html" class="nav-item">
+                    <i data-lucide="user-plus"></i>
+                    <span>Add Profiles</span>
+                </a>
+                <div class="nav-group">
+                    <button class="nav-item dropdown-toggle" aria-expanded="false" aria-controls="manageTeamsDropdown">
+                        <i data-lucide="users"></i>
+                        <span>Manage Team</span>
+                        <i data-lucide="chevron-down" class="dropdown-icon" style="margin-left:auto;transition:transform 0.3s;"></i>
+                    </button>
+                    <div class="dropdown-menu" id="manageTeamsDropdown">
+                        <a href="create_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="plus-circle" style="width:18px;height:18px;"></i>
+                            <span>Create Team</span>
+                        </a>
+                        <a href="edit_team.html" class="nav-item sub-nav-item">
+                            <i data-lucide="edit" style="width:18px;height:18px;"></i>
+                            <span>Edit Team</span>
+                        </a>
+                    </div>
+                </div>
+                <a href="faculty.html" class="nav-item active">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>Faculty List</span>
+                </a>
+                <a href="trainee.html" class="nav-item">
+                    <i data-lucide="users-2"></i>
+                    <span>Trainee List</span>
+                </a>
+                <a href="lab_asset_management.html" class="nav-item">
+                    <i data-lucide="package"></i>
+                    <span>Lab Asset Management</span>
+                </a>
+                <a href="component_verification.html" class="nav-item">
+                    <i data-lucide="check-square"></i>
+                    <span>Component Verification</span>
+                </a>
+                <a href="low_stock_management.html" class="nav-item">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Low Stock Management</span>
+                </a>
+                <a href="project_details.html" class="nav-item">
+                    <i data-lucide="folder"></i>
+                    <span>Project Details</span>
+                </a>
+                
+            </nav>
+            <button class="sign-out-btn" id="signOutBtn" >
+               <a href="../../faculty-main final version/login1.html" class="nav-item">
+                     <i data-lucide="log-out"></i>
+                <span>Sign Out</span>
+                </a>
+               
+            </button>
+        </aside>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <main class="main-content" id="mainContent">
+            <!-- Header with Title & Subtitle -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu"><i
+                            data-lucide="menu"></i></button>
+                    <div class="header-title-block">
+                        <h1 class="header-page-title">Faculty List</h1>
+                        <p class="header-page-subtitle">View, search, edit, and manage all faculty members registered in
+                            the Rapid Prototyping Lab.</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn" id="notificationBtn" aria-label="Notifications"><i
+                            data-lucide="bell"></i></button>
+                    <button class="user-profile-btn" id="profileBtn">
+                        <div class="user-info">
+                            <span class="user-name" id="headerUserName">Admin Name</span>
+                            <span class="user-role" id="headerUserRole">Administrator</span>
+                        </div>
+                        <div class="user-avatar" id="headerAvatar"><i data-lucide="user"></i></div>
+                    </button>
+                </div>
+            </header>
+
+            <section class="page-content">
+                <!-- Summary Cards -->
+                <div class="summary-cards-row">
+                    <div class="summary-card">
+                        <div class="summary-card-icon total"><i data-lucide="users"></i></div>
+                        <div class="summary-card-info">
+                            <span class="summary-card-count" id="totalFaculty">0</span>
+                            <span class="summary-card-label">Total Faculty</span>
+                            <span class="summary-card-desc">Total registered faculty</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-card-icon assigned"><i data-lucide="user-check"></i></div>
+                        <div class="summary-card-info">
+                            <span class="summary-card-count" id="assignedFaculty">0</span>
+                            <span class="summary-card-label">Assigned Faculty</span>
+                            <span class="summary-card-desc">Currently assigned to teams</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-card-icon unassigned"><i data-lucide="user-x"></i></div>
+                        <div class="summary-card-info">
+                            <span class="summary-card-count" id="unassignedFaculty">0</span>
+                            <span class="summary-card-label">Unassigned Faculty</span>
+                            <span class="summary-card-desc">Available for assignment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls: Search and Filter -->
+                <div class="controls-card table-card card">
+                    <div class="filters-row">
+                        <div class="search-wrapper">
+                            <i data-lucide="search" class="search-icon"></i>
+                            <input type="text" id="facultySearch" class="search-input"
+                                placeholder="Search by Faculty ID or Name...">
+                        </div>
+
+                        <div class="filter-wrapper">
+                            <label for="statusFilter" class="filter-label">Status</label>
+                            <div class="custom-select-wrapper">
+                                <select id="statusFilter" class="custom-select">
+                                    <option value="All">All</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                                <i data-lucide="chevron-down" class="select-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table" id="facultyTable">
+                            <thead>
+                                <tr>
+                                    <th>SI No</th>
+                                    <th>Faculty ID</th>
+                                    <th>Full Name</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th class="actions-col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="facultyTableBody">
+                                <!-- JS inserts here -->
+                            </tbody>
+                        </table>
+
+                        <div id="emptyState" class="empty-state hidden">
+                            <div class="empty-icon"><i data-lucide="search-x"></i></div>
+                            <h4>No faculty members found</h4>
+                            <p>Try adjusting your search or filters.</p>
+                        </div>
+                    </div>
+
+                    <div class="pagination">
+                        <span class="page-info" id="pageInfo">Page 1 of 1</span>
+                        <div class="page-buttons">
+                            <button class="page-btn" id="prevPageBtn" disabled><i
+                                    data-lucide="chevron-left"></i></button>
+                            <button class="page-btn" id="nextPageBtn" disabled><i
+                                    data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- View / Edit Modal -->
+    <div class="modal-overlay" id="facultyModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h2 id="modalTitle">Faculty Details</h2>
+                <button class="modal-close" id="closeFacultyModalBtn"><i data-lucide="x"></i></button>
+            </div>
+
+            <!-- View Mode (trimmed fields) -->
+            <div class="modal-body" id="viewFacultyMode">
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Faculty ID</span>
+                        <span class="detail-value" id="viewId"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Full Name</span>
+                        <span class="detail-value" id="viewName"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Email</span>
+                        <span class="detail-value" id="viewEmail"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Mobile Number</span>
+                        <span class="detail-value" id="viewPhone"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Gender</span>
+                        <span class="detail-value" id="viewGender"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Date of Birth</span>
+                        <span class="detail-value" id="viewDob"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Role</span>
+                        <span class="detail-value" id="viewRole"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value" id="viewStatus"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Mode (trimmed fields) -->
+            <div class="modal-body hidden" id="editFacultyMode">
+                <form id="editFacultyForm">
+                    <div class="form-grid-2">
+                        <div class="form-group row-group">
+                            <label>Faculty ID</label>
+                            <input type="text" id="editId" class="input-readonly" readonly>
+                        </div>
+                        <div class="form-group row-group">
+                            <label>Full Name</label>
+                            <input type="text" id="editName" required>
+                        </div>
+                        <div class="form-group row-group">
+                            <label>Email</label>
+                            <input type="email" id="editEmail" required>
+                        </div>
+                        <div class="form-group row-group">
+                            <label>Mobile Number</label>
+                            <input type="tel" id="editPhone" required>
+                        </div>
+                        <div class="form-group row-group">
+                            <label>Gender</label>
+                            <select id="editGender" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group row-group">
+                            <label>Date of Birth</label>
+                            <input type="date" id="editDob" required>
+                        </div>
+                        <div class="form-group row-group">
+                            <label>Role</label>
+                            <input type="text" id="editRole" required>
+                        </div>
+                        <div class="form-group row-group">
+                            <label>Status</label>
+                            <select id="editStatus" required>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Actions -->
+            <div class="modal-footer" id="viewModalFooter">
+                <button class="btn btn-secondary btn-icon" id="editModeBtn"><i data-lucide="edit"></i> Edit</button>
+                <button class="btn btn-danger btn-icon" id="deleteBtn"><i data-lucide="trash-2"></i> Delete</button>
+            </div>
+
+            <div class="modal-footer hidden" id="editModalFooter">
+                <button class="btn btn-secondary btn-icon" id="cancelEditBtn"><i data-lucide="x"></i> Cancel</button>
+                <button class="btn btn-primary btn-icon" form="editFacultyForm" id="saveEditBtn"><i
+                        data-lucide="save"></i> Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal-overlay" id="confirmDeleteModal">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h2>Confirm Deletion</h2>
+                <button class="modal-close" id="closeDeleteModalBtn"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this faculty member? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <footer class="site-footer">
+                <p>&copy; 2026 ILP Rapid Prototyping Lab Management System. All rights reserved.</p>
+            </footer>
+
+    <script src="../js/mock_data.js"></script>
+    <script src="../js/faculty.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
