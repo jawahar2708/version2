@@ -250,27 +250,35 @@ const COMPONENTS_CATALOG = [
 
 const TOOLS_CATALOG = [
     { id: 101, name: 'Soldering Iron',    category: 'Electronics', stock: 8,  maxPerRequest: 1,
+      image: './assets/images/equipment/solderingiron.jpg',
       description: 'Temperature-controlled soldering iron 60W with fine tip. Adjustable from 200–480°C.',
       specs: { Power: '60W', Temp: '200–480°C', Tip: 'Fine Conical', Cord: '1.2m', Weight: '120g' } },
     { id: 102, name: 'Multimeter',        category: 'Electronics', stock: 10, maxPerRequest: 1,
+      image: './assets/images/equipment/multimeter.jpeg',
       description: 'Digital multimeter for measuring AC/DC voltage, current, resistance, and continuity.',
       specs: { Voltage: 'AC/DC 1000V', Current: 'AC/DC 10A', Resistance: '40MΩ', Display: '4000 count', Safety: 'CAT III' } },
     { id: 103, name: 'Wire Cutter',       category: 'Electrical',  stock: 15, maxPerRequest: 2,
+      image: './assets/images/equipment/wirecutter.webp',
       description: 'High-leverage diagonal flush wire cutter. Cuts copper wire up to 4mm diameter cleanly.',
       specs: { Length: '15 cm', Material: 'Alloy Steel', Jaw: 'Flush Cut', Handle: 'Cushion-Grip', MaxWire: '4 mm' } },
     { id: 104, name: 'Cutter Knife',      category: 'General',     stock: 20, maxPerRequest: 2,
+      image: './assets/images/equipment/cutterknife.webp',
       description: 'Heavy-duty snap-off blade utility knife. Rubber anti-slip grip, auto-lock mechanism.',
       specs: { Blade: '18mm snap-off', Handle: 'Rubber grip', Lock: 'Auto-lock', Blades: '3 spare', Weight: '90g' } },
     { id: 105, name: 'Long Nose Pliers',  category: 'Mechanical',  stock: 12, maxPerRequest: 2,
+      image: './assets/images/equipment/longnosepliers.jpeg',
       description: 'Needle-nose pliers with side cutter. For bending wire, holding small parts in tight spaces.',
       specs: { Length: '16 cm', Jaw: 'Needle-nose', Side: 'Wire Cutter', Material: 'Chrome-Vanadium', Grip: 'Non-slip' } },
     { id: 106, name: 'Screwdriver Set',   category: 'General',     stock: 10, maxPerRequest: 1,
+      image: './assets/images/equipment/screwdriverset.jpg',
       description: '10-piece precision screwdriver set. Phillips PH0/PH1, flat, Torx T5–T8 in a roll pouch.',
       specs: { Count: '10 pcs', Types: 'Phillips, Flat, Torx', Material: 'S2 Steel', Handle: 'Ergonomic', Case: 'Roll Pouch' } },
     { id: 107, name: 'Hot Glue Gun',      category: 'General',     stock: 7,  maxPerRequest: 1,
+      image: './assets/images/equipment/hotgluegun.webp',
       description: 'Mini hot glue gun 20W with 8 glue sticks. Heats in 3 minutes, dual temperature mode.',
       specs: { Power: '20W', Stick: '7mm', HeatUp: '3 min', Temp: '165°C/140°C', Sticks: '8 included' } },
     { id: 108, name: 'Allen Key Set',     category: 'Mechanical',  stock: 18, maxPerRequest: 2,
+      image: './assets/images/equipment/allenkeyset.jpeg',
       description: 'Metric hex key set, 9 sizes (1.5–10mm). Ball-end for angled access. Folding design.',
       specs: { Count: '9 keys', Sizes: '1.5–10 mm', Type: 'Ball-end', Material: 'Chrome-Vanadium', Style: 'Folding' } }
 ];
@@ -1150,6 +1158,7 @@ window.addSelectedToolsToCart = function() {
                 id: tool.id,
                 name: tool.name,
                 category: tool.category,
+                image: tool.image || './assets/images/tool_placeholder.png',
                 quantity: qty
             });
         }
@@ -1173,7 +1182,7 @@ function showDetailsModal(item, type) {
     }
     
     const isComponent = type === 'component';
-    const imgSrc = isComponent ? (item.image || './assets/images/component_placeholder.png') : './assets/images/tool_placeholder.png';
+    const imgSrc = isComponent ? (item.image || './assets/images/component_placeholder.png') : (item.image || './assets/images/tool_placeholder.png');
     const policyText = isComponent 
         ? 'Project Hand-over: Permanently handed over after project completion.'
         : 'Daily Use: Must be returned by the end of each working day.';
@@ -1245,7 +1254,7 @@ window.renderToolCatalog = function() {
 
             <!-- Card Image -->
             <div style="width:100%;height:120px;background:#f8fafc;border-radius:8px;overflow:hidden;margin-bottom:12px;border:1px solid #f1f5f9;">
-                <img src="./assets/images/tool_placeholder.png" alt="${tool.name}" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${tool.image || './assets/images/tool_placeholder.png'}" alt="${tool.name}" style="width:100%;height:100%;object-fit:cover;">
             </div>
 
             <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0 0 4px 0;">${tool.name}</h3>
@@ -1298,6 +1307,7 @@ window.addToolToCart = function(id) {
             id: tool.id,
             name: tool.name,
             category: tool.category,
+            image: tool.image || './assets/images/tool_placeholder.png',
             quantity: qty
         });
     }
@@ -1366,7 +1376,7 @@ function renderToolCart() {
     list.innerHTML = toolCart.map((item, i) => `
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px;box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
             <div style="width:64px;height:64px;background:#f8fafc;border-radius:8px;overflow:hidden;border:1px solid #f1f5f9;flex-shrink:0;">
-                <img src="./assets/images/tool_placeholder.png" alt="Tool" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${item.image || './assets/images/tool_placeholder.png'}" alt="Tool" style="width:100%;height:100%;object-fit:cover;">
             </div>
             <div style="flex:1;">
                 <h4 style="font-size:15px;font-weight:700;margin:0 0 4px 0;color:#0f172a;">${item.name}</h4>
@@ -1470,11 +1480,14 @@ window.viewToolRequestDetails = function(requestId) {
         document.body.appendChild(modal);
     }
 
-    const itemsHTML = request.cartItems.map(item => `
+    const itemsHTML = request.cartItems.map(item => {
+        const catalogEntry = TOOLS_CATALOG.find(t => t.name === item.name);
+        const itemImg = (catalogEntry && catalogEntry.image) ? catalogEntry.image : './assets/images/tool_placeholder.png';
+        return `
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;">
             <div style="display:flex;align-items:center;gap:12px;">
                 <div style="width:40px;height:40px;border-radius:6px;overflow:hidden;border:1px solid #cbd5e1;flex-shrink:0;">
-                    <img src="./assets/images/tool_placeholder.png" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:cover;">
                 </div>
                 <div>
                     <strong style="font-size:14px;color:#0f172a;display:block;">${item.name}</strong>
@@ -1482,7 +1495,8 @@ window.viewToolRequestDetails = function(requestId) {
             </div>
             <span style="background:#fef3c7;color:#d97706;font-weight:700;font-size:12.5px;padding:4px 12px;border-radius:12px;">Qty: ${item.qty}</span>
         </div>
-    `).join('');
+        `;
+    }).join('');
 
     modal.innerHTML = `
         <div class="modal-backdrop" onclick="closeDetailsModal()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.6);z-index:9999;backdrop-filter:blur(4px);animation:fadeIn 0.2s ease;"></div>
@@ -1684,7 +1698,8 @@ window.viewActiveReturnDetails = function(requestId, type) {
             const catalogEntry = COMPONENTS_CATALOG.find(c => c.name === item.name);
             itemImg = (catalogEntry && catalogEntry.image) ? catalogEntry.image : compPlaceholder;
         } else {
-            itemImg = toolPlaceholder;
+            const catalogEntry = TOOLS_CATALOG.find(t => t.name === item.name);
+            itemImg = (catalogEntry && catalogEntry.image) ? catalogEntry.image : toolPlaceholder;
         }
         return `
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;">
