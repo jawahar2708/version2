@@ -207,33 +207,43 @@ let selectedStageTrackerId = stageTrackerState.currentStageId;
 // Component & Tool Data
 const COMPONENTS_CATALOG = [
     { id: 1,  name: 'Arduino Uno R3',          category: 'Microcontroller', stock: 12, maxPerRequest: 3,
+      image: './assets/images/equipment/adrinounor3.jpg',
       description: 'ATmega328P-based microcontroller board, 14 digital I/O pins, 6 PWM, USB connectivity.',
       specs: { Voltage: '5V', Flash: '32KB', SRAM: '2KB', Clock: '16 MHz', Interface: 'USB-B' } },
     { id: 2,  name: 'Raspberry Pi 4 (4GB)',     category: 'Microcontroller', stock: 5, maxPerRequest: 1,
+      image: './assets/images/equipment/rasberrypi4.webp',
       description: 'Quad-core ARM Cortex-A72, 4GB LPDDR4, dual-band Wi-Fi, Bluetooth 5, two USB 3.0 ports.',
       specs: { Voltage: '5V DC', RAM: '4GB', CPU: 'ARM A72 1.5GHz', USB: '2x USB3 + 2x USB2', OS: 'Raspberry Pi OS' } },
     { id: 3,  name: 'ESP32 Dev Board',          category: 'Microcontroller', stock: 18, maxPerRequest: 4,
+      image: './assets/images/equipment/esp32devboard.jpeg',
       description: 'Dual-core Xtensa LX6, integrated Wi-Fi & BT, 520KB SRAM, 4MB Flash, 38 GPIO pins.',
       specs: { Voltage: '3.3V / 5V', CPU: 'LX6 240MHz', 'Wi-Fi': '802.11 b/g/n', Bluetooth: 'v4.2 + BLE', GPIO: '38 pins' } },
     { id: 4,  name: 'Ultrasonic Sensor HC-SR04',category: 'Sensor',          stock: 30, maxPerRequest: 5,
+      image: './assets/images/equipment/ultrasonicsensorhc-sr04.webp',
       description: 'Distance measurement sensor using ultrasonic sound. Range 2–400 cm with 3mm accuracy.',
       specs: { Voltage: '5V', Range: '2–400 cm', Accuracy: '3 mm', Frequency: '40 kHz', Angle: '15°' } },
     { id: 5,  name: 'DHT22 Temperature Sensor', category: 'Sensor',          stock: 20, maxPerRequest: 5,
+      image: './assets/images/equipment/dht22tempraturesensor.jpeg',
       description: 'High-precision digital temperature and humidity sensor. Single-wire serial interface.',
       specs: { Voltage: '3.3–6V', Temp: '-40 to +80°C', Humidity: '0–100% RH', Accuracy: '±0.5°C', Protocol: 'Single-wire' } },
     { id: 6,  name: 'Servo Motor SG90',         category: 'Actuator',        stock: 25, maxPerRequest: 6,
+      image: './assets/images/equipment/servomotorsg90.jpg',
       description: 'Micro servo motor, 180° rotation, PWM control. Lightweight at 9g. Ideal for robotics arms.',
       specs: { Voltage: '4.8–6V', Torque: '1.8 kg·cm', Speed: '0.1 s/60°', Angle: '180°', Weight: '9g' } },
     { id: 7,  name: 'DC Motor with Driver',     category: 'Actuator',        stock: 15, maxPerRequest: 4,
+      image: './assets/images/equipment/dcmotorwithdriver.webp',
       description: 'TT gear motor with L298N dual H-bridge motor driver module. Forward/reverse/speed control.',
       specs: { Voltage: '5–12V', Driver: 'L298N H-Bridge', Current: '2A per channel', Speed: '200 RPM', Channels: '2' } },
     { id: 8,  name: 'Breadboard 830 Points',    category: 'Connectivity',    stock: 40, maxPerRequest: 4,
+      image: './assets/images/equipment/breadboard830points.jpg',
       description: '830-point solderless breadboard with binding posts. Ideal for prototyping circuits quickly.',
       specs: { Points: '830', Rows: '63', Columns: '10', Tie: '5 holes', Binding: 'Yes' } },
     { id: 9,  name: 'Jumper Wires (40pcs)',     category: 'Connectivity',    stock: 50, maxPerRequest: 10,
+      image: './assets/images/equipment/jumperwires.jpeg',
       description: '40-piece jumper wire kit: M-M, M-F, F-F combinations. 20cm length, 40 color-coded wires.',
       specs: { Count: '40 pcs', Length: '20 cm', Types: 'M-M, M-F, F-F', Material: 'Copper+PVC', Gauge: '28 AWG' } },
     { id: 10, name: 'LCD Display 16x2',         category: 'Display',         stock: 14, maxPerRequest: 3,
+      image: './assets/images/equipment/lcddisplay16x2.jpeg',
       description: '16 characters × 2 lines character LCD with HD44780 controller. Works with I2C backpack.',
       specs: { Voltage: '5V', Columns: '16', Rows: '2', Backlight: 'Blue/Green', Interface: 'Parallel / I2C' } }
 ];
@@ -757,7 +767,7 @@ window.renderComponentCatalog = function() {
 
             <!-- Card Image -->
             <div style="width:100%;height:120px;background:#f8fafc;border-radius:8px;overflow:hidden;margin-bottom:12px;border:1px solid #f1f5f9;">
-                <img src="./assets/images/component_placeholder.png" alt="${component.name}" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${component.image || './assets/images/component_placeholder.png'}" alt="${component.name}" style="width:100%;height:100%;object-fit:cover;">
             </div>
 
             <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0 0 4px 0;">${component.name}</h3>
@@ -827,6 +837,7 @@ window.addComponentToCart = function(id) {
             id: component.id,
             name: component.name,
             category: component.category,
+            image: component.image || './assets/images/component_placeholder.png',
             quantity: qty
         });
     }
@@ -868,7 +879,7 @@ window.renderComponentCart = function() {
     list.innerHTML = componentCart.map((item, i) => `
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px;box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
             <div style="width:64px;height:64px;background:#f8fafc;border-radius:8px;overflow:hidden;border:1px solid #f1f5f9;flex-shrink:0;">
-                <img src="./assets/images/component_placeholder.png" alt="Component" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${item.image || './assets/images/component_placeholder.png'}" alt="Component" style="width:100%;height:100%;object-fit:cover;">
             </div>
             <div style="flex:1;">
                 <h4 style="font-size:15px;font-weight:700;margin:0 0 4px 0;color:#0f172a;">${item.name}</h4>
@@ -976,11 +987,14 @@ window.viewComponentRequestDetails = function(requestId) {
         document.body.appendChild(modal);
     }
 
-    const itemsHTML = request.cartItems.map(item => `
+    const itemsHTML = request.cartItems.map(item => {
+        const catalogEntry = COMPONENTS_CATALOG.find(c => c.name === item.name);
+        const itemImg = (catalogEntry && catalogEntry.image) ? catalogEntry.image : './assets/images/component_placeholder.png';
+        return `
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;">
             <div style="display:flex;align-items:center;gap:12px;">
                 <div style="width:40px;height:40px;border-radius:6px;overflow:hidden;border:1px solid #cbd5e1;flex-shrink:0;">
-                    <img src="./assets/images/component_placeholder.png" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:cover;">
                 </div>
                 <div>
                     <strong style="font-size:14px;color:#0f172a;display:block;">${item.name}</strong>
@@ -988,7 +1002,8 @@ window.viewComponentRequestDetails = function(requestId) {
             </div>
             <span style="background:#e0e7ff;color:#3730a3;font-weight:700;font-size:12.5px;padding:4px 12px;border-radius:12px;">Qty: ${item.qty}</span>
         </div>
-    `).join('');
+        `;
+    }).join('');
 
     modal.innerHTML = `
         <div class="modal-backdrop" onclick="closeDetailsModal()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.6);z-index:9999;backdrop-filter:blur(4px);animation:fadeIn 0.2s ease;"></div>
@@ -1096,6 +1111,7 @@ window.addSelectedComponentsToCart = function() {
                 id: component.id,
                 name: component.name,
                 category: component.category,
+                image: component.image || './assets/images/component_placeholder.png',
                 quantity: qty
             });
         }
@@ -1157,7 +1173,7 @@ function showDetailsModal(item, type) {
     }
     
     const isComponent = type === 'component';
-    const imgSrc = isComponent ? './assets/images/component_placeholder.png' : './assets/images/tool_placeholder.png';
+    const imgSrc = isComponent ? (item.image || './assets/images/component_placeholder.png') : './assets/images/tool_placeholder.png';
     const policyText = isComponent 
         ? 'Project Hand-over: Permanently handed over after project completion.'
         : 'Daily Use: Must be returned by the end of each working day.';
@@ -1659,13 +1675,22 @@ window.viewActiveReturnDetails = function(requestId, type) {
         document.body.appendChild(modal);
     }
 
-    const placeholder = isComp ? './assets/images/component_placeholder.png' : './assets/images/tool_placeholder.png';
+    const compPlaceholder = './assets/images/component_placeholder.png';
+    const toolPlaceholder = './assets/images/tool_placeholder.png';
 
-    const itemsHTML = request.cartItems.map(item => `
+    const itemsHTML = request.cartItems.map(item => {
+        let itemImg;
+        if (isComp) {
+            const catalogEntry = COMPONENTS_CATALOG.find(c => c.name === item.name);
+            itemImg = (catalogEntry && catalogEntry.image) ? catalogEntry.image : compPlaceholder;
+        } else {
+            itemImg = toolPlaceholder;
+        }
+        return `
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;">
             <div style="display:flex;align-items:center;gap:12px;">
                 <div style="width:40px;height:40px;border-radius:6px;overflow:hidden;border:1px solid #cbd5e1;flex-shrink:0;">
-                    <img src="${placeholder}" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:cover;">
                 </div>
                 <div>
                     <strong style="font-size:14px;color:#0f172a;display:block;">${item.name}</strong>
@@ -1673,7 +1698,8 @@ window.viewActiveReturnDetails = function(requestId, type) {
             </div>
             <span style="background:${isComp ? '#e0e7ff' : '#fef3c7'};color:${isComp ? '#3730a3' : '#d97706'};font-weight:700;font-size:12.5px;padding:4px 12px;border-radius:12px;">Qty: ${item.qty}</span>
         </div>
-    `).join('');
+        `;
+    }).join('');
 
     modal.innerHTML = `
         <div class="modal-backdrop" onclick="closeDetailsModal()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.6);z-index:9999;backdrop-filter:blur(4px);animation:fadeIn 0.2s ease;"></div>
