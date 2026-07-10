@@ -2100,9 +2100,9 @@ window.openEquipmentSelection = function(name, units, imagePath) {
     }
 }
 
-/* ===========================================
+/* ============================================
    LOAD EQUIPMENT UNITS
-   =========================================== */
+   ============================================ */
 
 function loadEquipmentUnits() {
     const unitList = document.getElementById("equipmentUnitList");
