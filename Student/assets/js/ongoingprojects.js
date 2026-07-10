@@ -2071,9 +2071,10 @@ let availableTimeSlots = [];
    OPEN EQUIPMENT SELECTION
    =========================================== */
 
-window.openEquipmentSelection = function(name, units) {
+window.openEquipmentSelection = function(name, units, imagePath) {
     selectedEquipment.name = name;
     selectedEquipment.units = units;
+    selectedEquipment.imagePath = imagePath;
     loadSelectedEquipment();
     loadEquipmentUnits();
     hideAllPages();
@@ -2084,30 +2085,18 @@ window.openEquipmentSelection = function(name, units) {
    UPDATE EQUIPMENT DETAILS
    =========================================== */
 
-function loadSelectedEquipment() {
+   function loadSelectedEquipment() {
+    // 1. Update the text
     const nameEl = document.getElementById("selectedEquipmentName");
     if (nameEl) nameEl.innerText = selectedEquipment.name;
 
     const unitsEl = document.getElementById("selectedEquipmentUnits");
     if (unitsEl) unitsEl.innerText = selectedEquipment.units;
 
-    const icon = document.getElementById("selectedEquipmentIcon");
-    const placeholder = document.querySelector(".selected-equipment-placeholder");
-
-    if (icon && placeholder) {
-        icon.className = "fa-solid";
-        placeholder.style.background = "";
-
-        if (selectedEquipment.name === "3D Printer") {
-            icon.classList.add("fa-cube");
-            placeholder.style.background = "linear-gradient(135deg,#1e40af,#3b82f6)";
-        } else if (selectedEquipment.name === "Laser Cutter") {
-            icon.classList.add("fa-fire");
-            placeholder.style.background = "linear-gradient(135deg,#4338ca,#6366f1)";
-        } else if (selectedEquipment.name === "CNC Router") {
-            icon.classList.add("fa-gears");
-            placeholder.style.background = "linear-gradient(135deg,#059669,#10b981)";
-        }
+    // 2. Update the image
+    const imgElement = document.getElementById("selectedEquipmentImg");
+    if (imgElement && selectedEquipment.imagePath) {
+        imgElement.src = selectedEquipment.imagePath;
     }
 }
 

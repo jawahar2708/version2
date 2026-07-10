@@ -743,7 +743,7 @@
                             <div class="equipment-card" data-category="3d printing">
                                 <div class="equipment-card-img">
                                     <div class="equipment-card-img-placeholder" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);">
-                                        <i class="fa-solid fa-cube" style="font-size:42px;color:rgba(255,255,255,.85);"></i>
+                                        <img src="assets/images/equipment/3dprinter.jpeg" alt="3D Printer" style="width:100%;height:100%;object-fit:cover;">
                                     </div>
                                     <span class="equipment-availability-badge">3 Available</span>
                                 </div>
@@ -752,7 +752,7 @@
                                     <p class="equipment-units">Available Units : <strong>3</strong></p>
                                     <div class="equipment-card-actions">
                                         <a href="https://en.wikipedia.org/wiki/3D_printing"><button class="btn-equipment-view">View Details</button></a>
-                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('3D Printer', 3)">Book Equipment</button>
+                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('3D Printer', 3, 'assets/images/equipment/3dprinter.jpeg')">Book Equipment</button>
                                     </div>
                                 </div>
                             </div>
@@ -761,7 +761,7 @@
                             <div class="equipment-card" data-category="laser cutting">
                                 <div class="equipment-card-img">
                                     <div class="equipment-card-img-placeholder" style="background:linear-gradient(135deg,#111827,#4f46e5);">
-                                        <i class="fa-solid fa-fire" style="font-size:42px;color:rgba(255,255,255,.85);"></i>
+                                        <img src="assets/images/equipment/lasercutter.jpg" alt="Laser Cutter" style="width:100%;height:100%;object-fit:cover;">
                                     </div>
                                     <span class="equipment-availability-badge">2 Available</span>
                                 </div>
@@ -770,7 +770,7 @@
                                     <p class="equipment-units">Available Units : <strong>2</strong></p>
                                     <div class="equipment-card-actions">
                                         <a href="https://en.wikipedia.org/wiki/Laser_cutting"><button class="btn-equipment-view">View Details</button></a>
-                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('Laser Cutter', 2)">Book Equipment</button>
+                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('Laser Cutter', 2, 'assets/images/equipment/lasercutter.jpg')">Book Equipment</button>
                                     </div>
                                 </div>
                             </div>
@@ -779,7 +779,7 @@
                             <div class="equipment-card" data-category="cnc machines">
                                 <div class="equipment-card-img">
                                     <div class="equipment-card-img-placeholder" style="background:linear-gradient(135deg,#064e3b,#10b981);">
-                                        <i class="fa-solid fa-gears" style="font-size:42px;color:rgba(255,255,255,.85);"></i>
+                                        <img src="assets/images/equipment/cncrouter.jpeg" alt="CNC Router" style="width:100%;height:100%;object-fit:cover;">
                                     </div>
                                     <span class="equipment-availability-badge">2 Available</span>
                                 </div>
@@ -788,7 +788,7 @@
                                     <p class="equipment-units">Available Units : <strong>2</strong></p>
                                     <div class="equipment-card-actions">
                                         <a href="https://en.wikipedia.org/wiki/CNC_router"><button class="btn-equipment-view">View Details</button></a>
-                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('CNC Router', 2)">Book Equipment</button>
+                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('CNC Router', 2, 'assets/images/equipment/cncrouter.jpeg')">Book Equipment</button>
                                     </div>
                                 </div>
                             </div>
@@ -798,24 +798,27 @@
                     <!-- ========================================= -->
                     <!-- SELECT EQUIPMENT UNIT PAGE -->
                     <!-- ========================================= -->
-                    <div id="selectEquipmentUnitPage" style="display:none;">
+                     <div id="selectEquipmentUnitPage" style="display:none;">
                         <div class="equipment-selection-header">
                             <button class="back-btn" onclick="backToSelectEquipment()">
                                 <i class="fas fa-arrow-left"></i> Back
                             </button>
                         </div>
                         <div class="equipment-selection-container">
-                            <!-- LEFT PANEL -->
+                            
                             <div class="equipment-selection-left">
                                 <div class="selected-equipment-image">
-                                    <div class="selected-equipment-placeholder">
-                                        <i id="selectedEquipmentIcon" class="fa-solid fa-cube"></i>
+                                    <div class="selected-equipment-image">
+                                        
+                                        <div class="selected-equipment-placeholder" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6); width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden;">
+                                            <img id="selectedEquipmentImg" src= "assets/images/equipment/3dprinter.jpeg" alt="Selected Equipment" style="width:100%; height:100%; object-fit:cover;">
+                                        </div>
                                     </div>
                                 </div>
                                 <h2 id="selectedEquipmentName">3D Printer</h2>
                                 <div class="equipment-meta">Available Units : <strong id="selectedEquipmentUnits">3</strong></div>
                             </div>
-                            <!-- RIGHT PANEL -->
+                            
                             <div class="equipment-selection-right">
                                 <h3>Select Equipment Unit</h3>
                                 <div class="equipment-unit-list" id="equipmentUnitList"></div>
@@ -824,14 +827,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
 
                     <!-- ========================================= -->
                     <!-- SELECT EQUIPMENT UNIT PAGE (DUPLICATE IN SOURCE) -->
                     <!-- ========================================= -->
-                    <div id="selectEquipmentUnitPage" style="display:none;">
+                    <!-- <div id="selectEquipmentUnitPage" style="display:none;">
                         <div class="equipment-selection-container">
-                            <!-- LEFT PANEL -->
+                         
                             <div class="equipment-selection-left">
                                 <button class="btn btn-outline" onclick="backToSelectEquipment()">
                                     <i class="fas fa-arrow-left"></i> Back
@@ -844,7 +847,7 @@
                                     <span>Available Units : <strong id="selectedEquipmentUnits">3</strong></span>
                                 </div>
                             </div>
-                            <!-- RIGHT PANEL -->
+                            
                             <div class="equipment-selection-right">
                                 <h3>Select Equipment Unit</h3>
                                 <div class="equipment-unit-list" id="equipmentUnitList"></div>
@@ -853,7 +856,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- ========================================= -->
                     <!-- EQUIPMENT BOOKING FORM PAGE -->
