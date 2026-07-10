@@ -215,7 +215,7 @@ const COMPONENTS_CATALOG = [
       description: 'Quad-core ARM Cortex-A72, 4GB LPDDR4, dual-band Wi-Fi, Bluetooth 5, two USB 3.0 ports.',
       specs: { Voltage: '5V DC', RAM: '4GB', CPU: 'ARM A72 1.5GHz', USB: '2x USB3 + 2x USB2', OS: 'Raspberry Pi OS' } },
     { id: 3,  name: 'ESP32 Dev Board',          category: 'Microcontroller', stock: 18, maxPerRequest: 4,
-      image: './assets/images/equipment/esp32devboard.jpeg',
+      image: './assets/images/equipment/esp32devboard.webp',
       description: 'Dual-core Xtensa LX6, integrated Wi-Fi & BT, 520KB SRAM, 4MB Flash, 38 GPIO pins.',
       specs: { Voltage: '3.3V / 5V', CPU: 'LX6 240MHz', 'Wi-Fi': '802.11 b/g/n', Bluetooth: 'v4.2 + BLE', GPIO: '38 pins' } },
     { id: 4,  name: 'Ultrasonic Sensor HC-SR04',category: 'Sensor',          stock: 30, maxPerRequest: 5,
@@ -775,7 +775,7 @@ window.renderComponentCatalog = function() {
 
             <!-- Card Image -->
             <div style="width:100%;height:120px;background:#f8fafc;border-radius:8px;overflow:hidden;margin-bottom:12px;border:1px solid #f1f5f9;">
-                <img src="${component.image || './assets/images/component_placeholder.png'}" alt="${component.name}" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${component.image || './assets/images/component_placeholder.png'}" alt="${component.name}" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box;mix-blend-mode:multiply;">
             </div>
 
             <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0 0 4px 0;">${component.name}</h3>
@@ -887,7 +887,7 @@ window.renderComponentCart = function() {
     list.innerHTML = componentCart.map((item, i) => `
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px;box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
             <div style="width:64px;height:64px;background:#f8fafc;border-radius:8px;overflow:hidden;border:1px solid #f1f5f9;flex-shrink:0;">
-                <img src="${item.image || './assets/images/component_placeholder.png'}" alt="Component" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${item.image || './assets/images/component_placeholder.png'}" alt="Component" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box;mix-blend-mode:multiply;">
             </div>
             <div style="flex:1;">
                 <h4 style="font-size:15px;font-weight:700;margin:0 0 4px 0;color:#0f172a;">${item.name}</h4>
@@ -1002,7 +1002,7 @@ window.viewComponentRequestDetails = function(requestId) {
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;">
             <div style="display:flex;align-items:center;gap:12px;">
                 <div style="width:40px;height:40px;border-radius:6px;overflow:hidden;border:1px solid #cbd5e1;flex-shrink:0;">
-                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box;mix-blend-mode:multiply;">
                 </div>
                 <div>
                     <strong style="font-size:14px;color:#0f172a;display:block;">${item.name}</strong>
@@ -1203,7 +1203,7 @@ function showDetailsModal(item, type) {
                 <button onclick="closeDetailsModal()" style="border:none;background:none;font-size:20px;color:#94a3b8;cursor:pointer;line-height:1;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div style="width:100%;height:200px;border-radius:12px;overflow:hidden;margin-bottom:16px;border:1px solid #e2e8f0;">
-                <img src="${imgSrc}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${imgSrc}" alt="${item.name}" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box;mix-blend-mode:multiply;">
             </div>
             <div style="background:${policyBg};color:${policyColor};padding:10px 14px;border-radius:8px;font-size:12.5px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
                 <i class="fa-solid ${isComponent ? 'fa-circle-info' : 'fa-clock'}"></i>
@@ -1254,7 +1254,7 @@ window.renderToolCatalog = function() {
 
             <!-- Card Image -->
             <div style="width:100%;height:120px;background:#f8fafc;border-radius:8px;overflow:hidden;margin-bottom:12px;border:1px solid #f1f5f9;">
-                <img src="${tool.image || './assets/images/tool_placeholder.png'}" alt="${tool.name}" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${tool.image || './assets/images/tool_placeholder.png'}" alt="${tool.name}" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box;mix-blend-mode:multiply;">
             </div>
 
             <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0 0 4px 0;">${tool.name}</h3>
@@ -1376,7 +1376,7 @@ function renderToolCart() {
     list.innerHTML = toolCart.map((item, i) => `
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;align-items:center;gap:16px;box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
             <div style="width:64px;height:64px;background:#f8fafc;border-radius:8px;overflow:hidden;border:1px solid #f1f5f9;flex-shrink:0;">
-                <img src="${item.image || './assets/images/tool_placeholder.png'}" alt="Tool" style="width:100%;height:100%;object-fit:cover;">
+                <img src="${item.image || './assets/images/tool_placeholder.png'}" alt="Tool" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box;mix-blend-mode:multiply;">
             </div>
             <div style="flex:1;">
                 <h4 style="font-size:15px;font-weight:700;margin:0 0 4px 0;color:#0f172a;">${item.name}</h4>
@@ -1487,7 +1487,7 @@ window.viewToolRequestDetails = function(requestId) {
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;">
             <div style="display:flex;align-items:center;gap:12px;">
                 <div style="width:40px;height:40px;border-radius:6px;overflow:hidden;border:1px solid #cbd5e1;flex-shrink:0;">
-                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box;mix-blend-mode:multiply;">
                 </div>
                 <div>
                     <strong style="font-size:14px;color:#0f172a;display:block;">${item.name}</strong>
@@ -1705,7 +1705,7 @@ window.viewActiveReturnDetails = function(requestId, type) {
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;">
             <div style="display:flex;align-items:center;gap:12px;">
                 <div style="width:40px;height:40px;border-radius:6px;overflow:hidden;border:1px solid #cbd5e1;flex-shrink:0;">
-                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="${itemImg}" style="width:100%;height:100%;object-fit:contain;padding:8px;box-sizing:border-box;mix-blend-mode:multiply;">
                 </div>
                 <div>
                     <strong style="font-size:14px;color:#0f172a;display:block;">${item.name}</strong>
