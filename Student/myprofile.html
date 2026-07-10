@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+(function (d, w) {
+    var root = d.documentElement;
+    root.removeAttribute('data-theme');
+    root.style.colorScheme = 'light';
+    root.style.backgroundColor = '#F4F7FC';
+    var style = d.createElement('style');
+    style.id = 'portal-theme-critical';
+    style.textContent =
+        ':root{--background:#F4F7FC;--card:#FFF;--text-dark:#1F2937;--text-light:#6B7280;--border:#E5E7EB;--primary:#4F46E5;--primary-light:#EEF2FF}' +
+        'html,body{margin:0;min-height:100vh;background-color:var(--background);color:var(--text-dark);color-scheme:light}';
+    d.head.appendChild(style);
+})(document, window);
+    </script>
+    <title>My Profile | Student Portal</title>
+    <script src="assets/js/portal-preferences.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/myprofile.css">
+</head>
+<body>
+<div class="dashboard-container">
+       <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/images/OIP.webp" alt="Rapid Prototyping Lab">
+            <div class="logo-text">
+                <h4>Proto Track</h4>
+                <p>Rapid Prototyping Lab</p>
+            </div>
+        </div>
+        <nav class="sidebar-menu">
+            <p class="menu-title">STUDENT PORTAL</p>
+            <ul>
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" class="submenu-toggle">
+                        <i class="fa-solid fa-folder-open menu-icon"></i>
+                        <span class="menu-text">My Projects</span>
+                        <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="ongoingprojects.html">
+                                <i class="fa-solid fa-spinner submenu-icon"></i>
+                                <span>Ongoing Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="completedprojects.html">
+                                <i class="fa-solid fa-circle-check submenu-icon"></i>
+                                <span>Completed Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="supportcenter.html">
+                        <i class="fa-solid fa-headset menu-icon"></i>
+                        <span class="menu-text">Enquiry</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="knowledgebase.html">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <span class="menu-text">Knowledge Base</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="myprofile.html">
+                        <i class="fa-solid fa-user menu-icon"></i>
+                        <span class="menu-text">My Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+       <header class="top-navbar">
+            <div class="nav-left">
+                <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-title">
+                    <h2>Knowledge Base</h2>
+                    <p>Explore previous approved projects and request reports</p>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="notification-container">
+                    <button type="button" class="notification-trigger" aria-label="Open notifications" aria-haspopup="dialog" aria-expanded="false">
+                        <i class="fa-solid fa-bell" style="font-size:20px;color:var(--text-dark);"></i>
+                    </button>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <a href="myprofile.html"><img src="assets/images/OIP.webp" alt="Student"></a>
+                    <div class="user-info"><h4>Trainee1</h4><p>Student</p></div>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-content">
+            <div class="content-wrapper">
+                
+                <div class="page-header">
+                    <div class="header-title">
+                        <h1>My Profile</h1>
+                        <p>View and manage your personal information.</p>
+                    </div>
+                  
+                </div>
+
+                <div class="profile-layout">
+                    
+                    <div class="profile-sidebar-card">
+                        <div class="profile-avatar-container">
+                            <img src="assets/images/OIP.webp" alt="Trainee1" class="avatar-img">
+                            <button class="btn-camera-upload" onclick="document.getElementById('photoUpload').click()">
+                                <i class="fa-solid fa-camera"></i>
+                            </button>
+                            <input type="file" id="photoUpload" accept="image/*" hidden>
+                        </div>
+                        
+                        <h2 class="student-name">Trainee1</h2>
+                        <span class="status-badge">Active Student</span>
+                        
+                        <div class="student-id-container">
+                            <span class="id-label">Student ID</span>
+                            <span class="id-value">21CSR145</span>
+                        </div>
+                        
+                        <hr class="card-divider">
+                        
+                        <div class="profile-meta-list">
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="profile-details-column">
+                        
+                        <div class="details-card">
+                            <div class="card-title">
+                                <div class="title-icon"><i class="fa-regular fa-user"></i></div>
+                                <h3>Personal Information</h3>
+                            </div>
+                            
+                              
+                            <div class="info-grid">
+                                <div class="grid-item">
+                                    <div class="item-icon"><i class="fa-regular fa-user"></i></div>
+                                    <div class="item-data">
+                                        <label>Full Name</label>
+                                        <p>Trainee1</p>
+                                    </div>
+                                </div>
+                                <div class="grid-item">
+                                    <div class="item-icon"><i class="fa-regular fa-envelope"></i></div>
+                                    <div class="item-data">
+                                        <label>Email Address</label>
+                                        <p>trainee1@college.edu</p>
+                                    </div>
+                                </div>
+                                <div class="grid-item">
+                                    <div class="item-icon"><i class="fa-solid fa-phone"></i></div>
+                                    <div class="item-data">
+                                        <label>Phone Number</label>
+                                        <p>9876543210</p>
+                                    </div>
+                                </div>
+                                <div class="grid-item">
+                                    <div class="item-icon"><i class="fa-solid fa-mars"></i></div>
+                                    <div class="item-data">
+                                        <label>Gender</label>
+                                        <p>Male</p>
+                                    </div>
+                                </div>
+                              
+                            </div>
+                        </div>
+
+                        <div class="details-card security-card">
+                            <div class="card-title">
+                                <div class="title-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                                <h3>Security</h3>
+                            </div>
+                            
+                            <div class="security-grid">
+                                <div class="grid-item">
+                                    <div class="item-icon"><i class="fa-solid fa-lock"></i></div>
+                                    <div class="item-data">
+                                        <label>Password</label>
+                                        <p class="masked-password">••••••••••••</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid-item security-action-row">
+                                    <div class="item-icon"><i class="fa-regular fa-calendar"></i></div>
+                                    <div class="item-data">
+                                        <label>Last Password Changed</label>
+                                        <p>08 July 2026</p>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn-change-pwd" id="btnChangePassword">
+                                    <i class="fa-solid fa-key"></i> Change Password
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="modal-overlay" id="changePasswordModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>Change Password</h3>
+            <button class="btn-close-modal" id="closePwdModalBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="changePwdForm">
+                <div class="form-group">
+                    <label>Current Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" placeholder="Enter current password">
+                        <i class="fa-regular fa-eye toggle-pwd"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" placeholder="Enter new password">
+                        <i class="fa-regular fa-eye toggle-pwd"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Confirm New Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" placeholder="Confirm new password">
+                        <i class="fa-regular fa-eye toggle-pwd"></i>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="cancelPwdBtn">Cancel</button>
+                    <button type="button" class="btn-submit" id="updatePwdBtn">Update Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="successModal">
+    <div class="modal-container success-container">
+        <div class="success-icon-wrapper">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <h3>Password Updated Successfully!</h3>
+        <p>Your password has been changed.</p>
+        <button class="btn-submit" id="closeSuccessBtn">OK</button>
+    </div>
+</div>
+
+<script src="assets/js/global.js"></script>
+<script src="assets/js/myprofile.js"></script>
+</body>
+</html>

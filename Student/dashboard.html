@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+(function (d, w) {
+    var root = d.documentElement;
+    root.removeAttribute('data-theme');
+    root.style.colorScheme = 'light';
+    root.style.backgroundColor = '#F4F7FC';
+    var style = d.createElement('style');
+    style.id = 'portal-theme-critical';
+    style.textContent =
+        ':root{--background:#F4F7FC;--card:#FFF;--text-dark:#1F2937;--text-light:#6B7280;--border:#E5E7EB;--primary:#4F46E5;--primary-light:#EEF2FF}' +
+        'html,body{margin:0;min-height:100vh;background-color:var(--background);color:var(--text-dark);color-scheme:light}';
+    d.head.appendChild(style);
+})(document, window);
+    </script>
+    <title>Dashboard | Rapid Prototyping Lab</title>
+    <script src="assets/js/portal-preferences.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/images/OIP.webp" alt="Rapid Prototyping Lab">
+            <div class="logo-text">
+                <h4>Proto Track</h4>
+                <p>Rapid Prototyping Lab</p>
+            </div>
+        </div>
+        <nav class="sidebar-menu">
+            <p class="menu-title">STUDENT PORTAL</p>
+            <ul>
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" class="submenu-toggle">
+                        <i class="fa-solid fa-folder-open menu-icon"></i>
+                        <span class="menu-text">My Projects</span>
+                        <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="ongoingprojects.html">
+                                <i class="fa-solid fa-spinner submenu-icon"></i>
+                                <span>Ongoing Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="completedprojects.html">
+                                <i class="fa-solid fa-circle-check submenu-icon"></i>
+                                <span>Completed Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="supportcenter.html">
+                        <i class="fa-solid fa-headset menu-icon"></i>
+                        <span class="menu-text">Enquiry</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="knowledgebase.html">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <span class="menu-text">Knowledge Base</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="myprofile.html">
+                        <i class="fa-solid fa-user menu-icon"></i>
+                        <span class="menu-text">My Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <header class="top-navbar">
+            <div class="nav-left">
+                <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-title">
+                    <h2>Dashboard</h2>
+                    <p>Welcome back to your Student Portal</p>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="notification-container">
+                    <button type="button" class="notification-trigger" aria-label="Open notifications" aria-haspopup="dialog" aria-expanded="false">
+                        <i class="fa-solid fa-bell" style="font-size:20px;color:var(--text-dark);"></i>
+                    </button>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <a href="myprofile.html"><img src="assets/images/OIP.webp" alt="Student"></a>
+                    <div class="user-info">
+                        <h4>Trainee1</h4>
+                        <p>Student</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-content">
+            <div class="content-wrapper">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 style="font-size:24px;font-weight:700;margin-bottom:8px;">Hello, Student Name! 👋</h1>
+                        <p style="color:var(--text-muted);font-size:14px;">Welcome to ILP Rapid Prototyping Lab Management System</p>
+                    </div>
+                </div>
+
+                <div class="premium-dashboard-grid">
+                    <!-- Row 1 -->
+                    <div class="premium-card">
+                        <div class="premium-card-icon" style="color:#0284c7;background:#e0f2fe;"><i class="fa-regular fa-folder-open"></i></div>
+                        <div class="premium-card-content">
+                            <span class="premium-card-title">Current Project</span>
+                            <h3 class="premium-card-value" style="font-size:16px;">Smart Inventory Management System</h3>
+                            <a href="ongoingprojects.html" class="premium-card-link">View Details &rarr;</a>
+                        </div>
+                    </div>
+
+                    <div class="premium-card">
+                        <div class="premium-card-icon" style="color:#059669;background:#d1fae5;"><i class="fa-solid fa-layer-group"></i></div>
+                        <div class="premium-card-content">
+                            <span class="premium-card-title">Current Stage</span>
+                            <h3 class="premium-card-value">Design Phase</h3>
+                            <span class="premium-card-subtitle">Stage 3 of 10</span>
+                        </div>
+                    </div>
+
+                    <div class="premium-card">
+                        <div class="premium-progress-circle">
+                            <svg viewBox="0 0 36 36" class="circular-chart blue">
+                              <path class="circle-bg"
+                                d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                              />
+                              <path class="circle"
+                                stroke-dasharray="40, 100"
+                                d="M18 2.0845
+                                  a 15.9155 15.9155 0 0 1 0 31.831
+                                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                              />
+                              <text x="18" y="20.35" class="percentage">40%</text>
+                            </svg>
+                        </div>
+                        <div class="premium-card-content">
+                            <span class="premium-card-title">Overall Progress</span>
+                            <h3 class="premium-card-value">40%</h3>
+                            <div class="premium-mini-progress">
+                                <div class="mini-bar" style="width:40%"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="premium-card">
+                        <div class="premium-card-icon" style="color:#d97706;background:#fef3c7;"><i class="fa-regular fa-calendar"></i></div>
+                        <div class="premium-card-content">
+                            <span class="premium-card-title">Days Remaining</span>
+                            <h3 class="premium-card-value">12</h3>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="premium-card">
+                        <div class="premium-card-icon" style="color:#2563eb;background:#dbeafe;"><i class="fa-regular fa-clipboard"></i></div>
+                        <div class="premium-card-content">
+                            <span class="premium-card-title">Pending Reviews</span>
+                            <h3 class="premium-card-value">2</h3>
+                            
+                        </div>
+                    </div>
+
+                    <div class="premium-card">
+                        <div class="premium-card-icon" style="color:#dc2626;background:#fee2e2;"><i class="fa-regular fa-comment-dots"></i></div>
+                        <div class="premium-card-content">
+                            <span class="premium-card-title">Open Enquiry</span>
+                            <h3 class="premium-card-value">1</h3>
+                            
+                        </div>
+                    </div>
+
+                    <div class="premium-card">
+                        <div class="premium-card-icon" style="color:#0d9488;background:#ccfbf1;"><i class="fa-regular fa-calendar-check"></i></div>
+                        <div class="premium-card-content">
+                            <span class="premium-card-title">Upcoming Booking</span>
+                            <h3 class="premium-card-value">May 15, 2025</h3>
+                          
+                        </div>
+                    </div>
+
+                    <div class="premium-card">
+                        <div class="premium-card-icon" style="color:#ea580c;background:#ffedd5;"><i class="fa-regular fa-bell"></i></div>
+                        <div class="premium-card-content">
+                            <span class="premium-card-title">Unread Notifications</span>
+                            <h3 class="premium-card-value">3</h3>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2026 Rapid Prototyping Lab Management System. All Rights Reserved.</p>
+        </footer>
+    </main>
+</div>
+<script src="assets/js/global.js"></script>
+<script src="assets/js/dashboard.js"></script>
+</body>
+</html>

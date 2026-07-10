@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+(function (d, w) {
+    var root = d.documentElement;
+    root.removeAttribute('data-theme');
+    root.style.colorScheme = 'light';
+    root.style.backgroundColor = '#F4F7FC';
+    var style = d.createElement('style');
+    style.id = 'portal-theme-critical';
+    style.textContent =
+        ':root{--background:#F4F7FC;--card:#FFF;--text-dark:#1F2937;--text-light:#6B7280;--border:#E5E7EB;--primary:#4F46E5;--primary-light:#EEF2FF}' +
+        'html,body{margin:0;min-height:100vh;background-color:var(--background);color:var(--text-dark);color-scheme:light}';
+    d.head.appendChild(style);
+})(document, window);
+    </script>
+    <title>Settings | Rapid Prototyping Lab</title>
+    <script src="assets/js/portal-preferences.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/settings.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/images/OIP.webp" alt="Rapid Prototyping Lab">
+            <div class="logo-text">
+                <h4>Proto Track</h4>
+                <p>Rapid Prototyping Lab</p>
+            </div>
+        </div>
+        <nav class="sidebar-menu">
+            <p class="menu-title">STUDENT PORTAL</p>
+            <ul>
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" class="submenu-toggle">
+                        <i class="fa-solid fa-folder-open menu-icon"></i>
+                        <span class="menu-text">My Projects</span>
+                        <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="ongoingprojects.html">
+                                <i class="fa-solid fa-spinner submenu-icon"></i>
+                                <span>Ongoing Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="completedprojects.html">
+                                <i class="fa-solid fa-circle-check submenu-icon"></i>
+                                <span>Completed Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="supportcenter.html">
+                        <i class="fa-solid fa-headset menu-icon"></i>
+                        <span class="menu-text">Enquiry</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="knowledgebase.html">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <span class="menu-text">Knowledge Base</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="myprofile.html">
+                        <i class="fa-solid fa-user menu-icon"></i>
+                        <span class="menu-text">My Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <header class="top-navbar">
+            <div class="nav-left">
+                <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-title">
+                    <h2>Settings</h2>
+                    <p>Manage your account settings</p>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="notification-container">
+                    <button type="button" class="notification-trigger" aria-label="Open notifications" aria-haspopup="dialog" aria-expanded="false">
+                        <i class="fa-solid fa-bell" style="font-size:20px;color:var(--text-dark);"></i>
+                    </button>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <a href="myprofile.html"><img src="assets/images/OIP.webp" alt="Student"></a>
+                    <div class="user-info">
+                        <h4>Trainee1</h4>
+                        <p>Student</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-content">
+            <div class="content-wrapper settings-shell">
+                <div class="settings-hero">
+                    <div>
+                        <p class="settings-kicker">ACCOUNT CENTER</p>
+                        <!--<h1>Settings</h1>
+                        <p>Manage notifications and security from one clean place.</p>-->
+                    </div>
+                </div>
+
+                <div class="settings-tabs">
+                    <button class="settings-tab active" data-tab="overview"><i class="fa-solid fa-table-cells-large"></i> Overview</button>
+                    <button class="settings-tab" data-tab="security"><i class="fa-solid fa-lock"></i> Security</button>
+                </div>
+
+                <div class="settings-panel active" id="overview">
+                    <div class="settings-overview-grid">
+                        <aside class="profile-summary-card">
+                            <img src="assets/images/OIP.webp" alt="Trainee1">
+                            <h3>Trainee1</h3>
+                            <span class="role-badge">Student</span>
+                            <p>Register No: 22BCS001</p>
+                            <p>Computer Science and Engineering</p>
+
+                            <div class="summary-mini-grid">
+                                <div>
+                                    <strong>TEAM-2026-01</strong>
+                                    <span>Team ID</span>
+                                </div>
+                                <div>
+                                    <strong>Active</strong>
+                                    <span>Status</span>
+                                </div>
+                            </div>
+
+                            <div class="note-card">
+                                <h4><i class="fa-solid fa-circle-info"></i> Good to know</h4>
+                                <p>Personal details stay read-only. Use settings for notifications and password updates.</p>
+                            </div>
+                        </aside>
+
+                        <div class="settings-stack">
+                            <div class="panel settings-panel-card">
+                                <div class="panel-header">
+                                    <h3><i class="fa-solid fa-user-shield"></i> Account Snapshot</h3>
+                                </div>
+                                <div class="account-info compact">
+                                    <div class="info-row"><span>Account Type</span><strong>Student</strong></div>
+                                    <div class="info-row"><span>Account Status</span><span class="status-pill success">Active</span></div>
+                                    <div class="info-row"><span>Member Since</span><strong>June 2026</strong></div>
+                                    <div class="info-row"><span>Last Login</span><strong>Today, 09:45 AM</strong></div>
+                                </div>
+                            </div>
+
+                            <div class="panel settings-panel-card">
+                                <div class="panel-header">
+                                    <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
+                                </div>
+                                <div class="quick-actions">
+                                    <button type="button" class="quick-action-btn" data-action="projects"><i class="fa-solid fa-folder-open"></i><span>Open Projects</span></button>
+                                    <button type="button" class="quick-action-btn" data-action="support"><i class="fa-solid fa-headset"></i><span>Contact Support</span></button>
+                                    <button type="button" class="quick-action-btn" data-action="knowledgebase"><i class="fa-solid fa-rotate"></i><span>Knowledge Base</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-panel" id="security">
+                    <div class="settings-grid-two">
+                        <section class="panel settings-panel-card security-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-lock"></i> Change Password</h3>
+                            </div>
+                            <p class="settings-caption">Use at least 8 characters with a mix of letters, numbers, and symbols.</p>
+                            <form id="passwordForm" class="security-form">
+                                <div class="form-group">
+                                    <label>Current Password <span class="required">*</span></label>
+                                    <input type="password" required placeholder="Enter current password">
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password <span class="required">*</span></label>
+                                    <input type="password" required minlength="8" placeholder="Min 8 characters">
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm New Password <span class="required">*</span></label>
+                                    <input type="password" required minlength="8" placeholder="Confirm new password">
+                                </div>
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-lock"></i> Update Password</button>
+                            </form>
+                        </section>
+
+                        <section class="panel settings-panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-shield-heart"></i> Session & Safety</h3>
+                            </div>
+                            <div class="security-list">
+                                <div class="security-item">
+                                    <span>Login session</span>
+                                    <strong>Today, 09:45 AM</strong>
+                                </div>
+                                <div class="security-item">
+                                    <span>Device</span>
+                                    <strong>Chrome on Windows</strong>
+                                </div>
+                                <div class="security-item">
+                                    <span>Auto logout</span>
+                                    <strong>After 30 minutes idle</strong>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2026 Rapid Prototyping Lab Management System. All Rights Reserved.</p>
+        </footer>
+    </main>
+</div>
+<script src="assets/js/global.js"></script>
+<script src="assets/js/settings.js"></script>
+</body>
+</html>

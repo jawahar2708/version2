@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+(function (d, w) {
+    var root = d.documentElement;
+    root.removeAttribute('data-theme');
+    root.style.colorScheme = 'light';
+    root.style.backgroundColor = '#F4F7FC';
+    var style = d.createElement('style');
+    style.id = 'portal-theme-critical';
+    style.textContent =
+        ':root{--background:#F4F7FC;--card:#FFF;--text-dark:#1F2937;--text-light:#6B7280;--border:#E5E7EB;--primary:#4F46E5;--primary-light:#EEF2FF}' +
+        'html,body{margin:0;min-height:100vh;background-color:var(--background);color:var(--text-dark);color-scheme:light}';
+    d.head.appendChild(style);
+})(document, window);
+    </script>
+    <title>Knowledge Base | Rapid Prototyping Lab</title>
+    <script src="assets/js/portal-preferences.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/knowledgebase.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/images/OIP.webp" alt="Rapid Prototyping Lab">
+            <div class="logo-text">
+                <h4>Proto Track</h4>
+                <p>Rapid Prototyping Lab</p>
+            </div>
+        </div>
+        <nav class="sidebar-menu">
+            <p class="menu-title">STUDENT PORTAL</p>
+            <ul>
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" class="submenu-toggle">
+                        <i class="fa-solid fa-folder-open menu-icon"></i>
+                        <span class="menu-text">My Projects</span>
+                        <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="ongoingprojects.html">
+                                <i class="fa-solid fa-spinner submenu-icon"></i>
+                                <span>Ongoing Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="completedprojects.html">
+                                <i class="fa-solid fa-circle-check submenu-icon"></i>
+                                <span>Completed Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="supportcenter.html">
+                        <i class="fa-solid fa-headset menu-icon"></i>
+                        <span class="menu-text">Enquiry</span>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="knowledgebase.html">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <span class="menu-text">Knowledge Base</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="myprofile.html">
+                        <i class="fa-solid fa-user menu-icon"></i>
+                        <span class="menu-text">My Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+        <!-- TOPBAR -->
+        <header class="top-navbar">
+            <div class="nav-left">
+                <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-title">
+                    <h2>Knowledge Base</h2>
+                    <p>Explore previous approved projects and request reports</p>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="notification-container">
+                    <button type="button" class="notification-trigger" aria-label="Open notifications" aria-haspopup="dialog" aria-expanded="false">
+                        <i class="fa-solid fa-bell" style="font-size:20px;color:var(--text-dark);"></i>
+                    </button>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <a href="myprofile.html"><img src="assets/images/OIP.webp" alt="Student"></a>
+                    <div class="user-info"><h4>Trainee1</h4><p>Student</p></div>
+                </div>
+            </div>
+        </header>
+        <section class="dashboard-content">
+            <div class="content-wrapper">
+
+                <!-- STATS CARDS -->
+                <div class="kb-stats">
+                    <div class="kb-stat-card">
+                        <div class="kb-stat-icon" style="background:#EEF2FF;color:#4F46E5;"><i class="fa-solid fa-folder-open"></i></div>
+                        <div class="kb-stat-body">
+                            <p class="kb-stat-label">Total Repository Projects</p>
+                            <h2 class="kb-stat-value">520</h2>
+                            <p class="kb-stat-sub">Browse all projects</p>
+                        </div>
+                    </div>
+                    <div class="kb-stat-card">
+                        <div class="kb-stat-icon" style="background:#ECFDF5;color:#059669;"><i class="fa-solid fa-file-circle-plus"></i></div>
+                        <div class="kb-stat-body">
+                            <p class="kb-stat-label">My View Requests</p>
+                            <h2 class="kb-stat-value">85</h2>
+                            <p class="kb-stat-sub">Track request status</p>
+                        </div>
+                    </div>
+                    <div class="kb-stat-card">
+                        <div class="kb-stat-icon" style="background:#FFF7ED;color:#EA580C;"><i class="fa-solid fa-eye"></i></div>
+                        <div class="kb-stat-body">
+                            <p class="kb-stat-label">Approved View Request</p>
+                            <h2 class="kb-stat-value">34</h2>
+                            <p class="kb-stat-sub">Reports ready to view</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABS NAVIGATION -->
+                <div class="kb-tabs">
+                    <button class="kb-tab active" onclick="switchKbTab(this, 'browse')"><i class="fa-solid fa-folder-open"></i> Browse Repository</button>
+                    <button class="kb-tab" onclick="switchKbTab(this, 'requests')"><i class="fa-solid fa-file-circle-plus"></i> My Requests</button>
+                    <button class="kb-tab" onclick="switchKbTab(this, 'history')"><i class="fa-solid fa-eye"></i> Requested View History</button>
+                </div>
+
+                <!-- TAB CONTENT: BROWSE REPOSITORY -->
+                <div class="kb-panel active" id="tab-browse">
+                    <div class="kb-main" style="max-width:100%;padding:0;">
+
+                        <!-- SEARCH BAR -->
+                        <div class="kb-search-row">
+                            <div class="kb-search-wrap">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="kbSearch" placeholder="Search projects by title, domain, technology..." oninput="filterProjects()">
+                            </div>
+                            
+                        </div>
+
+                        <!--FILTER CHIPS-->
+                        <div class="kb-filters">
+                            <select id="departmentFilter" class="kb-filter-select" onchange="filterProjects()">
+                                <option value="">All Department</option>
+                                <option>CSE</option><option>ECE</option><option>ME</option><option>EEE</option>
+                            </select>
+                            <select id="yearFilter" class="kb-filter-select" onchange="filterProjects()">
+                                <option value="">Academic Year</option>
+                                <option>2024-25</option><option>2023-24</option><option>2022-23</option>
+                            </select>
+                            <select id="domainFilter" class="kb-filter-select" onchange="filterProjects()">
+                                <option value="">All Domain</option>
+                                <option>IoT</option><option>AI/ML</option><option>Robotics</option><option>Web</option><option>Embedded</option>
+                            </select>
+                            <select id="technologyFilter" class="kb-filter-select" onchange="filterProjects()">
+                                <option value="">All Technology</option>
+                                <option>Python</option><option>React</option><option>Arduino</option><option>TensorFlow</option>
+                            </select>
+                            <select id="facultyFilter" class="kb-filter-select" onchange="filterProjects()">
+                                <option value="">Faculty</option>
+                                <option>Dr. R. Karthikeyan</option><option>Dr. S. Mahalakshmi</option><option>Dr. P. Venkatesan</option>
+                            </select>
+                            <button class="kb-clear-btn" onclick="clearFilters()">Clear</button>
+                        </div>
+
+                        <!--SORT + VIEW TOGGLE-->
+                        <div class="kb-toolbar">
+                            <p class="kb-count" id="kbCount">Showing <strong>6</strong> projects</p>
+                            <div style="display:flex;align-items:center;gap:10px;">
+                                <select id="sortFilter"
+                                    class="kb-filter-select"
+                                    style="padding:6px 12px;font-size:13px;"
+                                    onchange="sortProjects()">
+
+                                    <option value="Newest">Newest</option>
+                                    <option value="Oldest">Oldest</option>
+                                    <option value="Most Viewed">Most Viewed</option>
+                                    <option value="Alphabetical">Alphabetical</option>
+
+</select>
+                                <div class="kb-view-toggle">
+                                    <button class="kb-view-btn active" id="gridViewBtn" onclick="setView('grid')"><i class="fa-solid fa-grid-2"></i></button>
+                                    <button class="kb-view-btn" id="listViewBtn" onclick="setView('list')"><i class="fa-solid fa-list"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PROJECT GRID -->
+                        <div class="kb-grid" id="kbGrid">
+
+                            <!-- Card 1 -->
+                            <div class="kb-card" data-title="Smart Inventory Management System" data-dept="CSE" data-year="2024-25" data-domain="IoT" data-technology="Python" data-faculty="Dr. R. Karthikeyan" data-views="312">
+                                <div class="kb-card-img">
+                                    <div class="kb-card-img-placeholder" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);">
+                                        <i class="fa-solid fa-wifi" style="font-size:36px;color:rgba(255,255,255,0.8);"></i>
+                                    </div>
+                                    <span class="kb-domain-badge" style="background:#0ea5e9;">IoT</span>
+                                </div>
+                                <div class="kb-card-body">
+                                    <h3 class="kb-card-title">Smart Inventory Management System</h3>
+                                    <div class="kb-card-meta">
+                                        <span><i class="fa-solid fa-building-columns"></i> CSE | 2024-25</span>
+                                        <span><i class="fa-solid fa-user-tie"></i> Dr. R. Karthikeyan</span>
+                                    </div>
+                                    <div class="kb-card-stats">
+                                        <span><i class="fa-solid fa-eye"></i> 312</span>
+                                        <span><i class="fa-solid fa-eye"></i> 86</span>
+                                    </div>
+                                    <div class="kb-card-actions">
+                                        <button class="btn-kb-view" onclick="openDetails('Smart Inventory Management System','CSE','2024-25','Dr. R. Karthikeyan','IoT','Python, MQTT, React','An IoT-based smart inventory system using RFID sensors and real-time dashboards to automate stock tracking in manufacturing facilities.')">View Details</button>
+                                        <button class="btn-kb-request" onclick="openRequest('Smart Inventory Management System')">Request</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="kb-card" data-title="Brain Tumor Detection using Deep Learning" data-dept="CSE" data-year="2024-25" data-domain="AI/ML" data-technology="TensorFlow" data-faculty="Dr. S. Mahalakshmi" data-views="550">
+                                <div class="kb-card-img">
+                                    <div class="kb-card-img-placeholder" style="background:linear-gradient(135deg,#1a1a2e,#7c3aed);">
+                                        <i class="fa-solid fa-brain" style="font-size:36px;color:rgba(255,255,255,0.8);"></i>
+                                    </div>
+                                    <span class="kb-domain-badge" style="background:#8b5cf6;">AI/ML</span>
+                                </div>
+                                <div class="kb-card-body">
+                                    <h3 class="kb-card-title">Brain Tumor Detection using Deep Learning</h3>
+                                    <div class="kb-card-meta">
+                                        <span><i class="fa-solid fa-building-columns"></i> CSE | 2024-25</span>
+                                        <span><i class="fa-solid fa-user-tie"></i> Dr. S. Mahalakshmi</span>
+                                    </div>
+                                    <div class="kb-card-stats">
+                                        <span><i class="fa-solid fa-eye"></i> 550</span>
+                                        <span><i class="fa-solid fa-eye"></i> 140</span>
+                                    </div>
+                                    <div class="kb-card-actions">
+                                        <button class="btn-kb-view" onclick="openDetails('Brain Tumor Detection using Deep Learning','CSE','2024-25','Dr. S. Mahalakshmi','AI/ML','Python, TensorFlow, OpenCV','A convolutional neural network model trained on MRI scans to detect and classify brain tumors with 94% accuracy.')">View Details</button>
+                                        <button class="btn-kb-request" onclick="openRequest('Brain Tumor Detection using Deep Learning')">Request</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="kb-card" data-title="Automated Pick and Place Robotic Arm" data-dept="ECE" data-year="2024-25" data-domain="Robotics" data-technology="Arduino" data-faculty="Dr. P. Venkatesan" data-views="278">
+                                <div class="kb-card-img">
+                                    <div class="kb-card-img-placeholder" style="background:linear-gradient(135deg,#064e3b,#10b981);">
+                                        <i class="fa-solid fa-robot" style="font-size:36px;color:rgba(255,255,255,0.8);"></i>
+                                    </div>
+                                    <span class="kb-domain-badge" style="background:#10b981;">Robotics</span>
+                                </div>
+                                <div class="kb-card-body">
+                                    <h3 class="kb-card-title">Automated Pick and Place Robotic Arm</h3>
+                                    <div class="kb-card-meta">
+                                        <span><i class="fa-solid fa-building-columns"></i> ECE | 2024-25</span>
+                                        <span><i class="fa-solid fa-user-tie"></i> Dr. P. Venkatesan</span>
+                                    </div>
+                                    <div class="kb-card-stats">
+                                        <span><i class="fa-solid fa-eye"></i> 278</span>
+                                        <span><i class="fa-solid fa-eye"></i> 62</span>
+                                    </div>
+                                    <div class="kb-card-actions">
+                                        <button class="btn-kb-view" onclick="openDetails('Automated Pick and Place Robotic Arm','ECE','2024-25','Dr. P. Venkatesan','Robotics','Arduino, Servo Motors, Python','A 5-DOF robotic arm with computer vision integration that autonomously picks and places objects on a conveyor belt.')">View Details</button>
+                                        <button class="btn-kb-request" onclick="openRequest('Automated Pick and Place Robotic Arm')">Request</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="kb-card" data-title="E-Learning Platform for Colleges" data-dept="CSE" data-year="2023-24" data-domain="Web" data-technology="React" data-faculty="Dr. R. Karthikeyan" data-views="421">
+                                <div class="kb-card-img">
+                                    <div class="kb-card-img-placeholder" style="background:linear-gradient(135deg,#1e3a8a,#0284c7);">
+                                        <i class="fa-solid fa-laptop-code" style="font-size:36px;color:rgba(255,255,255,0.8);"></i>
+                                    </div>
+                                    <span class="kb-domain-badge" style="background:#0284c7;">Web</span>
+                                </div>
+                                <div class="kb-card-body">
+                                    <h3 class="kb-card-title">E-Learning Platform for Colleges</h3>
+                                    <div class="kb-card-meta">
+                                        <span><i class="fa-solid fa-building-columns"></i> CSE | 2023-24</span>
+                                        <span><i class="fa-solid fa-user-tie"></i> Dr. R. Karthikeyan</span>
+                                    </div>
+                                    <div class="kb-card-stats">
+                                        <span><i class="fa-solid fa-eye"></i> 421</span>
+                                        <span><i class="fa-solid fa-eye"></i> 101</span>
+                                    </div>
+                                    <div class="kb-card-actions">
+                                        <button class="btn-kb-view" onclick="openDetails('E-Learning Platform for Colleges','CSE','2023-24','Dr. R. Karthikeyan','Web','React, Node.js, MongoDB','A full-stack web platform providing live classes, recorded sessions, quizzes and certificates for college students.')">View Details</button>
+                                        <button class="btn-kb-request" onclick="openRequest('E-Learning Platform for Colleges')">Request</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 5 -->
+                            <div class="kb-card" data-title="Smart Agriculture Monitoring System" data-dept="ECE" data-year="2023-24" data-domain="IoT" data-technology="React" data-faculty="Dr. L. Prabhu" data-views="339">
+                                <div class="kb-card-img">
+                                    <div class="kb-card-img-placeholder" style="background:linear-gradient(135deg,#14532d,#4ade80);">
+                                        <i class="fa-solid fa-seedling" style="font-size:36px;color:rgba(255,255,255,0.8);"></i>
+                                    </div>
+                                    <span class="kb-domain-badge" style="background:#f59e0b;">Embedded</span>
+                                </div>
+                                <div class="kb-card-body">
+                                    <h3 class="kb-card-title">Smart Agriculture Monitoring System</h3>
+                                    <div class="kb-card-meta">
+                                        <span><i class="fa-solid fa-building-columns"></i> ECE | 2023-24</span>
+                                        <span><i class="fa-solid fa-user-tie"></i> Dr. L. Prabhu</span>
+                                    </div>
+                                    <div class="kb-card-stats">
+                                        <span><i class="fa-solid fa-eye"></i> 339</span>
+                                        <span><i class="fa-solid fa-eye"></i> 77</span>
+                                    </div>
+                                    <div class="kb-card-actions">
+                                        <button class="btn-kb-view" onclick="openDetails('Smart Agriculture Monitoring System','ECE','2023-24','Dr. L. Prabhu','Embedded','Raspberry Pi, Sensors, MQTT','A real-time soil moisture, temperature and humidity monitoring system with automated irrigation control via mobile app.')">View Details</button>
+                                        <button class="btn-kb-request" onclick="openRequest('Smart Agriculture Monitoring System')">Request</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 6 -->
+                            <div class="kb-card" data-title="Attendance System using Face Recognition" data-dept="CSE" data-year="2023-24" data-domain="AI/ML" data-technology="TensorFlow" data-faculty="Dr. S. Mahalakshmi" data-views="298">
+                                <div class="kb-card-img">
+                                    <div class="kb-card-img-placeholder" style="background:linear-gradient(135deg,#450a0a,#ef4444);">
+                                        <i class="fa-solid fa-face-smile" style="font-size:36px;color:rgba(255,255,255,0.8);"></i>
+                                    </div>
+                                    <span class="kb-domain-badge" style="background:#ef4444;">AI</span>
+                                </div>
+                                <div class="kb-card-body">
+                                    <h3 class="kb-card-title">Attendance System using Face Recognition</h3>
+                                    <div class="kb-card-meta">
+                                        <span><i class="fa-solid fa-building-columns"></i> CSE | 2023-24</span>
+                                        <span><i class="fa-solid fa-user-tie"></i> Dr. S. Mahalakshmi</span>
+                                    </div>
+                                    <div class="kb-card-stats">
+                                        <span><i class="fa-solid fa-eye"></i> 298</span>
+                                        <span><i class="fa-solid fa-eye"></i> 68</span>
+                                    </div>
+                                    <div class="kb-card-actions">
+                                        <button class="btn-kb-view" onclick="openDetails('Attendance System using Face Recognition','CSE','2023-24','Dr. S. Mahalakshmi','AI/ML','Python, OpenCV, DeepFace','Automated attendance system using facial recognition that marks present/absent in real-time from a webcam feed.')">View Details</button>
+                                        <button class="btn-kb-request" onclick="openRequest('Attendance System using Face Recognition')">Request</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- /kb-grid -->
+
+                        <!-- PAGINATION -->
+                        <div class="kb-pagination">
+                            <button class="kb-page-btn active">1</button>
+                            <button class="kb-page-btn">2</button>
+                            <button class="kb-page-btn">3</button>
+                            <button class="kb-page-btn">4</button>
+                            <span class="kb-page-ellipsis">...</span>
+                            <button class="kb-page-btn">26</button>
+                            <button class="kb-page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+
+
+
+                    </div><!-- /kb-main -->
+                </div><!-- /tab-browse -->
+
+                <!-- TAB CONTENT: MY REQUESTS -->
+                <div class="kb-panel" id="tab-requests">
+                    <div style="background:#fff;border-radius:12px;border:1px solid #E5E7EB;overflow:hidden;padding:12px 0;" id="tab-req-container">
+                    </div>
+                </div>
+
+                <!-- TAB CONTENT: View HISTORY -->
+                <div class="kb-panel" id="tab-history">
+                    <div style="background:#fff;border-radius:12px;border:1px solid #E5E7EB;overflow-x:auto;overflow-y:auto;max-height:450px;width:100%;padding:12px 0;" id="tab-dl-container">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="dashboard-footer">
+            <p>&copy; 2026 Rapid Prototyping Lab Management System. All rights reserved.</p>
+        </footer>
+    </main>
+</div>
+
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+     VIEW DETAILS MODAL
+Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<div id="detailsModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:99999;align-items:center;justify-content:center;overflow-y:auto;">
+    <div style="background:#fff;border-radius:16px;width:90%;max-width:780px;margin:40px auto;box-shadow:0 25px 60px rgba(0,0,0,0.25);overflow:hidden;">
+        <!-- Modal Header -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:24px 28px;border-bottom:1px solid #E5E7EB;">
+            <div>
+                <h2 id="dm-title" style="margin:0;font-size:20px;color:#111827;"></h2>
+                <div style="display:flex;gap:12px;margin-top:6px;" id="dm-badges"></div>
+            </div>
+            <button onclick="closeDetails()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#6B7280;">&times;</button>
+        </div>
+        <!-- Modal Body -->
+        <div style="padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            <div>
+                <div style="background:#F8FAFC;border-radius:12px;height:180px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;" id="dm-img-wrap">
+                    <i class="fa-solid fa-folder-open" style="font-size:48px;color:#CBD5E1;"></i>
+                </div>
+                <h4 style="font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px;">Abstract</h4>
+                <p id="dm-abstract" style="font-size:14px;color:#374151;line-height:1.7;margin:0 0 20px;"></p>
+                <h4 style="font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px;">Technology Stack</h4>
+                <p id="dm-tech" style="font-size:14px;color:#374151;margin:0 0 20px;"></p>
+            </div>
+            <div>
+                <div style="background:#F8FAFC;border-radius:12px;padding:20px;margin-bottom:20px;">
+                    <h4 style="font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 16px;">Project Details</h4>
+                    <div id="dm-details" style="display:flex;flex-direction:column;gap:10px;"></div>
+                </div>
+                <div style="background:#F8FAFC;border-radius:12px;padding:20px;">
+                    <h4 style="font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 16px;">Available Documents</h4>
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#374151;"><i class="fa-solid fa-circle-check" style="color:#10B981;"></i> Final Report</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#374151;"><i class="fa-solid fa-circle-check" style="color:#10B981;"></i> Presentation</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#374151;"><i class="fa-solid fa-circle-check" style="color:#10B981;"></i> Source Code</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#374151;"><i class="fa-solid fa-circle-check" style="color:#10B981;"></i> Literature Survey</div>
+                    </div>
+                    <p style="font-size:12px;color:#9CA3AF;margin:12px 0 0;"><i class="fa-solid fa-lock" style="margin-right:4px;"></i>Documents require faculty approval to view</p>
+                </div>
+            </div>
+        </div>
+        <div style="padding:20px 28px;border-top:1px solid #E5E7EB;display:flex;justify-content:flex-end;gap:12px;">
+            <button onclick="closeDetails()" style="padding:10px 20px;border:1px solid #E5E7EB;border-radius:8px;background:#fff;color:#374151;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px;">Close</button>
+            <button id="dm-req-btn" style="padding:10px 24px;border:none;border-radius:8px;background:#4F46E5;color:#fff;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px;">Request View Access</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================================
+     REQUEST VIEW MODAL
+========================================================== -->
+<div id="requestModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:999999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:16px;width:90%;max-width:520px;margin:auto;box-shadow:0 25px 60px rgba(0,0,0,0.25);animation:kbModalIn 0.3s ease;">
+        <div style="padding:24px 28px;border-bottom:1px solid #E5E7EB;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <h3 style="margin:0;font-size:18px;color:#111827;">Request View</h3>
+                <p id="rm-project" style="margin:4px 0 0;font-size:13px;color:#6B7280;"></p>
+            </div>
+            <button onclick="closeRequest()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#6B7280;">&times;</button>
+        </div>
+        <div style="padding:24px 28px;">
+            <div style="margin-bottom:16px;">
+                <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Reason for Request <span style="color:#EF4444;">*</span></label>
+                <select id="requestReason" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:8px;font-family:inherit;font-size:14px;color:#374151;background:#fff;outline:none;" required>
+                    <option value="">Select reason</option>
+                    <option>Academic Reference</option>
+                    <option>Research Purpose</option>
+                    <option>Project Inspiration</option>
+                    <option>Learning & Study</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Additional Remarks <span style="color:#9CA3AF;">(optional)</span></label>
+                <textarea rows="3" placeholder="Any additional details for the faculty..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:8px;font-family:inherit;font-size:14px;color:#374151;resize:vertical;outline:none;box-sizing:border-box;"></textarea>
+            </div>
+        </div>
+        <div style="padding:16px 28px 24px;display:flex;justify-content:flex-end;gap:12px;">
+            <button onclick="closeRequest()" style="padding:10px 20px;border:1px solid #E5E7EB;border-radius:8px;background:#fff;color:#374151;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px;">Cancel</button>
+            <button onclick="submitRequest()" style="padding:10px 24px;border:none;border-radius:8px;background:#4F46E5;color:#fff;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px;"><i class="fa-solid fa-paper-plane" style="margin-right:6px;"></i>Submit Request</button>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/global.js"></script>
+<script>
+// ─── KB FUNCTIONS ───
+function filterProjects() {
+
+    var search = document.getElementById("kbSearch").value.toLowerCase();
+
+    var department = document.getElementById("departmentFilter").value;
+    var year = document.getElementById("yearFilter").value;
+    var domain = document.getElementById("domainFilter").value;
+    var technology = document.getElementById("technologyFilter").value;
+    var faculty = document.getElementById("facultyFilter").value;
+
+    var cards = document.querySelectorAll(".kb-card");
+
+    var visible = 0;
+
+    cards.forEach(function(card) {
+
+        var title = (card.dataset.title || "").toLowerCase();
+        var dept = card.dataset.dept || "";
+        var yr = card.dataset.year || "";
+        var dom = card.dataset.domain || "";
+        var tech = card.dataset.technology || "";
+        var fac = card.dataset.faculty || "";
+
+        var matchSearch =
+            search === "" ||
+            title.includes(search);
+
+        var matchDepartment =
+            department === "" ||
+            dept === department;
+
+        var matchYear =
+            year === "" ||
+            yr === year;
+
+        var matchDomain =
+            domain === "" ||
+            dom === domain;
+
+        var matchTechnology =
+            technology === "" ||
+            tech === technology;
+
+        var matchFaculty =
+            faculty === "" ||
+            fac === faculty;
+
+        if (
+            matchSearch &&
+            matchDepartment &&
+            matchYear &&
+            matchDomain &&
+            matchTechnology &&
+            matchFaculty
+        ) {
+            card.style.display = "";
+            visible++;
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+
+    document.getElementById("kbCount").innerHTML =
+        "Showing <strong>" + visible + "</strong> projects";
+}
+
+function sortProjects() {
+
+    const sortValue = document.getElementById("sortFilter").value;
+    const container = document.getElementById("kbGrid");
+    const cards = Array.from(document.querySelectorAll(".kb-card"));
+
+    cards.sort(function(a, b) {
+
+        if (sortValue === "Newest") {
+            return b.dataset.year.localeCompare(a.dataset.year);
+        }
+
+        if (sortValue === "Oldest") {
+            return a.dataset.year.localeCompare(b.dataset.year);
+        }
+
+        if (sortValue === "Most Viewed") {
+            return Number(b.dataset.views) - Number(a.dataset.views);
+        }
+
+        if (sortValue === "Alphabetical") {
+            return a.dataset.title.localeCompare(b.dataset.title);
+        }
+
+        return 0;
+    });
+
+    cards.forEach(function(card) {
+        container.appendChild(card);
+    });
+
+}
+
+function clearFilters() {
+
+    document.getElementById("kbSearch").value = "";
+
+    document.getElementById("departmentFilter").selectedIndex = 0;
+    document.getElementById("yearFilter").selectedIndex = 0;
+    document.getElementById("domainFilter").selectedIndex = 0;
+    document.getElementById("technologyFilter").selectedIndex = 0;
+    document.getElementById("facultyFilter").selectedIndex = 0;
+    document.getElementById("sortFilter").selectedIndex = 0;
+
+    filterProjects();
+    sortProjects();
+
+}
+
+function sortProjects() {
+
+    const sortValue = document.getElementById("sortFilter").value;
+    const grid = document.getElementById("kbGrid");
+    const cards = Array.from(grid.querySelectorAll(".kb-card"));
+
+    cards.sort(function(a, b) {
+
+        switch (sortValue) {
+
+            case "Newest":
+                return b.dataset.year.localeCompare(a.dataset.year);
+
+            case "Oldest":
+                return a.dataset.year.localeCompare(b.dataset.year);
+
+            case "Most Viewed":
+                return Number(b.dataset.views) - Number(a.dataset.views);
+
+            case "Alphabetical":
+                return a.dataset.title.localeCompare(b.dataset.title);
+
+            default:
+                return 0;
+        }
+
+    });
+
+    cards.forEach(function(card) {
+        grid.appendChild(card);
+    });
+
+}
+
+function setView(v) {
+    var grid = document.getElementById('kbGrid');
+    if (v === 'list') {
+        grid.classList.add('kb-list-view');
+        document.getElementById('gridViewBtn').classList.remove('active');
+        document.getElementById('listViewBtn').classList.add('active');
+    } else {
+        grid.classList.remove('kb-list-view');
+        document.getElementById('gridViewBtn').classList.add('active');
+        document.getElementById('listViewBtn').classList.remove('active');
+    }
+}
+
+var _currentProject = '';
+
+function openDetails(title, dept, year, faculty, domain, tech, abstract) {
+    _currentProject = title;
+    document.getElementById('dm-title').innerText = title;
+    document.getElementById('dm-abstract').innerText = abstract;
+    document.getElementById('dm-tech').innerText = tech;
+    document.getElementById('dm-badges').innerHTML =
+        '<span style="background:#EEF2FF;color:#4F46E5;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;">' + domain + '</span>' +
+        '<span style="background:#F0FDF4;color:#15803D;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;">Completed</span>';
+    document.getElementById('dm-details').innerHTML =
+        detailRow('Department', dept) +
+        detailRow('Academic Year', year) +
+        detailRow('Faculty Mentor', faculty) +
+        detailRow('Domain', domain);
+    document.getElementById('dm-req-btn').onclick = function() { closeDetails(); openRequest(title); };
+    var m = document.getElementById('detailsModal');
+    m.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:99999;align-items:flex-start;justify-content:center;overflow-y:auto;';
+}
+
+function detailRow(label, value) {
+    return '<div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;color:#6B7280;">'+label+':</span><span style="font-size:13px;font-weight:600;color:#111827;">'+value+'</span></div>';
+}
+
+function closeDetails() {
+    document.getElementById('detailsModal').style.display = 'none';
+}
+
+function openRequest(title) {
+    _currentProject = title;
+    document.getElementById('rm-project').innerText = title;
+    var m = document.getElementById('requestModal');
+    m.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:999999;align-items:center;justify-content:center;';
+}
+
+function closeRequest() {
+    document.getElementById('requestModal').style.display = 'none';
+}
+
+function submitRequest() {
+    // ===============================
+    // VALIDATE SELECT DOCUMENTS
+    // ===============================
+    const selectedDocuments = document.querySelectorAll(
+        'input[name="documents"]:checked'
+    );
+
+    if (selectedDocuments.length === 0) {
+        alert("Please select at least one document.");
+        return;
+    }
+
+    // ===============================
+    // VALIDATE REASON FOR REQUEST
+    // ===============================
+    const reason = document.getElementById("requestReason").value.trim();
+
+    if (reason === "") {
+        alert("Please select the reason for request.");
+        return;
+    }
+    closeRequest();
+    var modal = document.getElementById('requestModal');
+    var title = _currentProject || (modal ? modal.querySelector('#rm-project').innerText : '') || 'Project Request';
+    var checkboxes = modal ? modal.querySelectorAll('input[type="checkbox"]') : [];
+    var docs = [];
+    checkboxes.forEach(function(cb) {
+        if (cb.checked && cb.parentElement) {
+            docs.push(cb.parentElement.textContent.trim());
+        }
+    });
+    var docsText = docs.length ? docs.join(', ') : 'Final Report';
+    var reqBody = document.querySelector('#tab-req-container tbody');
+    if (reqBody) {
+        var today = new Date();
+        var dateStr = today.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+        var row = document.createElement('tr');
+        row.setAttribute('data-status', 'pending');
+        row.style.borderBottom = '1px solid #F3F4F6';
+        row.innerHTML =
+            '<td style="padding:16px 20px;font-weight:600;color:#111827;">' + title + '</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">' + docsText + '</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">' + dateStr + '</td>' +
+            '<td style="padding:16px 20px;"><span class="kb-status-badge pending">Pending</span></td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">—</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">—</td>' +
+            '<td style="padding:16px 20px;"><button type="button" onclick="cancelKbRequest(this)" style="padding:6px 12px;background:#fff1f2;color:#dc2626;border:1px solid #fecdd3;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;"><i class="fa-solid fa-xmark"></i> Cancel</button></td>';
+        reqBody.prepend(row);
+    }
+    // Show success toast
+    var toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:#111827;color:#fff;padding:14px 22px;border-radius:10px;font-size:14px;font-weight:500;z-index:9999999;box-shadow:0 8px 24px rgba(0,0,0,0.3);display:flex;align-items:center;gap:10px;';
+    toast.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#10B981;font-size:16px;"></i> Request submitted! Awaiting faculty approval.';
+    document.body.appendChild(toast);
+    setTimeout(function() { toast.remove(); }, 3500);
+}
+
+function cancelKbRequest(button) {
+    var row = button && button.closest('tr');
+    if (!row) return;
+    var status = (row.getAttribute('data-status') || '').toLowerCase();
+    if (status !== 'pending') {
+        if (window.showToast) {
+            window.showToast('Only pending requests can be cancelled.', 'warning');
+        }
+        return;
+    }
+    var titleCell = row.querySelector('td');
+    var title = titleCell ? titleCell.textContent.trim() : 'this request';
+    if (!confirm('Cancel ' + title + '? This cannot be undone.')) return;
+    row.remove();
+    if (window.showToast) {
+        window.showToast('Request cancelled successfully.', 'warning');
+    }
+}
+
+// Pagination clicks
+document.querySelectorAll('.kb-page-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.kb-page-btn').forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+    });
+});
+
+// Tab Switching
+function switchKbTab(btn, tabId) {
+    document.querySelectorAll('.kb-tab').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.kb-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+// Populate Tables on load (runs immediately since it's at the end of the body)
+(function() {
+    var reqRows = [
+        { title:'Smart Inventory Management System', date:'May 16, 2025', docs:'Final Report, Presentation', status:'pending', statusLabel:'Pending', faculty:'—', approve:'—', expiry:'—' },
+        { title:'Brain Tumor Detection using Deep Learning', date:'May 14, 2025', docs:'Final Report', status:'approved', statusLabel:'Approved', faculty:'Dr. S. Mahalakshmi', approve:'May 15, 2025', expiry:'May 16, 2025' },
+        { title:'IoT Home Automation System', date:'May 13, 2025', docs:'Source Code, User Manual', status:'pending', statusLabel:'Pending', faculty:'—', approve:'—', expiry:'—' },
+        { title:'E-Learning Platform for Colleges', date:'May 10, 2025', docs:'Final Report', status:'rejected', statusLabel:'Rejected', faculty:'Dr. R. Karthikeyan', approve:'—', expiry:'—' },
+        { title:'Drone Surveillance System', date:'May 11, 2025', docs:'Final Report, Presentation', status:'approved', statusLabel:'Approved', faculty:'Dr. P. Venkatesan', approve:'May 12, 2025', expiry:'May 13, 2025' },
+        { title:'Library Management System', date:'May 08, 2025', docs:'Final Report', status:'approved', statusLabel:'Approved', faculty:'Dr. R. Karthikeyan', approve:'May 09, 2025', expiry:'May 10, 2025' },
+    ];
+
+    var dlRows = [
+        { title:'Drone Surveillance System', docs:'Final Report, Presentation', dlDate:'May 12, 2025', faculty:'Dr. P. Venkatesan', expiry:'May 13, 2025', expired:false },
+        { title:'Library Management System', docs:'Final Report', dlDate:'May 09, 2025', faculty:'Dr. R. Karthikeyan', expiry:'May 10, 2025', expired:false },
+        { title:'Smart Waste Management', docs:'Final Report, User Manual', dlDate:'May 05, 2025', faculty:'Dr. S. Mahalakshmi', expiry:'May 06, 2025', expired:true },
+        { title:'Brain Tumor Detection', docs:'Final Report', dlDate:'Apr 28, 2025', faculty:'Dr. S. Mahalakshmi', expiry:'Apr 29, 2025', expired:true },
+    ];
+
+    // Build Requests Table
+    var reqHtml = '<table style="width:100%;border-collapse:collapse;font-size:14px;">' +
+        '<thead><tr style="background:#F8FAFC;border-bottom:1px solid #E5E7EB;">' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Project Title</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Requested Documents</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Request Date</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Status</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Approved By</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Expiry</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Action</th>' +
+        '</tr></thead><tbody>';
+    reqRows.forEach(function(r) {
+        var badge = '<span class="kb-status-badge '+r.status+'">'+r.statusLabel+'</span>';
+        var action = r.status === 'pending'
+            ? '<button type="button" onclick="cancelKbRequest(this)" style="padding:6px 12px;background:#fff1f2;color:#dc2626;border:1px solid #fecdd3;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;"><i class="fa-solid fa-xmark"></i> Cancel</button>'
+            : '<span style="font-size:12px;color:#9CA3AF;font-weight:600;">Locked</span>';
+        reqHtml += '<tr data-status="'+r.status+'" style="border-bottom:1px solid #F3F4F6;">' +
+            '<td style="padding:16px 20px;font-weight:600;color:#111827;">'+r.title+'</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">'+r.docs+'</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">'+r.date+'</td>' +
+            '<td style="padding:16px 20px;">'+badge+'</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">'+r.faculty+'</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">'+r.expiry+'</td>' +
+            '<td style="padding:16px 20px;">'+action+'</td>' +
+            '</tr>';
+    });
+    reqHtml += '</tbody></table>';
+    document.getElementById('tab-req-container').innerHTML = reqHtml;
+
+    // Build Views Table
+    var dlHtml = '<div style="overflow-x:auto;">' + '<table style="width:100%;min-width:950px;border-collapse:collapse;font-size:14px;">' +
+        '<thead><tr style="background:#F8FAFC;border-bottom:1px solid #E5E7EB;">' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Project Title</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Approved Documents</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Approval Date</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Approved By</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Access Expiry</th>' +
+        '<th style="padding:14px 20px;text-align:left;font-weight:700;color:#374151;">Action</th>' +
+        '</tr></thead><tbody>';
+    dlRows.forEach(function(r) {
+        var btn = r.expired
+            ? '<span style="font-size:12px;color:#9CA3AF;font-weight:600;"><i class="fa-solid fa-ban"></i> Expired</span>'
+            : '<button onclick="alert(\'Loading: '+r.title+'\')" style="padding:6px 14px;background:#4F46E5;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;"><i class="fa-solid fa-eye"></i> View Document</button>';
+        dlHtml += '<tr style="border-bottom:1px solid #F3F4F6;">' +
+            '<td style="padding:16px 20px;font-weight:600;color:#111827;">'+r.title+'</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">'+r.docs+'</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">'+r.dlDate+'</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">'+r.faculty+'</td>' +
+            '<td style="padding:16px 20px;color:#6B7280;">'+r.expiry+'</td>' +
+            '<td style="padding:16px 20px;">'+btn+'</td>' +
+            '</tr>';
+    });
+    dlHtml += '</tbody></table></div>';
+    document.getElementById('tab-dl-container').innerHTML = dlHtml;
+})();
+</script>
+
+</body>
+</html>

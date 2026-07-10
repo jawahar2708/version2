@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+(function (d, w) {
+    var root = d.documentElement;
+    root.removeAttribute('data-theme');
+    root.style.colorScheme = 'light';
+    root.style.backgroundColor = '#F4F7FC';
+    var style = d.createElement('style');
+    style.id = 'portal-theme-critical';
+    style.textContent =
+        ':root{--background:#F4F7FC;--card:#FFF;--text-dark:#1F2937;--text-light:#6B7280;--border:#E5E7EB;--primary:#4F46E5;--primary-light:#EEF2FF}' +
+        'html,body{margin:0;min-height:100vh;background-color:var(--background);color:var(--text-dark);color-scheme:light}';
+    d.head.appendChild(style);
+})(document, window);
+    </script>
+    <title>Ongoing Projects | Student Portal</title>
+    <script src="assets/js/portal-preferences.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="./assets/css/ongoingprojects.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/images/OIP.webp" alt="Rapid Prototyping Lab">
+            <div class="logo-text">
+                <h4>Proto Track</h4>
+                <p>Rapid Prototyping Lab</p>
+            </div>
+        </div>
+        <nav class="sidebar-menu">
+            <p class="menu-title">STUDENT PORTAL</p>
+            <ul>
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" class="submenu-toggle">
+                        <i class="fa-solid fa-folder-open menu-icon"></i>
+                        <span class="menu-text">My Projects</span>
+                        <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="ongoingprojects.html">
+                                <i class="fa-solid fa-spinner submenu-icon"></i>
+                                <span>Ongoing Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="completedprojects.html">
+                                <i class="fa-solid fa-circle-check submenu-icon"></i>
+                                <span>Completed Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="supportcenter.html">
+                        <i class="fa-solid fa-headset menu-icon"></i>
+                        <span class="menu-text">Enquiry</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="knowledgebase.html">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <span class="menu-text">Knowledge Base</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="myprofile.html">
+                        <i class="fa-solid fa-user menu-icon"></i>
+                        <span class="menu-text">My Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+    <!-- MAIN -->
+    <main class="main-content">
+        <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/images/OIP.webp" alt="Rapid Prototyping Lab">
+            <div class="logo-text">
+                <h4>Proto Track</h4>
+                <p>Rapid Prototyping Lab</p>
+            </div>
+        </div>
+        <nav class="sidebar-menu">
+            <p class="menu-title">STUDENT PORTAL</p>
+            <ul>
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" class="submenu-toggle">
+                        <i class="fa-solid fa-folder-open menu-icon"></i>
+                        <span class="menu-text">My Projects</span>
+                        <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="ongoingprojects.html">
+                                <i class="fa-solid fa-spinner submenu-icon"></i>
+                                <span>Ongoing Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="completedprojects.html">
+                                <i class="fa-solid fa-circle-check submenu-icon"></i>
+                                <span>Completed Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="supportcenter.html">
+                        <i class="fa-solid fa-headset menu-icon"></i>
+                        <span class="menu-text">Enquiry</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="knowledgebase.html">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <span class="menu-text">Knowledge Base</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="myprofile.html">
+                        <i class="fa-solid fa-user menu-icon"></i>
+                        <span class="menu-text">My Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+        <!-- TOPBAR -->
+        <header class="top-navbar">
+            <div class="nav-left">
+                <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-title">
+                    <h2>Ongoing Projects</h2>
+                    <p>Track and manage your active projects</p>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="notification-container">
+                    <button type="button" class="notification-trigger" aria-label="Open notifications" aria-haspopup="dialog" aria-expanded="false">
+                        <i class="fa-solid fa-bell" style="font-size:20px;color:var(--text-dark);"></i>
+                    </button>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <a href="myprofile.html"><img src="assets/images/OIP.webp" alt="Student"></a>
+                    <div class="user-info"><h4>Trainee1</h4><p>Student</p></div>
+                </div>
+            </div>
+        </header>
+
+    <!-- MAIN CONTENT -->
+    <section class="dashboard-content">
+        <div class="content-wrapper">
+            <!-- TAB NAVIGATION -->
+            <div class="project-tabs">
+                <button class="project-tab active" data-view="dashboard" onclick="spaNavigate('dashboard')">
+                    <i class="fa-solid fa-circle-info"></i> Overview
+                </button>
+                <button class="project-tab" data-view="stage-detail" onclick="openStageDetail(3)">
+                    <i class="fa-solid fa-layer-group"></i> Stage Tracker
+                </button>
+                <button class="project-tab" data-view="equipment-booking" onclick="spaNavigate('equipment-booking')">
+                    <i class="fa-solid fa-calendar-check"></i> Equipment Booking
+                </button>
+                <button class="project-tab" data-view="component-booking" onclick="spaNavigate('component-booking')">
+                    <i class="fa-solid fa-cubes"></i> Component Booking
+                </button>
+                <button class="project-tab" data-view="daily-tools" onclick="spaNavigate('daily-tools')">
+                    <i class="fa-solid fa-screwdriver-wrench"></i> Tools
+                </button>
+                <button class="project-tab" data-view="component-returning" onclick="spaNavigate('component-returning')">
+                    <i class="fa-solid fa-rotate-left"></i> Returns
+                </button>
+            </div>
+
+            <!-- VIEW 1: DASHBOARD/OVERVIEW -->
+            <div id="view-dashboard" class="spa-view active">
+                <div class="overview-shell">
+                    <!-- Project Hero Card -->
+                    <div class="overview-card" style="margin-bottom:16px;">
+                        <div class="overview-hero">
+                            <div class="overview-hero-media">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h2 style="margin:0;font-size:28px;font-weight:800;letter-spacing:-0.03em;color:#0f172a;">Smart Agriculture Robot</h2>
+                                <div class="project-status-pill">
+                                    <span class="status-dot"></span>
+                                    Active
+                                </div>
+                                <div class="project-progress">
+                                    <p class="project-progress-value">72%</p>
+                                    <p class="project-progress-label">Overall Progress</p>
+                                    <div class="project-progress-bar"><span></span></div>
+                                </div>
+                            </div>
+                            <div class="project-stats">
+                                <div class="project-stat">
+                                    <div class="stat-icon" style="background:#ede9fe;color:#6d28d9;"><i class="fa-solid fa-flag"></i></div>
+                                    <div class="stat-label">Current Stage</div>
+                                    <div class="stat-value">Prototype Development</div>
+                                </div>
+                                <div class="project-stat">
+                                    <div class="stat-icon" style="background:#ffedd5;color:#ea580c;"><i class="fa-regular fa-calendar-days"></i></div>
+                                    <div class="stat-label">Days Left</div>
+                                    <div class="stat-value" style="font-size:28px;color:#111827;">58</div>
+                                </div>
+                                <div class="project-stat">
+                                    <div class="stat-icon" style="background:#fee2e2;color:#dc2626;"><i class="fa-regular fa-calendar-check"></i></div>
+                                    <div class="stat-label">Final Submission</div>
+                                    <div class="stat-value" style="font-size:18px;color:#dc2626;">25 Dec 2025</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Info & Team Section -->
+                    <div class="project-section-grid">
+                        <div class="overview-panel stage-card">
+                            <h3 class="section-title">
+                                <span class="stage-icon"><i class="fa-solid fa-circle-info"></i></span>
+                                Project Information
+                            </h3>
+                            <div class="project-info-grid">
+                                <div class="project-info-row">
+                                    <div class="project-info-label"><i class="fa-regular fa-id-card"></i> Project ID</div>
+                                    <div class="project-info-value">PRJ-2025-07</div>
+                                </div>
+                                <div class="project-info-row">
+                                    <div class="project-info-label"><i class="fa-solid fa-folder-open"></i> Project Name</div>
+                                    <div class="project-info-value">Smart Agriculture Robot</div>
+                                </div>
+                                <div class="project-info-row">
+                                    <div class="project-info-label"><i class="fa-regular fa-calendar-plus"></i> Start Date</div>
+                                    <div class="project-info-value">10 Jun 2025</div>
+                                </div>
+                                <div class="project-info-row">
+                                    <div class="project-info-label"><i class="fa-regular fa-calendar-check"></i> Final Submission</div>
+                                    <div class="project-info-value">25 Dec 2025</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overview-panel stage-card">
+                            <h3 class="section-title">
+                                <span class="stage-icon"><i class="fa-solid fa-users"></i></span>
+                                Team Information
+                            </h3>
+                            <div class="team-grid">
+                                <div class="team-box">
+                                    <div class="team-title">Faculty Guide</div>
+                                    <div class="member-row">
+                                        <div class="avatar-chip purple">DK</div>
+                                        <div>
+                                            <p class="member-name">Dr. R. Kumar</p>
+                                            <p class="member-role">Professor<br>Mechanical Engineering</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="team-box">
+                                    <div class="team-title">Team Leader</div>
+                                    <div class="member-row">
+                                        <div class="avatar-chip blue">S</div>
+                                        <div>
+                                            <p class="member-name">Surendhan</p>
+                                            <p class="member-role">Team Leader</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="team-box">
+                                    <div class="team-title">Team Members (4)</div>
+                                    <div class="member-row">
+                                        <div class="avatar-chip green">AK</div>
+                                        <div><p class="member-name">Arun K</p></div>
+                                    </div>
+                                    <div class="member-row">
+                                        <div class="avatar-chip orange">MS</div>
+                                        <div><p class="member-name">Monisha S</p></div>
+                                    </div>
+                                    <div class="member-row">
+                                        <div class="avatar-chip purple">VP</div>
+                                        <div><p class="member-name">Vignesh P</p></div>
+                                    </div>
+                                    <div class="member-row">
+                                        <div class="avatar-chip blue">SR</div>
+                                        <div><p class="member-name">Sriram R</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stage Progress -->
+                    <div class="overview-panel stage-progress-panel">
+                        <div class="stage-header">
+                            <h3><span class="stage-icon"><i class="fa-solid fa-route"></i></span> Overall Stage Progress</h3>
+                        </div>
+                        <div class="overview-stepper">
+                            <div class="overview-step completed" onclick="openStageDetail(1)">
+                                <div class="circle"><i class="fa-solid fa-check"></i></div>
+                                <div class="title">Idea Generation</div>
+                                <div class="state">Completed</div>
+                            </div>
+                            <div class="overview-step completed" onclick="openStageDetail(2)">
+                                <div class="circle"><i class="fa-solid fa-check"></i></div>
+                                <div class="title">Project Proposal</div>
+                                <div class="state">Completed</div>
+                            </div>
+                            <div class="overview-step current" onclick="openStageDetail(3)">
+                                <div class="circle">3</div>
+                                <div class="title">Design & Analysis</div>
+                                <div class="state">In Progress</div>
+                            </div>
+                            <div class="overview-step" onclick="openStageDetail(4)">
+                                <div class="circle">4</div>
+                                <div class="title">Prototype Development</div>
+                                <div class="state">Locked</div>
+                            </div>
+                            <div class="overview-step" onclick="openStageDetail(5)">
+                                <div class="circle">5</div>
+                                <div class="title">Testing & Validation</div>
+                                <div class="state">Locked</div>
+                            </div>
+                            <div class="overview-step" onclick="openStageDetail(6)">
+                                <div class="circle">6</div>
+                                <div class="title">Integration</div>
+                                <div class="state">Locked</div>
+                            </div>
+                            <div class="overview-step" onclick="openStageDetail(7)">
+                                <div class="circle">7</div>
+                                <div class="title">Final Testing</div>
+                                <div class="state">Locked</div>
+                            </div>
+                            <div class="overview-step" onclick="openStageDetail(8)">
+                                <div class="circle">8</div>
+                                <div class="title">Documentation</div>
+                                <div class="state">Locked</div>
+                            </div>
+                            <div class="overview-step" onclick="openStageDetail(9)">
+                                <div class="circle">9</div>
+                                <div class="title">Review & Approval</div>
+                                <div class="state">Locked</div>
+                            </div>
+                            <div class="overview-step" onclick="openStageDetail(10)">
+                                <div class="circle">10</div>
+                                <div class="title">Final Submission</div>
+                                <div class="state">Locked</div>
+                            </div>
+                        </div>
+                        <div class="overview-stepper-note">
+                            <i class="fa-solid fa-circle-info"></i>
+                            You are currently in <strong>Design & Analysis</strong> stage.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: STAGE TRACKER -->
+            <div id="view-stage-detail" class="spa-view">
+                <div class="stage-tracker-shell">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+                        <button onclick="spaNavigate('dashboard')" class="btn-text">
+                            <i class="fa-solid fa-arrow-left"></i> Back to Project
+                        </button>
+                        
+                        <!-- Submenu Tabs -->
+                        <div class="stage-tab-container">
+                            <button class="stage-tab active" data-tab="timeline-info" onclick="switchStageTab('timeline-info')">
+                                <i class="fa-solid fa-diagram-project"></i> Stage Timeline & Info
+                            </button>
+                            <button class="stage-tab" data-tab="submission" onclick="switchStageTab('submission')">
+                                <i class="fa-solid fa-file-arrow-up"></i> Current Submission
+                            </button>
+                            <button class="stage-tab" data-tab="history" onclick="switchStageTab('history')">
+                                <i class="fa-solid fa-clock-rotate-left"></i> Version History
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TAB 1: STAGE TIMELINE & INFORMATION -->
+                    <div id="tab-stage-timeline-info" class="stage-tab-content active-content">
+                        <div class="stage-tracker-grid">
+                            <!-- Left: Timeline -->
+                            <div class="overview-panel tracker-panel">
+                                <div class="tracker-header">
+                                    <div>
+                                        <h2 class="tracker-title">Stage Timeline</h2>
+                                        <p class="tracker-subtitle">Track your project progress through all 10 stages</p>
+                                    </div>
+                                </div>
+                                <div id="stage-timeline-list" class="stage-timeline-list"></div>
+                                <div class="tracker-footer-note">
+                                    Click on any stage to view details in <strong>Stage Information</strong>.
+                                </div>
+                            </div>
+
+                            <!-- Right: Stage Info -->
+                            <div class="overview-panel stage-info-card">
+                                <h2 class="section-title">
+                                    <span class="stage-icon"><i class="fa-solid fa-circle-info"></i></span>
+                                    Stage Information
+                                </h2>
+                                <div class="stage-info-top">
+                                    <div>
+                                        <h3 id="tracker-stage-name">Design & Analysis</h3>
+                                        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+                                            <span class="mini-pill" id="tracker-stage-count-pill">Stage 3 of 10</span>
+                                            <span class="mini-pill status" id="tracker-stage-status-pill">In Progress</span>
+                                        </div>
+                                        <p id="tracker-stage-summary">Create the system design, architecture and analyze feasibility for the proposed solution.</p>
+                                    </div>
+                                    <div class="stage-info-illustration">
+                                        <i class="fa-solid fa-clipboard-list"></i>
+                                    </div>
+                                </div>
+                                <div class="stage-info-list">
+                                    <div class="info-row">
+                                        <span><i class="fa-regular fa-hashtag"></i> Stage Number</span>
+                                        <strong id="tracker-stage-number">3</strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <span><i class="fa-solid fa-font"></i> Stage Name</span>
+                                        <strong id="tracker-stage-name-label">Design & Analysis</strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <span><i class="fa-solid fa-circle-info"></i> Stage Status</span>
+                                        <strong id="tracker-stage-status-label">In Progress</strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <span><i class="fa-regular fa-calendar-plus"></i> Stage Start Date</span>
+                                        <strong id="tracker-stage-start">28 May 2025</strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <span><i class="fa-regular fa-calendar-check"></i> Stage End Date</span>
+                                        <strong id="tracker-stage-end">15 Jun 2025</strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <span><i class="fa-regular fa-clock"></i> Days Remaining</span>
+                                        <strong id="tracker-days-remaining">18 Days</strong>
+                                    </div>
+                                </div>
+                                <div class="task-box">
+                                    <h4>What you need to do</h4>
+                                    <ul id="tracker-stage-tasks-list">
+                                        <li>Prepare system design documents</li>
+                                        <li>Create diagrams and models</li>
+                                        <li>Analyze feasibility and requirements</li>
+                                        <li>Upload all required documents</li>
+                                        <li>Submit for faculty review</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="info-notice-box" style="margin-top: 16px; background: #fffdf5; border: 1px solid #fef3c7; border-left: 4px solid #f59e0b; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #78350f; display: flex; gap: 8px; align-items: flex-start;">
+                                    <i class="fa-solid fa-triangle-exclamation" style="margin-top: 2px;"></i>
+                                    <div>
+                                        <strong>Note:</strong> Once submitted, you cannot upload new files until the faculty reviews your submission. If rejected, you can upload a new version with required changes.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: CURRENT SUBMISSION -->
+                    <div id="tab-stage-submission" class="stage-tab-content" style="display:none;">
+                        <div class="overview-panel tracker-panel">
+                            <h2 class="section-title">
+                                <span class="stage-icon"><i class="fa-solid fa-file-arrow-up"></i></span>
+                                Current Submission
+                            </h2>
+                            <div class="submission-summary" style="margin-bottom: 24px;">
+                                <div class="summary-chip">
+                                    <span>Stage</span>
+                                    <strong id="submission-stage">Design & Analysis (Stage 3)</strong>
+                                </div>
+                                <div class="summary-chip">
+                                    <span>Status</span>
+                                    <strong class="in-progress" id="submission-status">In Progress</strong>
+                                </div>
+                                <div class="summary-chip">
+                                    <span>Submission Status</span>
+                                    <strong class="warning" id="submission-upload-status">Not Submitted</strong>
+                                </div>
+                            </div>
+                            <div class="submission-upload-grid">
+                                <div class="upload-card">
+                                    <h4>Upload Files</h4>
+                                    <p>You can upload multiple files. Max file size: 10MB per file.</p>
+                                    <div class="upload-zone" id="stage-upload-zone" onclick="document.getElementById('fileUploadMock').click()">
+                                        <div class="upload-icon">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        </div>
+                                        <h4 id="uploadText">Drag & drop files here</h4>
+                                        <p>or click to browse documents</p>
+                                        <input type="file" style="display:none;" id="fileUploadMock" multiple onchange="handleFileUpload(this)">
+                                    </div>
+                                    <div id="uploaded-files-list" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
+                                        <!-- Dynamically listed uploaded files -->
+                                    </div>
+                                </div>
+                                <div class="guideline-card">
+                                    <h4>Submission Guidelines</h4>
+                                    <ul>
+                                        <li>Upload all relevant design documents</li>
+                                        <li>Accepted formats: PDF, DOC, DOCX, PPT, PNG, JPG, ZIP</li>
+                                        <li>Ensure all files are clearly named</li>
+                                        <li>Maximum 10MB per file</li>
+                                        <li>Add remarks before submission</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="remarks-row" style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+                                <div style="width: 100%;">
+                                    <label style="font-weight: 600; font-size: 14px; display: block; margin-bottom: 8px; color: var(--text-dark);">Submission Remarks (Optional)</label>
+                                    <textarea id="submission-remarks" placeholder="Write any remarks or additional information about your submission..." style="width:100%; min-height:100px; padding:12px; border:1px solid var(--border); border-radius:8px; resize:vertical; font-size:14px;"></textarea>
+                                </div>
+                                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:8px;">
+                                    <button class="btn" style="background:#fff; border:1px solid #dbe4f0; color:#475569; padding:10px 20px;" onclick="resetSubmissionForm()">Reset</button>
+                                    <button class="btn btn-primary" id="stage-submit-btn" onclick="submitStageWork()" style="padding:10px 24px;">Submit for Review</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: VERSION HISTORY -->
+                    <div id="tab-stage-history" class="stage-tab-content" style="display:none;">
+                        <div class="overview-panel tracker-panel">
+                            <h2 class="section-title">
+                                <span class="stage-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                                Version History
+                            </h2>
+                            <p style="font-size:13px;color:#64748b;margin:4px 0 20px 0;">View all your submissions and faculty reviews for this stage</p>
+                            <div id="version-history-list" class="version-history-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: COMPONENT BOOKING -->
+            <div id="view-component-booking" class="spa-view">
+                <button onclick="spaNavigate('dashboard')" class="btn-text" style="margin-bottom:16px;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Project
+                </button>
+
+                <div style="background: #eef2ff; border: 1px solid #e0e7ff; border-left: 4px solid #4f46e5; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 13.5px; color: #3730a3; display: flex; gap: 10px; align-items: center;">
+                    <i class="fa-solid fa-circle-info" style="font-size: 16px;"></i>
+                    <div>
+                        <strong>Project Hand-over Policy:</strong> Requested components are project-bound and will be handed over to your team permanently after project completion.
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:8px;margin-bottom:24px;border-bottom:2px solid #e2e8f0;padding-bottom:0;">
+                    <button class="component-tab active" data-tab="browse" onclick="switchComponentTab('browse')">
+                        <i class="fa-solid fa-magnifying-glass"></i> Browse Components
+                    </button>
+                    <button class="component-tab" data-tab="cart" onclick="switchComponentTab('cart')">
+                        <i class="fa-solid fa-cart-shopping"></i> Shopping Cart <span id="cart-badge" style="background:#ef4444;color:#fff;border-radius:50%;padding:2px 6px;font-size:10px;margin-left:4px;display:none;">0</span>
+                    </button>
+                    <button class="component-tab" data-tab="requests" onclick="switchComponentTab('requests')">
+                        <i class="fa-solid fa-clock-rotate-left"></i> My Requests
+                    </button>
+                </div>
+
+                <!-- Browse Components Tab -->
+                <div id="tab-browse-components" class="component-tab-content" style="display:block;">
+                    <div class="panel">
+                        <div style="margin-bottom:24px;">
+                            <div style="position:relative;">
+                                <i class="fa-solid fa-magnifying-glass" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;"></i>
+                                <input type="text" id="component-search" placeholder="Search components (Arduino, Raspberry Pi, Sensors...)" oninput="filterComponents()" style="width:100%;padding:12px 12px 12px 40px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;">
+                            </div>
+                        </div>
+
+                        <!-- Bulk Actions Bar -->
+                        <div id="component-bulk-bar" style="display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin-bottom:20px;justify-content:space-between;align-items:center;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <input type="checkbox" id="component-select-all" onchange="toggleSelectAll('component', this)" style="width:16px;height:16px;accent-color:#4f46e5;cursor:pointer;">
+                                <span style="font-size:13.5px;color:#475569;font-weight:600;"><span id="component-selected-count">0</span> items selected</span>
+                            </div>
+                            <div style="display:flex;gap:8px;">
+                                <button onclick="clearComponentSelection()" class="btn" style="background:#fff;border:1px solid #cbd5e1;color:#475569;padding:6px 12px;font-size:13px;">Clear Selection</button>
+                                <button onclick="addSelectedComponentsToCart()" class="btn btn-primary" style="padding:6px 14px;font-size:13px;"><i class="fa-solid fa-cart-plus"></i> Add Selected to Cart</button>
+                            </div>
+                        </div>
+
+                        <div id="component-catalog" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"></div>
+                    </div>
+                </div>
+
+                <!-- Shopping Cart Tab -->
+                <div id="tab-cart-components" class="component-tab-content" style="display:none;">
+                    <div class="panel">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                            <div>
+                                <h2 style="font-size:20px;font-weight:700;margin:0 0 4px 0;">Your Cart</h2>
+                                <p style="font-size:14px;color:#64748b;margin:0;">Review and request your components</p>
+                            </div>
+                            <button onclick="clearCart()" class="btn-text" style="color:#ef4444;font-size:14px;">
+                                <i class="fa-solid fa-trash"></i> Clear Cart
+                            </button>
+                        </div>
+                        <div id="cart-empty" style="display:none;text-align:center;padding:60px 20px;">
+                            <div style="font-size:64px;color:#cbd5e1;margin-bottom:16px;">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </div>
+                            <h3 style="font-size:18px;color:#475569;margin:0 0 8px 0;">Your cart is empty</h3>
+                            <p style="font-size:14px;color:#94a3b8;margin:0;">Browse components and add them to your cart</p>
+                        </div>
+                        <div id="cart-items" style="display:none;grid-template-columns:1fr 300px;gap:24px;">
+                            <div id="cart-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+                            <div>
+                                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px;">
+                                    <h3 style="font-size:16px;font-weight:700;margin:0 0 16px 0;">Request Information</h3>
+                                    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#475569;">Project</label>
+                                    <div style="background:#e2e8f0;padding:10px 12px;border-radius:8px;font-size:13px;color:#64748b;margin-bottom:16px;">
+                                        Smart Agriculture Robot <i class="fa-solid fa-lock"></i>
+                                    </div>
+                                    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#475569;">Purpose (Optional)</label>
+                                    <textarea style="width:100%;border:1px solid #e2e8f0;border-radius:8px;padding:10px;font-size:13px;resize:vertical;" rows="4" placeholder="Write the purpose of this component request..."></textarea>
+                                </div>
+                                <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;">
+                                    <h3 style="font-size:16px;font-weight:700;margin:0 0 16px 0;border-bottom:1px solid #e2e8f0;padding-bottom:12px;">Summary</h3>
+                                    <div style="display:flex;justify-content:space-between;margin-bottom:12px;font-size:14px;color:#475569;">
+                                        <span>Total Items</span>
+                                        <strong id="cart-total-types">0</strong>
+                                    </div>
+                                    <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:14px;color:#475569;">
+                                        <span>Total Quantity</span>
+                                        <strong id="cart-total-items">0</strong>
+                                    </div>
+                                    <button onclick="requestAllComponents()" class="btn btn-primary" style="width:100%;padding:14px;font-size:16px;font-weight:600;">
+                                        Submit Request
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Requests Tab -->
+                <div id="tab-requests-components" class="component-tab-content" style="display:none;">
+                    <div class="panel">
+                        <h2 style="font-size:20px;font-weight:700;margin:0 0 24px 0;">My Component Requests</h2>
+                        <div class="table-wrapper">
+                            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid #e2e8f0;text-align:left;color:#475569;">
+                                        <th style="padding:12px 16px;">Request ID</th>
+                                        <th style="padding:12px 16px;">Components</th>
+                                        <th style="padding:12px 16px;">Requested On</th>
+                                        <th style="padding:12px 16px;">Status</th>
+                                        <th style="padding:12px 16px;text-align:right;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="my-component-requests-list"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 4: EQUIPMENT BOOKING -->
+            <div id="view-equipment-booking" class="spa-view">
+                <button onclick="spaNavigate('dashboard')" class="btn-text" style="margin-bottom:16px;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Project
+                </button>
+
+                <!-- Tabs -->
+                <div class="equipment-tabs">
+                    <button class="equipment-tab active" id="selectEquipmentTab">
+                        <i class="fa-solid fa-cube"></i>
+                        <span>Select Equipment</span>
+                    </button>
+                    <button class="equipment-tab" id="myBookingsTab">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>My Bookings</span>
+                    </button>
+                </div>
+
+                <!-- Page Content -->
+                <div id="equipmentBookingContent">
+                    <!-- Select Equipment Content -->
+                    <div id="selectEquipmentPage">
+                        <!-- ========================================= -->
+                        <!-- SEARCH & FILTER -->
+                        <!-- ========================================= -->
+                        <div class="equipment-toolbar">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="equipmentSearch" placeholder="Search Equipment...">
+                            </div>
+                            <div class="toolbar-filters">
+                                <select id="equipmentCategory">
+                                    <option>All Categories</option>
+                                    <option>3D Printing</option>
+                                    <option>Laser Cutting</option>
+                                    <option>CNC Machines</option>
+                                    <option>PCB Fabrication</option>
+                                    <option>Electronics</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- EQUIPMENT GRID -->
+                        <div class="equipment-grid" id="equipmentGrid">
+                            <!-- Card 1 -->
+                            <div class="equipment-card" data-category="3d printing">
+                                <div class="equipment-card-img">
+                                    <div class="equipment-card-img-placeholder" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6);">
+                                        <i class="fa-solid fa-cube" style="font-size:42px;color:rgba(255,255,255,.85);"></i>
+                                    </div>
+                                    <span class="equipment-availability-badge">3 Available</span>
+                                </div>
+                                <div class="equipment-card-body">
+                                    <h3 class="equipment-card-title">3D Printer</h3>
+                                    <p class="equipment-units">Available Units : <strong>3</strong></p>
+                                    <div class="equipment-card-actions">
+                                        <a href="https://en.wikipedia.org/wiki/3D_printing"><button class="btn-equipment-view">View Details</button></a>
+                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('3D Printer', 3)">Book Equipment</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="equipment-card" data-category="laser cutting">
+                                <div class="equipment-card-img">
+                                    <div class="equipment-card-img-placeholder" style="background:linear-gradient(135deg,#111827,#4f46e5);">
+                                        <i class="fa-solid fa-fire" style="font-size:42px;color:rgba(255,255,255,.85);"></i>
+                                    </div>
+                                    <span class="equipment-availability-badge">2 Available</span>
+                                </div>
+                                <div class="equipment-card-body">
+                                    <h3 class="equipment-card-title">Laser Cutter</h3>
+                                    <p class="equipment-units">Available Units : <strong>2</strong></p>
+                                    <div class="equipment-card-actions">
+                                        <a href="https://en.wikipedia.org/wiki/Laser_cutting"><button class="btn-equipment-view">View Details</button></a>
+                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('Laser Cutter', 2)">Book Equipment</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="equipment-card" data-category="cnc machines">
+                                <div class="equipment-card-img">
+                                    <div class="equipment-card-img-placeholder" style="background:linear-gradient(135deg,#064e3b,#10b981);">
+                                        <i class="fa-solid fa-gears" style="font-size:42px;color:rgba(255,255,255,.85);"></i>
+                                    </div>
+                                    <span class="equipment-availability-badge">2 Available</span>
+                                </div>
+                                <div class="equipment-card-body">
+                                    <h3 class="equipment-card-title">CNC Router</h3>
+                                    <p class="equipment-units">Available Units : <strong>2</strong></p>
+                                    <div class="equipment-card-actions">
+                                        <a href="https://en.wikipedia.org/wiki/CNC_router"><button class="btn-equipment-view">View Details</button></a>
+                                        <button class="btn-equipment-book" onclick="openEquipmentSelection('CNC Router', 2)">Book Equipment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   <!-- END equipment-grid -->
+                    </div>       <!-- END selectEquipmentPage -->
+
+                    <!-- ========================================= -->
+                    <!-- SELECT EQUIPMENT UNIT PAGE -->
+                    <!-- ========================================= -->
+                    <div id="selectEquipmentUnitPage" style="display:none;">
+                        <div class="equipment-selection-header">
+                            <button class="back-btn" onclick="backToSelectEquipment()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                        </div>
+                        <div class="equipment-selection-container">
+                            <!-- LEFT PANEL -->
+                            <div class="equipment-selection-left">
+                                <div class="selected-equipment-image">
+                                    <div class="selected-equipment-placeholder">
+                                        <i id="selectedEquipmentIcon" class="fa-solid fa-cube"></i>
+                                    </div>
+                                </div>
+                                <h2 id="selectedEquipmentName">3D Printer</h2>
+                                <div class="equipment-meta">Available Units : <strong id="selectedEquipmentUnits">3</strong></div>
+                            </div>
+                            <!-- RIGHT PANEL -->
+                            <div class="equipment-selection-right">
+                                <h3>Select Equipment Unit</h3>
+                                <div class="equipment-unit-list" id="equipmentUnitList"></div>
+                                <div class="equipment-selection-footer">
+                                    <button class="btn btn-primary" onclick="continueBooking()">Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================= -->
+                    <!-- SELECT EQUIPMENT UNIT PAGE (DUPLICATE IN SOURCE) -->
+                    <!-- ========================================= -->
+                    <div id="selectEquipmentUnitPage" style="display:none;">
+                        <div class="equipment-selection-container">
+                            <!-- LEFT PANEL -->
+                            <div class="equipment-selection-left">
+                                <button class="btn btn-outline" onclick="backToSelectEquipment()">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </button>
+                                <div class="selected-equipment-image">
+                                    <img src="assets/images/equipment/3d-printer.png" alt="Equipment">
+                                </div>
+                                <h2 id="selectedEquipmentName">3D Printer</h2>
+                                <div class="equipment-meta">
+                                    <span>Available Units : <strong id="selectedEquipmentUnits">3</strong></span>
+                                </div>
+                            </div>
+                            <!-- RIGHT PANEL -->
+                            <div class="equipment-selection-right">
+                                <h3>Select Equipment Unit</h3>
+                                <div class="equipment-unit-list" id="equipmentUnitList"></div>
+                                <div class="equipment-selection-footer">
+                                    <button class="btn btn-primary" onclick="continueBooking()">Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================= -->
+                    <!-- EQUIPMENT BOOKING FORM PAGE -->
+                    <!-- ========================================= -->
+                    <div id="equipmentBookingFormPage" style="display:none;">
+                        <div class="booking-form-header">
+                            <button class="back-btn" onclick="backToEquipmentUnit()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                        </div>
+                        <div class="booking-layout">
+                            <!-- LEFT PANEL -->
+                            <div class="booking-form-card">
+                                <h2>Equipment Booking</h2>
+                                <div class="form-group">
+                                    <label>Equipment</label>
+                                    <input type="text" id="bookingEquipment" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Equipment Unit</label>
+                                    <input type="text" id="bookingEquipmentUnit" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Booking Date</label>
+                                    <input type="date" id="bookingDate">
+                                </div>
+                                <div class="two-column" style="display: none;">
+                                    <div class="form-group">
+                                        <label>From Time</label>
+                                        <select id="fromTime">
+                                            <option>Select Time</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>To Time</label>
+                                        <select id="toTime">
+                                            <option>Select Time</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="two-column">
+    <div class="form-group">
+        <label>From Time</label>
+        <input type="time" id="fromTimePicker" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label>To Time</label>
+        <input type="time" id="toTimePicker" class="form-control">
+    </div>
+</div>
+                                <div class="form-group">
+                                    <label>Purpose</label>
+                                    <textarea id="bookingPurpose" rows="4" placeholder="Enter the purpose of booking..." required></textarea>
+                                </div>
+                                <div class="booking-footer">
+                                    <button class="btn btn-primary" onclick="submitBooking()">Submit Booking</button>
+                                </div>
+                            </div>
+                            <!-- RIGHT PANEL -->
+                            <div class="slot-card">
+                                <h2>Slot Availability</h2>
+                                <p>Select a booking date to view equipment availability.</p>
+                                <div id="slotAvailability"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================= -->
+                    <!-- MY BOOKINGS PAGE -->
+                    <!-- ========================================= -->
+                    <div id="myBookingsPage" style="display:none;">
+                        <!-- Search & Filters -->
+                        <div class="booking-toolbar">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="bookingSearch" placeholder="Search by Booking ID or Equipment">
+                            </div>
+                            <div class="booking-filters">
+                                <select id="equipmentFilter">
+                                    <option>All Equipment</option>
+                                    <option>3D Printer</option>
+                                    <option>Laser Cutter</option>
+                                    <option>CNC Router</option>
+                                    <option>PCB Milling Machine</option>
+                                    <option>Electronics</option>
+                                </select>
+                                <select id="statusFilter">
+                                    <option>All Status</option>
+                                    <option>Pending</option>
+                                    <option>Approved</option>
+                                    <option>Rejected</option>
+                                    <option>Completed</option>
+                                    <option>Cancelled</option>
+                                </select>
+                                <button class="btn btn-primary" id="resetBookingFilter" type="button">
+                                    <i class="fas fa-rotate-left"></i> Reset Filter
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Booking Table -->
+                        <div class="table-container">
+                            <table class="booking-table" id="bookingTable">
+                                <thead>
+                                    <tr>
+                                        <th>Booking ID</th>
+                                        <th>Equipment</th>
+                                        <th>Equipment Unit</th>
+                                        <th>Booking Date</th>
+                                        <th>Time Slot</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bookingTableBody">
+                                    <tr>
+                                        <td>BK001</td>
+                                        <td>3D Printer</td>
+                                        <td>3D Printer-01</td>
+                                        <td>28-May-2026</td>
+                                        <td>10:00 AM - 12:00 PM</td>
+                                        <td><span class="status pending">Pending</span></td>
+                                        <td><button class="btn btn-sm btn-primary" onclick="viewBookingDetails()">View</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK002</td>
+                                        <td>Laser Cutter</td>
+                                        <td>Laser Cutter-02</td>
+                                        <td>29-May-2026</td>
+                                        <td>02:00 PM - 04:00 PM</td>
+                                        <td><span class="status approved">Approved</span></td>
+                                        <td><button class="btn btn-sm btn-primary" onclick="viewBookingDetails()">View</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- ========================================= -->
+                    <!-- BOOKING DETAILS PAGE -->
+                    <!-- ========================================= -->
+                    <div id="bookingDetailsPage" style="display:none;">
+                        <div class="details-header">
+                            <button class="booking-back-btn" onclick="backToMyBookings()">
+                                <i class="fas fa-arrow-left"></i> Back to My Bookings
+                            </button>
+                            <h2>Booking Details</h2>
+                        </div>
+                        <div class="details-card">
+                            <table class="details-table">
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <td>BK001</td>
+                                </tr>
+                                <tr>
+                                    <th>Equipment</th>
+                                    <td>3D Printer</td>
+                                </tr>
+                                <tr>
+                                    <th>Equipment Unit</th>
+                                    <td>3D Printer-01</td>
+                                </tr>
+                                <tr>
+                                    <th>Booking Date</th>
+                                    <td>28-May-2026</td>
+                                </tr>
+                                <tr>
+                                    <th>Time Slot</th>
+                                    <td>10:00 AM - 12:00 PM</td>
+                                </tr>
+                                <tr>
+                                    <th>Duration</th>
+                                    <td>2 Hours</td>
+                                </tr>
+                                <tr>
+                                    <th>Purpose</th>
+                                    <td>Prototype development and testing.</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td><span class="status pending">Pending</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 5: TOOLS BORROWING -->
+            <div id="view-daily-tools" class="spa-view">
+                <button onclick="spaNavigate('dashboard')" class="btn-text" style="margin-bottom:16px;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Project
+                </button>
+
+                <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #d97706; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 13.5px; color: #78350f; display: flex; gap: 10px; align-items: center;">
+                    <i class="fa-solid fa-clock" style="font-size: 16px;"></i>
+                    <div>
+                        <strong>Daily Borrowing Policy:</strong> Tools listed here are for daily lab use and must be returned to the lab by the end of each working day.
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:8px;margin-bottom:24px;border-bottom:2px solid #e2e8f0;padding-bottom:0;">
+                    <button class="tool-tab active" data-tab="browse" onclick="switchToolTab('browse')">
+                        <i class="fa-solid fa-magnifying-glass"></i> Browse Tools
+                    </button>
+                    <button class="tool-tab" data-tab="cart" onclick="switchToolTab('cart')">
+                        <i class="fa-solid fa-list"></i> Borrow List <span id="tool-cart-badge" style="background:#ef4444;color:#fff;border-radius:50%;padding:2px 6px;font-size:10px;margin-left:4px;display:none;">0</span>
+                    </button>
+                    <button class="tool-tab" data-tab="requests" onclick="switchToolTab('requests')">
+                        <i class="fa-solid fa-clock-rotate-left"></i> My Requests
+                    </button>
+                </div>
+
+                <!-- Browse Tools -->
+                <div id="tab-browse-tools" class="tool-tab-content" style="display:block;">
+                    <div class="panel">
+                        <div style="margin-bottom:24px;">
+                            <div style="position:relative;">
+                                <i class="fa-solid fa-magnifying-glass" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#94a3b8;"></i>
+                                <input type="text" id="tool-search" placeholder="Search tools (Soldering Iron, Multimeter...)" oninput="filterTools()" style="width:100%;padding:12px 12px 12px 40px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;">
+                            </div>
+                        </div>
+
+                        <!-- Bulk Actions Bar -->
+                        <div id="tool-bulk-bar" style="display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin-bottom:20px;justify-content:space-between;align-items:center;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <input type="checkbox" id="tool-select-all" onchange="toggleSelectAll('tool', this)" style="width:16px;height:16px;accent-color:#4f46e5;cursor:pointer;">
+                                <span style="font-size:13.5px;color:#475569;font-weight:600;"><span id="tool-selected-count">0</span> items selected</span>
+                            </div>
+                            <div style="display:flex;gap:8px;">
+                                <button onclick="clearToolSelection()" class="btn" style="background:#fff;border:1px solid #cbd5e1;color:#475569;padding:6px 12px;font-size:13px;">Clear Selection</button>
+                                <button onclick="addSelectedToolsToCart()" class="btn btn-primary" style="padding:6px 14px;font-size:13px;"><i class="fa-solid fa-cart-plus"></i> Add Selected to Cart</button>
+                            </div>
+                        </div>
+
+                        <div id="tool-catalog" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"></div>
+                    </div>
+                </div>
+
+                <!-- Borrow List -->
+                <div id="tab-cart-tools" class="tool-tab-content" style="display:none;">
+                    <div class="panel">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                            <h2 style="font-size:20px;font-weight:700;margin:0;">Your Borrow List</h2>
+                            <button onclick="clearToolCart()" class="btn-text" style="color:#ef4444;">
+                                <i class="fa-solid fa-trash"></i> Clear List
+                            </button>
+                        </div>
+                        <div id="tool-cart-empty" style="text-align:center;padding:60px 20px;">
+                            <i class="fa-solid fa-cubes" style="font-size:64px;color:#cbd5e1;margin-bottom:16px;display:block;"></i>
+                            <h3 style="font-size:18px;color:#475569;">Your borrow list is empty</h3>
+                        </div>
+                        <div id="tool-cart-items" style="display:none;grid-template-columns:1fr 300px;gap:24px;">
+                            <div id="tool-cart-list"></div>
+                            <div>
+                                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px;">
+                                    <h3 style="font-size:16px;font-weight:700;margin:0 0 16px 0;">Borrow Information</h3>
+                                    <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Purpose</label>
+                                    <textarea style="width:100%;border:1px solid #e2e8f0;border-radius:8px;padding:10px;font-size:13px;" rows="4" placeholder="Describe why you need these tools..."></textarea>
+                                </div>
+                                <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;">
+                                    <h3 style="font-size:16px;font-weight:700;margin:0 0 16px 0;border-bottom:1px solid #e2e8f0;padding-bottom:12px;">Summary</h3>
+                                    <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:14px;">
+                                        <span>Total Items: <strong id="tool-cart-total-types">0</strong></span>
+                                        <span>Total Qty: <strong id="tool-cart-total-items">0</strong></span>
+                                    </div>
+                                    <button onclick="requestAllTools()" class="btn btn-primary" style="width:100%;padding:14px;">Submit Borrow Request</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Requests -->
+                <div id="tab-requests-tools" class="tool-tab-content" style="display:none;">
+                    <div class="panel">
+                        <h2 style="font-size:20px;font-weight:700;margin:0 0 24px 0;">My Tool Borrow Requests</h2>
+                        <div class="table-wrapper">
+                            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid #e2e8f0;text-align:left;color:#475569;">
+                                        <th style="padding:12px 16px;">Borrow ID</th>
+                                        <th style="padding:12px 16px;">Tools</th>
+                                        <th style="padding:12px 16px;">Requested On</th>
+                                        <th style="padding:12px 16px;">Status</th>
+                                        <th style="padding:12px 16px;text-align:right;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="my-tool-requests-list"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 6: RETURNS HUB -->
+            <div id="view-component-returning" class="spa-view">
+                <button onclick="spaNavigate('dashboard')" class="btn-text" style="margin-bottom:16px;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Project
+                </button>
+
+                <div style="display:flex;gap:8px;margin-bottom:24px;border-bottom:2px solid #e2e8f0;padding-bottom:0;">
+                    <button class="return-tab active" data-tab="components" onclick="switchReturnTab('components')">
+                        <i class="fa-solid fa-microchip"></i> Component Returns
+                    </button>
+                    <button class="return-tab" data-tab="tools" onclick="switchReturnTab('tools')">
+                        <i class="fa-solid fa-wrench"></i> Tool Returns
+                    </button>
+                </div>
+
+                <!-- Component Returns -->
+                <div id="tab-return-components" class="return-tab-content" style="display:block;">
+                    <!-- Active Possessions Section -->
+                    <div class="panel" style="margin-bottom: 24px; border-left: 4px solid #4f46e5;">
+                        <h2 style="font-size:18px;font-weight:700;margin:0 0 16px 0;color:#0f172a;display:flex;align-items:center;gap:8px;">
+                            <i class="fa-solid fa-hand-holding-hand" style="color:#4f46e5;"></i> Active Component Issues (Possessed Items)
+                        </h2>
+                        <div class="table-wrapper">
+                            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid #e2e8f0;text-align:left;color:#475569;font-weight:600;">
+                                        <th style="padding:12px 16px;">Request ID</th>
+                                        <th style="padding:12px 16px;">Issued Components</th>
+                                        <th style="padding:12px 16px;">Date Issued</th>
+                                        <th style="padding:12px 16px;text-align:right;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="active-component-issues-list"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Return Log Section -->
+                    <div class="panel">
+                        <h2 style="font-size:18px;font-weight:700;margin:0 0 16px 0;color:#0f172a;display:flex;align-items:center;gap:8px;">
+                            <i class="fa-solid fa-clock-rotate-left" style="color:#64748b;"></i> Component Return Log
+                        </h2>
+                        <div class="table-wrapper">
+                            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid #e2e8f0;text-align:left;color:#475569;font-weight:600;">
+                                        <th style="padding:12px 16px;">Return ID</th>
+                                        <th style="padding:12px 16px;">Component</th>
+                                        <th style="padding:12px 16px;">Ref Request ID</th>
+                                        <th style="padding:12px 16px;">Return Date</th>
+                                        <th style="padding:12px 16px;">Condition</th>
+                                        <th style="padding:12px 16px;">Status</th>
+                                        <th style="padding:12px 16px;text-align:right;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="component-returns-list"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool Returns -->
+                <div id="tab-return-tools" class="return-tab-content" style="display:none;">
+                    <!-- Active Possessions Section -->
+                    <div class="panel" style="margin-bottom: 24px; border-left: 4px solid #d97706;">
+                        <h2 style="font-size:18px;font-weight:700;margin:0 0 16px 0;color:#0f172a;display:flex;align-items:center;gap:8px;">
+                            <i class="fa-solid fa-hand-holding-hand" style="color:#d97706;"></i> Active Tool Borrows (Possessed Tools)
+                        </h2>
+                        <div class="table-wrapper">
+                            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid #e2e8f0;text-align:left;color:#475569;font-weight:600;">
+                                        <th style="padding:12px 16px;">Borrow ID</th>
+                                        <th style="padding:12px 16px;">Borrowed Tools</th>
+                                        <th style="padding:12px 16px;">Date Borrowed</th>
+                                        <th style="padding:12px 16px;text-align:right;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="active-tool-borrows-list"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Return Log Section -->
+                    <div class="panel">
+                        <h2 style="font-size:18px;font-weight:700;margin:0 0 16px 0;color:#0f172a;display:flex;align-items:center;gap:8px;">
+                            <i class="fa-solid fa-clock-rotate-left" style="color:#64748b;"></i> Tool Return Log
+                        </h2>
+                        <div class="table-wrapper">
+                            <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid #e2e8f0;text-align:left;color:#475569;font-weight:600;">
+                                        <th style="padding:12px 16px;">Return ID</th>
+                                        <th style="padding:12px 16px;">Tool</th>
+                                        <th style="padding:12px 16px;">Ref Borrow ID</th>
+                                        <th style="padding:12px 16px;">Return Date</th>
+                                        <th style="padding:12px 16px;">Condition</th>
+                                        <th style="padding:12px 16px;">Status</th>
+                                        <th style="padding:12px 16px;text-align:right;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tool-returns-list"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+</div>
+
+<script src="./assets/js/ongoingprojects.js"></script>
+</body>
+</html>

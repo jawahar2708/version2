@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+(function (d, w) {
+    var root = d.documentElement;
+    root.removeAttribute('data-theme');
+    root.style.colorScheme = 'light';
+    root.style.backgroundColor = '#F4F7FC';
+    var style = d.createElement('style');
+    style.id = 'portal-theme-critical';
+    style.textContent =
+        ':root{--background:#F4F7FC;--card:#FFF;--text-dark:#1F2937;--text-light:#6B7280;--border:#E5E7EB;--primary:#4F46E5;--primary-light:#EEF2FF}' +
+        'html,body{margin:0;min-height:100vh;background-color:var(--background);color:var(--text-dark);color-scheme:light}';
+    d.head.appendChild(style);
+})(document, window);
+    </script>
+    <title>Completed Projects | Rapid Prototyping Lab</title>
+    <script src="assets/js/portal-preferences.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/completedprojects.css">
+    <style>body { overflow-x: hidden; width: 100%; }</style>
+</head>
+<body>
+<div class="dashboard-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/images/OIP.webp" alt="Rapid Prototyping Lab">
+            <div class="logo-text">
+                <h4>Proto Track</h4>
+                <p>Rapid Prototyping Lab</p>
+            </div>
+        </div>
+        <nav class="sidebar-menu">
+            <p class="menu-title">STUDENT PORTAL</p>
+            <ul>
+                <li class="menu-item">
+                    <a href="dashboard.html">
+                        <i class="fa-solid fa-house menu-icon"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" class="submenu-toggle">
+                        <i class="fa-solid fa-folder-open menu-icon"></i>
+                        <span class="menu-text">My Projects</span>
+                        <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="ongoingprojects.html">
+                                <i class="fa-solid fa-spinner submenu-icon"></i>
+                                <span>Ongoing Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="completedprojects.html">
+                                <i class="fa-solid fa-circle-check submenu-icon"></i>
+                                <span>Completed Projects</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="supportcenter.html">
+                        <i class="fa-solid fa-headset menu-icon"></i>
+                        <span class="menu-text">Enquiry</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="knowledgebase.html">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <span class="menu-text">Knowledge Base</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="myprofile.html">
+                        <i class="fa-solid fa-user menu-icon"></i>
+                        <span class="menu-text">My Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <header class="top-navbar">
+            <div class="nav-left">
+                <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="page-title">
+                    <h2>Completed Projects</h2>
+                    <p>View all your completed projects</p>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="notification-container">
+                    <button type="button" class="notification-trigger" aria-label="Open notifications" aria-haspopup="dialog" aria-expanded="false">
+                        <i class="fa-solid fa-bell" style="font-size:20px;color:var(--text-dark);"></i>
+                    </button>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <a href="myprofile.html"><img src="assets/images/OIP.webp" alt="Student"></a>
+                    <div class="user-info">
+                        <h4>Trainee1</h4>
+                        <p>Student</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="dashboard-content">
+            <div class="content-wrapper">
+                                                <!-- VIEW 1: MASTER DASHBOARD -->
+                <div id="view-dashboard" class="spa-view" style="display:block; padding: 24px; background: #f8fafc; min-height: calc(100vh - 70px);">
+                    
+                    <!-- Stats Panel -->
+                    <div style="background:#fff; border-radius:12px; border:1px solid #e2e8f0; display:flex; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.05); overflow:hidden;">
+                        <!-- Right Stats Area (Now Full Width) -->
+                        <div style="flex:1; display:flex; align-items:center; padding:16px 0;">
+                            <div style="flex:1; padding:0 24px; border-right:1px solid #e2e8f0; display:flex; gap:16px; align-items:center;">
+                                <div style="width:40px; height:40px; border-radius:50%; background:#eef2ff; color:#4f46e5; display:flex; align-items:center; justify-content:center; font-size:18px;">
+                                    <i class="fa-solid fa-medal"></i>
+                                </div>
+                                <div>
+                                    <p style="margin:0 0 4px 0; font-size:12px; color:#64748b; font-weight:600;">Total Completed Projects</p>
+                                    <h3 style="margin:0; font-size:20px; font-weight:700; color:#0f172a;">4</h3>
+                                </div>
+                            </div>
+                            
+                            <div style="flex:1; padding:0 24px; border-right:1px solid #e2e8f0; display:flex; gap:16px; align-items:center;">
+                                <div style="width:40px; height:40px; border-radius:50%; background:#ecfdf5; color:#059669; display:flex; align-items:center; justify-content:center; font-size:18px;">
+                                    <i class="fa-solid fa-check-double"></i>
+                                </div>
+                                <div>
+                                    <p style="margin:0 0 4px 0; font-size:12px; color:#64748b; font-weight:600;">Total Stages Completed</p>
+                                    <h3 style="margin:0; font-size:20px; font-weight:700; color:#0f172a;">40 / 40</h3>
+                                </div>
+                            </div>
+                            
+                            <div style="flex:1.2; padding:0 24px; border-right:1px solid #e2e8f0; display:flex; gap:16px; align-items:center;">
+                                <div style="width:40px; height:40px; border-radius:50%; background:#f0fdf4; color:#16a34a; display:flex; align-items:center; justify-content:center; font-size:18px;">
+                                    <i class="fa-regular fa-calendar-check"></i>
+                                </div>
+                                <div>
+                                    <p style="margin:0 0 4px 0; font-size:12px; color:#64748b; font-weight:600;">Last Completed Project</p>
+                                    <h3 style="margin:0 0 2px 0; font-size:14px; font-weight:600; color:#0f172a;">Health Monitoring System</h3>
+                                    <p style="margin:0; font-size:12px; color:#64748b;">May 05, 2025</p>
+                                </div>
+                            </div>
+                            
+                            <div style="flex:1.2; padding:0 24px; display:flex; gap:16px; align-items:center;">
+                                <div style="width:40px; height:40px; border-radius:50%; background:#fdf4ff; color:#c026d3; display:flex; align-items:center; justify-content:center; font-size:18px;">
+                                    <i class="fa-solid fa-trophy"></i>
+                                </div>
+                                <div>
+                                    <p style="margin:0 0 4px 0; font-size:12px; color:#64748b; font-weight:600;">Overall Completion</p>
+                                    <h3 style="margin:0 0 2px 0; font-size:20px; font-weight:700; color:#0f172a;">100%</h3>
+                                    <p style="margin:0; font-size:11px; color:#64748b;">All assigned projects completed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table Section -->
+                    <div style="background:#fff; border-radius:12px; border:1px solid #e2e8f0; box-shadow:0 1px 3px rgba(0,0,0,0.05); padding:24px;">
+                        
+                        <!-- Filters -->
+                        <div style="display:flex; justify-content:space-between; margin-bottom:20px; gap:16px;">
+                            <div style="position:relative; flex:1; max-width:400px;">
+                                <i class="fa-solid fa-search" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#94a3b8;"></i>
+                                <input type="text" id="searchInput" placeholder="Search projects by name or type..." style="width:100%; padding:10px 12px 10px 36px; border:1px solid #e2e8f0; border-radius:8px; font-size:13px; outline:none; color:#0f172a;">
+                            </div>
+                            <div style="display:flex; gap:12px;">
+                                <select id="domainFilter" style="padding:10px 32px 10px 16px; border:1px solid #e2e8f0; border-radius:8px; font-size:13px; outline:none; color:#0f172a; background:#fff; appearance:none; background-image:url('data:image/svg+xml;utf8,<svg fill="%2364748b" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat:no-repeat; background-position-x:calc(100% - 8px); background-position-y:50%;">
+                                    <option>All Domains</option>
+                                    <option>Healthcare</option>
+                                    <option>Smart City</option>
+                                    <option>Education</option>
+                                </select>
+                                <select id="typeFilter" style="padding:10px 32px 10px 16px; border:1px solid #e2e8f0; border-radius:8px; font-size:13px; outline:none; color:#0f172a; background:#fff; appearance:none; background-image:url('data:image/svg+xml;utf8,<svg fill="%2364748b" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat:no-repeat; background-position-x:calc(100% - 8px); background-position-y:50%;">
+                                    <option>All Project Types</option>
+                                    <option>IoT Based System</option>
+                                    <option>Web Application</option>
+                                </select>
+                                <select id="sortFilter" style="padding:10px 32px 10px 16px; border:1px solid #e2e8f0; border-radius:8px; font-size:13px; outline:none; color:#0f172a; background:#fff; appearance:none; background-image:url('data:image/svg+xml;utf8,<svg fill="%2364748b" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat:no-repeat; background-position-x:calc(100% - 8px); background-position-y:50%;">
+                                    <option value="recent">Sort by: Recently Completed</option>
+                                    <option value="oldest">Sort by: Oldest First</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Table -->
+                        <div style="overflow-x:auto;">
+                            <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                                <thead>
+                                    <tr style="border-bottom:1px solid #e2e8f0; color:#0f172a; font-weight:600;">
+                                        <th style="padding:12px; text-align:left; width:40px;">#</th>
+                                        <th style="padding:12px; text-align:left;">Project Name</th>
+                                        <th style="padding:12px; text-align:left;">Domain</th>
+                                        <th style="padding:12px; text-align:left;">Project Type</th>
+                                        <th style="padding:12px; text-align:left;">Faculty Mentor</th>
+                                        <th style="padding:12px; text-align:left;">Completed On</th>
+                                        <th style="padding:12px; text-align:left;">Final Stage</th>
+                                        <th style="padding:12px; text-align:center;">Status</th>
+                                        <th style="padding:12px; text-align:center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="projectsTable">
+                                    <tr class="project-row" style="border-bottom:1px solid #f1f5f9; transition:background 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
+                                        <td style="padding:16px 12px; color:#0f172a; font-weight:500;">1</td>
+                                        <td class="project-name" style="padding:16px 12px;">
+                                            <strong style="color:#0f172a; display:block; margin-bottom:4px;">Health Monitoring System</strong>
+                                            <small style="color:#64748b; font-size:12px;">Real-time health monitoring using IoT devices.</small>
+                                        </td>
+                                        <td class="domain" style="padding:16px 12px; color:#475569;">Healthcare</td>
+                                        <td class="project-type" style="padding:16px 12px; color:#475569;">IoT Based System</td>
+                                        <td class="faculty" style="padding:16px 12px; color:#475569;">Faculty Name</td>
+                                        <td class="completed-date" style="padding:16px 12px; color:#475569;">May 05, 2025</td>
+                                        <td class="final-stage" style="padding:16px 12px; color:#475569;">10 / 10<br><small style="color:#64748b;">Deployment</small></td>
+                                        <td class="status" style="padding:16px 12px; text-align:center;">
+                                            <span style="display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; color:#16a34a; padding:4px 10px; border-radius:4px; font-size:12px; font-weight:500;">
+                                                <i class="fa-solid fa-circle-check"></i> Completed
+                                            </span>
+                                        </td>
+                                        <td style="padding:16px 12px; text-align:center;">
+                                            <button onclick="spaNavigate('project-detail')" style="background:transparent; border:1px solid #7c3aed; color:#7c3aed; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s;" onmouseover="this.style.background='#f3e8ff'" onmouseout="this.style.background='transparent'">
+                                                <i class="fa-regular fa-eye"></i> View Details
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="project-row" style="border-bottom:1px solid #f1f5f9; transition:background 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
+                                        <td style="padding:16px 12px; color:#0f172a; font-weight:500;">2</td>
+                                        <td class="project-name" style="padding:16px 12px;">
+                                            <strong style="color:#0f172a; display:block; margin-bottom:4px;">Smart Waste Management System</strong>
+                                            <small style="color:#64748b; font-size:12px;">Automated waste monitoring and management using sensors.</small>
+                                        </td>
+                                        <td class="domain" style="padding:16px 12px; color:#475569;">Smart City</td>
+                                        <td class="project-type" style="padding:16px 12px; color:#475569;">IoT Based System</td>
+                                        <td class="faculty" style="padding:16px 12px; color:#475569;">Faculty Name</td>
+                                        <td class="completed-date" style="padding:16px 12px; color:#475569;">Apr 18, 2025</td>
+                                        <td class="final-stage" style="padding:16px 12px; color:#475569;">10 / 10<br><small style="color:#64748b;">Deployment</small></td>
+                                        <td class="status" style="padding:16px 12px; text-align:center;">
+                                            <span style="display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; color:#16a34a; padding:4px 10px; border-radius:4px; font-size:12px; font-weight:500;">
+                                                <i class="fa-solid fa-circle-check"></i> Completed
+                                            </span>
+                                        </td>
+                                        <td style="padding:16px 12px; text-align:center;">
+                                            <button onclick="spaNavigate('project-detail')" style="background:transparent; border:1px solid #7c3aed; color:#7c3aed; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s;" onmouseover="this.style.background='#f3e8ff'" onmouseout="this.style.background='transparent'">
+                                                <i class="fa-regular fa-eye"></i> View Details
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="project-row" style="border-bottom:1px solid #f1f5f9; transition:background 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
+                                        <td style="padding:16px 12px; color:#0f172a; font-weight:500;">3</td>
+                                        <td class="project-name" style="padding:16px 12px;">
+                                            <strong style="color:#0f172a; display:block; margin-bottom:4px;">Library Management System</strong>
+                                            <small style="color:#64748b; font-size:12px;">Digital library system for issue, return and inventory management.</small>
+                                        </td>
+                                        <td class="domain" style="padding:16px 12px; color:#475569;">Education</td>
+                                        <td class="project-type" style="padding:16px 12px; color:#475569;">Web Application</td>
+                                        <td class="faculty" style="padding:16px 12px; color:#475569;">Faculty Name</td>
+                                        <td class="completed-date" style="padding:16px 12px; color:#475569;">Mar 28, 2025</td>
+                                        <td class="final-stage" style="padding:16px 12px; color:#475569;">10 / 10<br><small style="color:#64748b;">Deployment</small></td>
+                                        <td class="status" style="padding:16px 12px; text-align:center;">
+                                            <span style="display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; color:#16a34a; padding:4px 10px; border-radius:4px; font-size:12px; font-weight:500;">
+                                                <i class="fa-solid fa-circle-check"></i> Completed
+                                            </span>
+                                        </td>
+                                        <td style="padding:16px 12px; text-align:center;">
+                                            <button onclick="spaNavigate('project-detail')" style="background:transparent; border:1px solid #7c3aed; color:#7c3aed; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s;" onmouseover="this.style.background='#f3e8ff'" onmouseout="this.style.background='transparent'">
+                                                <i class="fa-regular fa-eye"></i> View Details
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="project-row" style="border-bottom:1px solid #f1f5f9; transition:background 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
+                                        <td style="padding:16px 12px; color:#0f172a; font-weight:500;">4</td>
+                                        <td class="project-name" style="padding:16px 12px;">
+                                            <strong style="color:#0f172a; display:block; margin-bottom:4px;">Smart Energy Monitoring System</strong>
+                                            <small style="color:#64748b; font-size:12px;">Monitor and optimize energy consumption using IoT and analytics.</small>
+                                        </td>
+                                        <td class="domain" style="padding:16px 12px; color:#475569;">Energy</td>
+                                        <td class="project-type" style="padding:16px 12px; color:#475569;">IoT Based System</td>
+                                        <td class="faculty" style="padding:16px 12px; color:#475569;">Faculty Name</td>
+                                        <td class="completed-date" style="padding:16px 12px; color:#475569;">Feb 26, 2025</td>
+                                        <td class="final-stage" style="padding:16px 12px; color:#475569;">10 / 10<br><small style="color:#64748b;">Deployment</small></td>
+                                        <td class="status" style="padding:16px 12px; text-align:center;">
+                                            <span style="display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; color:#16a34a; padding:4px 10px; border-radius:4px; font-size:12px; font-weight:500;">
+                                                <i class="fa-solid fa-circle-check"></i> Completed
+                                            </span>
+                                        </td>
+                                        <td style="padding:16px 12px; text-align:center;">
+                                            <button onclick="spaNavigate('project-detail')" style="background:transparent; border:1px solid #7c3aed; color:#7c3aed; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s;" onmouseover="this.style.background='#f3e8ff'" onmouseout="this.style.background='transparent'">
+                                                <i class="fa-regular fa-eye"></i> View Details
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                            <p style="margin:0; font-size:13px; color:#64748b;">Showing 1 to 4 of 4 projects</p>
+                            <div style="display:flex; gap:8px;">
+                                <button style="width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid #e2e8f0; background:#fff; border-radius:6px; color:#94a3b8; cursor:not-allowed;"><i class="fa-solid fa-chevron-left"></i></button>
+                                <button style="width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid #7c3aed; background:#f3e8ff; border-radius:6px; color:#7c3aed; font-weight:600;">1</button>
+                                <button style="width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid #e2e8f0; background:#fff; border-radius:6px; color:#94a3b8; cursor:not-allowed;"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- VIEW 2: PROJECT DETAIL -->
+                <div id="view-project-detail" class="spa-view" style="display:none; padding: 20px;">
+                    
+                                        <div style="margin-bottom: 16px;">
+                        <button class="btn" style="background:#fff; border:1px solid #e2e8f0; color:#0f172a; padding:8px 16px; border-radius:8px; font-weight:500; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,0.05); cursor:pointer;" onclick="spaNavigate('dashboard')">
+                            <i class="fa-solid fa-arrow-left" style="margin-right:6px;"></i> Back to Projects
+                        </button>
+                    </div>
+                    <div class="panel">
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;border-bottom:1px solid #e2e8f0;padding-bottom:16px;">
+                            <div>
+                                <h2 style="font-size:24px;margin:0 0 8px 0;color:#0f172a;">Health Monitoring System</h2>
+                                <p style="margin:0;color:#64748b;font-size:14px;">Real-time health monitoring using IoT</p>
+                            </div>
+                            <span style="background:#d1fae5;color:#059669;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;"><i class="fa-solid fa-award" style="margin-right:6px;"></i>Successfully Completed</span>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+                            <div>
+                                <h3 style="font-size:14px;color:#64748b;text-transform:uppercase;margin-bottom:12px;">Project Artifacts</h3>
+                                <div style="display:flex;flex-direction:column;gap:12px;">
+                                    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;">
+                                        <div style="display:flex;align-items:center;gap:12px;">
+                                            <i class="fa-solid fa-file-pdf" style="color:#ef4444;font-size:24px;"></i>
+                                            <div><h4 style="margin:0;font-size:14px;">Final_Report.pdf</h4><p style="margin:0;font-size:12px;color:#64748b;">4.2 MB</p></div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;">
+                                        <div style="display:flex;align-items:center;gap:12px;">
+                                            <i class="fa-solid fa-file-powerpoint" style="color:#f97316;font-size:24px;"></i>
+                                            <div><h4 style="margin:0;font-size:14px;">Presentation.pptx</h4><p style="margin:0;font-size:12px;color:#64748b;">12.5 MB</p></div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style="font-size:14px;color:#64748b;text-transform:uppercase;margin-bottom:12px;">Project Details</h3>
+                                <ul style="list-style:none;padding:0;margin:0;font-size:14px;color:#334155;">
+                                    <li style="margin-bottom:8px;"><strong>Mentor:</strong> Dr. S. Kumar</li>
+                                    <li style="margin-bottom:8px;"><strong>Domain:</strong> Healthcare</li>
+                                    <li style="margin-bottom:8px;"><strong>Duration:</strong> 12 Weeks</li>
+                                    <li style="margin-bottom:8px;"><strong>Completion Date:</strong> May 05, 2025</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="dashboard-footer">
+            <p>&copy 2026 Rapid Prototyping Lab Management System. All Rights Reserved.</p>
+        </footer>
+    </main>
+</div>
+<script src="assets/js/global.js"></script>
+<script src="assets/js/completedprojects.js"></script>
+</body>
+</html>
