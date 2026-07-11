@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Workspace - RPLMS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* ── Active Teams Quick Grid ───────────────────────── */
+        .teams-quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .team-quick-card {
+            background: #fff;
+            border: 1.5px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .team-quick-card:hover {
+            border-color: #A5B4FC;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(92, 89, 242, 0.1);
+        }
+
+        .team-quick-card.active-card {
+            border-color: #4F3CF5;
+            background: linear-gradient(135deg, #EEF2FF, #F5F3FF);
+            box-shadow: 0 4px 16px rgba(79, 60, 245, 0.18);
+        }
+
+        .team-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #818CF8, #4F3CF5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #fff;
+            flex-shrink: 0;
+            font-weight: 800;
+        }
+
+        .team-quick-info {
+            min-width: 0;
+        }
+
+        .team-quick-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .team-quick-id {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* ── Search bar ──────────────────────────────────────── */
+        .ws-search-bar {
+            background: #fff;
+            border: 1.5px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ── Workspace panels ───────────────── */
+        .ws-team-banner {
+            background: linear-gradient(135deg, #3730A3, #4F3CF5);
+            border-radius: 16px;
+            padding: 24px 28px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ws-team-banner::after {
+            content: '';
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .ws-team-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-weight: 800;
+        }
+
+        .ws-team-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ws-team-name {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            margin-bottom: 4px;
+        }
+
+        .ws-team-meta {
+            font-size: 12.5px;
+            opacity: 0.7;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .ws-team-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ws-btn {
+            padding: 9px 16px;
+            border-radius: 10px;
+            border: none;
+            font-size: 12.5px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .ws-btn-outline {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .ws-btn-outline:hover {
+            background: rgba(255, 255, 255, 0.24);
+        }
+
+        .ws-btn-white {
+            background: #fff;
+            color: #4F3CF5;
+        }
+
+        .ws-btn-white:hover {
+            background: #F5F3FF;
+        }
+
+        /* ── KPI mini cards ─────────────────────────────────── */
+        .ws-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .ws-kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .ws-kpi {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px 20px;
+            transition: box-shadow 0.2s;
+        }
+
+        .ws-kpi:hover {
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .ws-kpi-icon {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .ws-kpi-val {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .ws-kpi-label {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .ws-kpi-sub {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* table + timeline layout */
+        .ws-main-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 960px) {
+            .ws-main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 24px;
+            padding-bottom: 18px;
+            border-left: 2px solid #E5E7EB;
+        }
+
+        .timeline-item:last-child {
+            border-left-color: transparent;
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -7px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #5C59F2;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px #C7D2FE;
+        }
+
+        .timeline-label {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .timeline-sub {
+            font-size: 11.5px;
+            color: var(--text-secondary);
+        }
+
+        /* ── section labels ─────────────────────────────────── */
+        .ws-section-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+
+        /* ── empty/error ─────────────────────────────────────── */
+        #emptyState {
+            background: #fff;
+            border: 1.5px dashed var(--border-color);
+            border-radius: 16px;
+            text-align: center;
+            padding: 56px 24px;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar"></aside>
+
+        <!-- MAIN PANEL -->
+        <main class="main-content">
+
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggleBtn">&#9776;</button>
+                    <div class="page-title-area">
+                        <h1 class="page-title">Team Workspace</h1>
+                        <ul class="breadcrumbs">
+                            <li>Home</li>
+                            <li>Team Workspace</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="header-icon-btn">
+                        <span class="icon">&#128276;</span>
+                        <span class="icon-badge">3</span>
+                    </button>
+                    <div class="header-date-widget"></div>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <div class="page-content-wrapper"
+                style="display:flex; flex-direction:column; gap:24px; max-width:1360px; margin:0 auto; padding:28px 32px;">
+
+                <!-- ACTIVE TEAMS QUICK GRID -->
+                <section
+                    style="background:#fff; border:1.5px solid var(--border-color); border-radius:16px; padding:22px 24px;">
+                    <div
+                        style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <div style="font-size:15px; font-weight:800; color:var(--text-primary);">Active Teams</div>
+                            <div style="font-size:12px; color:var(--text-secondary); margin-top:3px;">Click a team for
+                                instant workspace view</div>
+                        </div>
+                        <a href="teams.html"
+                            style="font-size:12px; font-weight:600; color:var(--primary-color); text-decoration:none;">Manage
+                            Teams →</a>
+                    </div>
+                    <div class="teams-quick-grid" id="activeTeamsGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- SEARCH SECTION -->
+                <div class="ws-search-bar">
+                    <div class="form-group" style="flex:1; min-width:220px; max-width:360px; margin:0;">
+                        <label class="form-label">Search by Team ID <span class="required-star">*</span></label>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <input type="text" id="teamSearchInput" class="form-control" placeholder="e.g. TEAM-001"
+                                maxlength="20" style="padding:10px 14px; font-size:13px;">
+                            <button class="btn btn-primary" id="searchBtn"
+                                style="padding:10px 20px; white-space:nowrap;">Search</button>
+                            <button class="btn btn-secondary" id="resetBtn" style="padding:10px 16px;">Reset</button>
+                        </div>
+                        <span class="invalid-feedback" id="searchError">Please enter a valid Team ID.</span>
+                    </div>
+                </div>
+
+                <!-- EMPTY STATE -->
+                <div id="emptyState">
+                    <div class="empty-icon">🏢</div>
+                    <div style="font-size:16px; font-weight:800; color:var(--text-primary); margin-bottom:8px;">Select a
+                        Team to View Workspace</div>
+                    <div style="font-size:13px; color:var(--text-secondary);">Click any team card above or enter a Team
+                        ID to load the full workspace view.</div>
+                </div>
+
+                <!-- WORKSPACE CONTENT (hidden until team selected) -->
+                <div id="workspaceContent" style="display:none; flex-direction:column; gap:24px;">
+
+                    <!-- TEAM BANNER -->
+                    <div class="ws-team-banner">
+                        <div class="ws-team-avatar" id="wsTeamAvatarLetter">T</div>
+                        <div class="ws-team-info">
+                            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:4px;">
+                                <span class="ws-team-name" id="wsTeamName">--</span>
+                                <span class="badge" id="wsTeamStatusBadge"
+                                    style="background:rgba(255,255,255,0.2); color:#fff;">--</span>
+                            </div>
+                            <div class="ws-team-meta">
+                                <span>ID: <strong id="wsTeamId">--</strong></span>
+                                <span>Project: <strong id="wsProjectName">--</strong></span>
+                                <span>Lab: <strong id="wsLabName">--</strong></span>
+                            </div>
+                        </div>
+                        <div class="ws-team-actions">
+                            <button class="ws-btn ws-btn-outline" id="btnEqHistory">Equipment History</button>
+                            <button class="ws-btn ws-btn-outline" id="btnMatHistory">Component History</button>
+                            <button class="ws-btn ws-btn-outline" id="btnRaiseTicket">Raise Ticket</button>
+                            <button class="ws-btn ws-btn-white" id="btnPrint">Print Summary</button>
+                        </div>
+                    </div>
+
+                    <!-- KPI CARDS -->
+                    <div class="ws-kpi-grid">
+                        <div class="ws-kpi">
+                            <div class="ws-kpi-icon">📦</div>
+                            <div class="ws-kpi-val" id="kpiBorrowed">0</div>
+                            <div class="ws-kpi-label">Borrowed Items</div>
+                            <div class="ws-kpi-sub">Currently with team</div>
+                        </div>
+                        <div class="ws-kpi">
+                            <div class="ws-kpi-icon">⏳</div>
+                            <div class="ws-kpi-val" id="kpiPending" style="color:#B45309;">0</div>
+                            <div class="ws-kpi-label">Pending Requests</div>
+                            <div class="ws-kpi-sub">Awaiting approval</div>
+                        </div>
+                        <div class="ws-kpi">
+                            <div class="ws-kpi-icon">🕐</div>
+                            <div class="ws-kpi-val" id="kpiDueSoon" style="color:#C2410C;">0</div>
+                            <div class="ws-kpi-label">Due Soon</div>
+                            <div class="ws-kpi-sub">Within 7 days</div>
+                        </div>
+                        <div class="ws-kpi">
+                            <div class="ws-kpi-icon">🚨</div>
+                            <div class="ws-kpi-val" id="kpiOverdue" style="color:#DC2626;">0</div>
+                            <div class="ws-kpi-label">Overdue Returns</div>
+                            <div class="ws-kpi-sub">Past due date</div>
+                        </div>
+                    </div>
+
+                    <!-- TWO COLUMN: Tables + Timeline -->
+                    <div class="ws-main-grid">
+
+                        <!-- LEFT: Tables -->
+                        <div style="display:flex; flex-direction:column; gap:20px;">
+
+                            <!-- ISSUED EQUIPMENT TABLE -->
+                            <section class="table-card">
+                                <div
+                                    style="padding:16px 20px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                                    <div>
+                                        <div style="font-size:14px; font-weight:800; color:var(--text-primary);">Issued
+                                            Equipment</div>
+                                        <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">Items
+                                            currently issued to this team</div>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <select id="eqStatusFilter" class="form-control"
+                                            style="padding:6px 10px; font-size:12px; width:auto;">
+                                            <option value="All">All Status</option>
+                                            <option value="Assigned">With Team</option>
+                                            <option value="Overdue">Overdue</option>
+                                            <option value="Returned">Returned</option>
+                                        </select>
+                                        <div class="search-wrapper" style="max-width:180px;">
+                                            <span class="search-icon">&#128269;</span>
+                                            <input type="text" id="eqSearchInput" class="search-input"
+                                                placeholder="Search...">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="custom-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Eq. ID</th>
+                                                <th>Equipment Name</th>
+                                                <th class="sortable" data-sort-eq="bookingDate">Booking Date &#8597;</th>
+                                                <th>Slot</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="eqTableBody"></tbody>
+                                    </table>
+                                </div>
+                                <div class="table-footer">
+                                    <span class="table-info" id="eqTableInfo">--</span>
+                                    <ul class="pagination" id="eqPagination"></ul>
+                                </div>
+                            </section>
+
+                            <!-- COMPONENT REQUESTS TABLE -->
+                            <section class="table-card">
+                                <div
+                                    style="padding:16px 20px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                                    <div>
+                                        <div style="font-size:14px; font-weight:800; color:var(--text-primary);">
+                                            Component Requests</div>
+                                        <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">All
+                                            component requests raised by this team</div>
+                                    </div>
+                                    <select id="reqStatusFilter" class="form-control"
+                                        style="padding:6px 10px; font-size:12px; width:auto;">
+                                        <option value="All">All Status</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Rejected">Rejected</option>
+                                        <option value="Issued">Issued</option>
+                                        <option value="Returned">Returned</option>
+                                    </select>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="custom-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Request ID</th>
+                                                <th>Item Name</th>
+                                                <th>Qty</th>
+                                                <th>Request Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="reqTableBody"></tbody>
+                                    </table>
+                                </div>
+                                <div class="table-footer">
+                                    <span class="table-info" id="reqTableInfo">--</span>
+                                    <ul class="pagination" id="reqPagination"></ul>
+                                </div>
+                            </section>
+
+                        </div>
+
+                        <!-- RIGHT: Timeline -->
+                        <div style="display:flex; flex-direction:column; gap:20px;">
+                            <section
+                                style="background:#fff; border:1.5px solid var(--border-color); border-radius:14px; overflow:hidden;">
+                                <div
+                                    style="padding:16px 20px; border-bottom:1px solid var(--border-color); background:linear-gradient(to right,#F8FAFF,#fff);">
+                                    <div style="font-size:14px; font-weight:800; color:var(--text-primary);">📅 Recent
+                                        Activity</div>
+                                    <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">Latest
+                                        team actions &amp; events</div>
+                                </div>
+                                <div id="timelineContainer"
+                                    style="padding:20px; display:flex; flex-direction:column; gap:0; max-height:600px; overflow-y:auto;">
+                                </div>
+                            </section>
+
+                            <!-- Tickets for team -->
+                            <section
+                                style="background:#fff; border:1.5px solid var(--border-color); border-radius:14px; overflow:hidden;">
+                                <div style="padding:16px 20px; border-bottom:1px solid var(--border-color);">
+                                    <div style="font-size:14px; font-weight:800; color:var(--text-primary);">🎫 Open
+                                        Tickets</div>
+                                    <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">Active
+                                        issues against this team</div>
+                                </div>
+                                <div id="wsTicketsContainer"
+                                    style="padding:16px 20px; display:flex; flex-direction:column; gap:10px;"></div>
+                            </section>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- END workspaceContent -->
+
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+                &copy; 2025 RPLMS - Rapid Prototyping Lab Management System. All rights reserved.
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/team-workspace.js"></script>
+    <script>
+        renderBaseLayout("teams");
+
+        // Render active team quick-cards
+        document.addEventListener("DOMContentLoaded", () => {
+            const db = getDB();
+            const grid = document.getElementById("activeTeamsGrid");
+            if (!grid) return;
+            const teams = (db.teams || []).filter(t => t.status === "Active").slice(0, 8);
+
+            if (teams.length === 0) {
+                grid.innerHTML = '<div style="color:var(--text-secondary);font-size:13px;grid-column:1/-1;">No active teams found.</div>';
+                return;
+            }
+
+            const colors = [
+                ["#818CF8", "#4F3CF5"], ["#F59E0B", "#D97706"], ["#10B981", "#059669"],
+                ["#3B82F6", "#1D4ED8"], ["#EF4444", "#DC2626"], ["#8B5CF6", "#7C3AED"],
+                ["#F97316", "#EA580C"], ["#06B6D4", "#0284C7"]
+            ];
+
+            grid.innerHTML = teams.map((t, i) => {
+                const [bg1, bg2] = colors[i % colors.length];
+                const letter = (t.name || "T")[0].toUpperCase();
+                return `
+              <div class="team-quick-card" onclick="loadTeamWorkspaceById('${t.id}')">
+                <div class="team-avatar" style="background:linear-gradient(135deg,${bg1},${bg2});">${letter}</div>
+                <div class="team-quick-info">
+                  <div class="team-quick-name">${t.name}</div>
+                  <div class="team-quick-id">${t.id}</div>
+                </div>
+              </div>`;
+            }).join("");
+        });
+
+        function loadTeamWorkspaceById(teamId) {
+            document.getElementById("teamSearchInput").value = teamId;
+            document.getElementById("searchBtn").click();
+            // Highlight active card
+            document.querySelectorAll(".team-quick-card").forEach(c => c.classList.remove("active-card"));
+            [...document.querySelectorAll(".team-quick-card")].forEach(c => {
+                const idEl = c.querySelector(".team-quick-id");
+                if (idEl && idEl.textContent === teamId) c.classList.add("active-card");
+            });
+        }
+    </script>
+</body>
+
+</html>
