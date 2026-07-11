@@ -26,6 +26,187 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="./assets/css/ongoingprojects.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+    /* =============================================
+       MATERIAL DESIGN CLOCK PICKER — CUSTOM BUILT
+       ============================================= */
+    .mtp-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+    }
+    .mtp-overlay.active { display: flex; }
+    .mtp-dialog {
+        background: #fff;
+        border-radius: 28px;
+        width: 328px;
+        overflow: hidden;
+        box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+        font-family: 'Inter', sans-serif;
+        animation: mtpSlideUp .22s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes mtpSlideUp {
+        from { opacity: 0; transform: translateY(24px) scale(.97); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .mtp-header {
+        background: #4f46e5;
+        padding: 20px 24px 16px;
+        color: #fff;
+    }
+    .mtp-header-label {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: .8px;
+        text-transform: uppercase;
+        opacity: .8;
+        margin-bottom: 6px;
+    }
+    .mtp-header-time {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 52px;
+        font-weight: 300;
+        line-height: 1;
+    }
+    .mtp-header-time span.mtp-seg {
+        cursor: pointer;
+        padding: 2px 4px;
+        border-radius: 6px;
+        transition: background .15s;
+    }
+    .mtp-header-time span.mtp-seg:hover { background: rgba(255,255,255,.15); }
+    .mtp-header-time span.mtp-seg.active { background: rgba(255,255,255,.25); }
+    .mtp-header-colon { opacity: .6; }
+    .mtp-ampm {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-left: 8px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .mtp-ampm span {
+        cursor: pointer;
+        padding: 2px 6px;
+        border-radius: 5px;
+        opacity: .5;
+        transition: all .15s;
+    }
+    .mtp-ampm span.active { opacity: 1; background: rgba(255,255,255,.2); }
+    .mtp-clock-wrap {
+        display: flex;
+        justify-content: center;
+        padding: 24px 24px 8px;
+    }
+    .mtp-clock {
+        position: relative;
+        width: 256px;
+        height: 256px;
+        border-radius: 50%;
+        background: #f1f0fb;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    .mtp-clock-center {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #4f46e5;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .mtp-clock-hand {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        transform-origin: bottom center;
+        width: 2px;
+        background: #4f46e5;
+        margin-left: -1px;
+        border-radius: 2px 2px 0 0;
+        transition: transform .15s cubic-bezier(.22,1,.36,1);
+    }
+    .mtp-clock-hand::after {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 10px solid #4f46e5;
+        background: transparent;
+        border-radius: 0;
+    }
+    .mtp-clock-num {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: #1f2937;
+        transform: translate(-50%, -50%);
+        transition: background .12s, color .12s;
+        cursor: pointer;
+    }
+    .mtp-clock-num:hover { background: rgba(79,70,229,.12); }
+    .mtp-clock-num.selected {
+        background: #4f46e5 !important;
+        color: #fff !important;
+    }
+    .mtp-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 8px 16px 20px;
+    }
+    .mtp-btn {
+        padding: 9px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background .15s;
+    }
+    .mtp-btn-cancel { background: transparent; color: #6b7280; }
+    .mtp-btn-cancel:hover { background: #f3f4f6; }
+    .mtp-btn-ok { background: #4f46e5; color: #fff; }
+    .mtp-btn-ok:hover { background: #4338ca; }
+    .mtp-input-wrapper {
+        position: relative;
+        cursor: pointer;
+    }
+    .mtp-input-wrapper input {
+        cursor: pointer;
+        caret-color: transparent;
+    }
+    .mtp-input-wrapper .mtp-clock-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        pointer-events: none;
+        font-size: 14px;
+    }
+    </style>
 </head>
 <body>
 <div class="dashboard-container">
@@ -807,45 +988,36 @@
                             <div class="booking-form-card">
                                 <h2>Equipment Booking</h2>
                                 <div class="form-group">
-                                    <label>Equipment</label>
+                                    <label>Equipment <span style="color: #ef4444;">*</span></label>
                                     <input type="text" id="bookingEquipment" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>Equipment Unit</label>
+                                    <label>Equipment Unit <span style="color: #ef4444;">*</span></label>
                                     <input type="text" id="bookingEquipmentUnit" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>Booking Date</label>
+                                    <label>Booking Date <span style="color: #ef4444;">*</span></label>
                                     <input type="date" id="bookingDate">
                                 </div>
-                                <div class="two-column" style="display: none;">
+                                <div class="two-column">
                                     <div class="form-group">
-                                        <label>From Time</label>
-                                        <select id="fromTime">
-                                            <option>Select Time</option>
-                                        </select>
+                                        <label>From Time <span style="color: #ef4444;">*</span></label>
+                                        <div class="mtp-input-wrapper">
+                                            <input type="text" id="fromTimePicker" class="form-control" placeholder="Select Start Time" readonly onclick="openMTP('from')">
+                                            <i class="fas fa-clock mtp-clock-icon"></i>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>To Time</label>
-                                        <select id="toTime">
-                                            <option>Select Time</option>
-                                        </select>
+                                        <label>To Time <span style="color: #ef4444;">*</span></label>
+                                        <div class="mtp-input-wrapper">
+                                            <input type="text" id="toTimePicker" class="form-control" placeholder="Select End Time" readonly onclick="openMTP('to')">
+                                            <i class="fas fa-clock mtp-clock-icon"></i>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="two-column">
-    <div class="form-group">
-        <label>From Time</label>
-        <input type="time" id="fromTimePicker" class="form-control">
-    </div>
-
-    <div class="form-group">
-        <label>To Time</label>
-        <input type="time" id="toTimePicker" class="form-control">
-    </div>
-</div>
                                 <div class="form-group">
                                     <label>Purpose</label>
-                                    <textarea id="bookingPurpose" rows="4" placeholder="Enter the purpose of booking..." required></textarea>
+                                    <textarea id="bookingPurpose" rows="4" placeholder="Enter the purpose of booking..."></textarea>
                                 </div>
                                 <div class="booking-footer">
                                     <button class="btn btn-primary" onclick="submitBooking()">Submit Booking</button>
@@ -853,7 +1025,7 @@
                             </div>
                             <!-- RIGHT PANEL -->
                             <div class="slot-card">
-                                <h2>Slot Availability</h2>
+                                <h2>Reserved Slots</h2>
                                 <p>Select a booking date to view equipment availability.</p>
                                 <div id="slotAvailability"></div>
                             </div>
@@ -908,23 +1080,23 @@
                                     </tr>
                                 </thead>
                                 <tbody id="bookingTableBody">
-                                    <tr>
+                                    <tr data-bk-id="BK001" data-bk-equipment="3D Printer" data-bk-unit="3D Printer-01" data-bk-date="28-May-2026" data-bk-time="10:00 AM - 12:00 PM" data-bk-status="approved" data-bk-purpose="Prototype shell development.">
                                         <td>BK001</td>
                                         <td>3D Printer</td>
                                         <td>3D Printer-01</td>
                                         <td>28-May-2026</td>
                                         <td>10:00 AM - 12:00 PM</td>
-                                        <td><span class="status pending">Pending</span></td>
-                                        <td><button class="btn btn-sm btn-primary" onclick="viewBookingDetails()">View</button></td>
+                                        <td><span class="status approved">Approved</span></td>
+                                        <td><button class="btn btn-sm btn-primary" onclick="viewBookingDetails(this)">View</button></td>
                                     </tr>
-                                    <tr>
+                                    <tr data-bk-id="BK002" data-bk-equipment="Laser Cutter" data-bk-unit="Laser Cutter-02" data-bk-date="29-May-2026" data-bk-time="02:00 PM - 04:00 PM" data-bk-status="approved" data-bk-purpose="PCB enclosure cutting.">
                                         <td>BK002</td>
                                         <td>Laser Cutter</td>
                                         <td>Laser Cutter-02</td>
                                         <td>29-May-2026</td>
                                         <td>02:00 PM - 04:00 PM</td>
                                         <td><span class="status approved">Approved</span></td>
-                                        <td><button class="btn btn-sm btn-primary" onclick="viewBookingDetails()">View</button></td>
+                                        <td><button class="btn btn-sm btn-primary" onclick="viewBookingDetails(this)">View</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -943,38 +1115,14 @@
                         </div>
                         <div class="details-card">
                             <table class="details-table">
-                                <tr>
-                                    <th>Booking ID</th>
-                                    <td>BK001</td>
-                                </tr>
-                                <tr>
-                                    <th>Equipment</th>
-                                    <td>3D Printer</td>
-                                </tr>
-                                <tr>
-                                    <th>Equipment Unit</th>
-                                    <td>3D Printer-01</td>
-                                </tr>
-                                <tr>
-                                    <th>Booking Date</th>
-                                    <td>28-May-2026</td>
-                                </tr>
-                                <tr>
-                                    <th>Time Slot</th>
-                                    <td>10:00 AM - 12:00 PM</td>
-                                </tr>
-                                <tr>
-                                    <th>Duration</th>
-                                    <td>2 Hours</td>
-                                </tr>
-                                <tr>
-                                    <th>Purpose</th>
-                                    <td>Prototype development and testing.</td>
-                                </tr>
-                                <tr>
-                                    <th>Status</th>
-                                    <td><span class="status pending">Pending</span></td>
-                                </tr>
+                                <tr><th>Booking ID</th><td id="det-id">—</td></tr>
+                                <tr><th>Equipment</th><td id="det-equipment">—</td></tr>
+                                <tr><th>Equipment Unit</th><td id="det-unit">—</td></tr>
+                                <tr><th>Booking Date</th><td id="det-date">—</td></tr>
+                                <tr><th>Time Slot</th><td id="det-time">—</td></tr>
+                                <tr><th>Duration</th><td id="det-duration">—</td></tr>
+                                <tr><th>Purpose</th><td id="det-purpose">—</td></tr>
+                                <tr><th>Status</th><td id="det-status">—</td></tr>
                             </table>
                         </div>
                     </div>
@@ -1201,6 +1349,181 @@
 </div>
 
 <script src="assets/js/global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="./assets/js/ongoingprojects.js"></script>
+<!-- Material Design Clock Picker -->
+<div class="mtp-overlay" id="mtpOverlay">
+    <div class="mtp-dialog">
+        <div class="mtp-header">
+            <div class="mtp-header-label">Select Time</div>
+            <div class="mtp-header-time">
+                <span class="mtp-seg active" id="mtpHourSeg">12</span>
+                <span class="mtp-header-colon">:</span>
+                <span class="mtp-seg" id="mtpMinSeg">00</span>
+                <div class="mtp-ampm">
+                    <span class="active" id="mtpAM" onclick="mtpSetAMPM('AM')">AM</span>
+                    <span id="mtpPM" onclick="mtpSetAMPM('PM')">PM</span>
+                </div>
+            </div>
+        </div>
+        <div class="mtp-clock-wrap">
+            <div class="mtp-clock" id="mtpClock">
+                <div class="mtp-clock-center"></div>
+                <div class="mtp-clock-hand" id="mtpHand"></div>
+            </div>
+        </div>
+        <div class="mtp-footer">
+            <button class="mtp-btn mtp-btn-cancel" onclick="closeMTP()">Cancel</button>
+            <button class="mtp-btn mtp-btn-ok" onclick="confirmMTP()">OK</button>
+        </div>
+    </div>
+</div>
+<script>
+/* =============================================
+   MATERIAL DESIGN CLOCK TIME PICKER — VANILLA JS
+   ============================================= */
+(function() {
+    const overlay  = document.getElementById('mtpOverlay');
+    const clock    = document.getElementById('mtpClock');
+    const hand     = document.getElementById('mtpHand');
+    const hourSeg  = document.getElementById('mtpHourSeg');
+    const minSeg   = document.getElementById('mtpMinSeg');
+    const amEl     = document.getElementById('mtpAM');
+    const pmEl     = document.getElementById('mtpPM');
+
+    let _mode       = 'hour';  // 'hour' | 'min'
+    let _hour       = 12;
+    let _min        = 0;
+    let _ampm       = 'AM';
+    let _targetId   = null;
+
+    window.openMTP = function(target) {
+        _targetId = target === 'from' ? 'fromTimePicker' : 'toTimePicker';
+        const existing = document.getElementById(_targetId).value;
+        if (existing) {
+            const parsed = parseTime12(existing);
+            if (parsed) { _hour = parsed.h12; _min = parsed.m; _ampm = parsed.ampm; }
+        } else { _hour = 12; _min = 0; _ampm = 'AM'; }
+        _mode = 'hour';
+        renderClock();
+        overlay.classList.add('active');
+    };
+
+    window.closeMTP = function() { overlay.classList.remove('active'); };
+
+    window.confirmMTP = function() {
+        const h = String(_hour).padStart(2,'0');
+        const m = String(_min).padStart(2,'0');
+        document.getElementById(_targetId).value = `${h}:${m} ${_ampm}`;
+        overlay.classList.remove('active');
+    };
+
+    window.mtpSetAMPM = function(val) {
+        _ampm = val;
+        amEl.classList.toggle('active', val === 'AM');
+        pmEl.classList.toggle('active', val === 'PM');
+    };
+
+    function parseTime12(str) {
+        const m = str.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (!m) return null;
+        return { h12: parseInt(m[1]), m: parseInt(m[2]), ampm: m[3].toUpperCase() };
+    }
+
+    hourSeg.addEventListener('click', () => { _mode = 'hour'; hourSeg.classList.add('active'); minSeg.classList.remove('active'); renderClock(); });
+    minSeg.addEventListener('click',  () => { _mode = 'min';  minSeg.classList.add('active'); hourSeg.classList.remove('active'); renderClock(); });
+
+    function renderClock() {
+        // Header
+        hourSeg.textContent = String(_hour).padStart(2,'0');
+        minSeg.textContent  = String(_min).padStart(2,'0');
+        amEl.classList.toggle('active', _ampm === 'AM');
+        pmEl.classList.toggle('active', _ampm === 'PM');
+
+        // Clear old numbers
+        clock.querySelectorAll('.mtp-clock-num').forEach(n => n.remove());
+
+        const cx = 128, cy = 128, r = 104;
+        let count, values, current;
+
+        if (_mode === 'hour') {
+            count  = 12;
+            values = [12,1,2,3,4,5,6,7,8,9,10,11];
+            current = _hour;
+        } else {
+            count  = 12;
+            values = [0,5,10,15,20,25,30,35,40,45,50,55];
+            current = Math.round(_min / 5) * 5;
+        }
+
+        for (let i = 0; i < count; i++) {
+            const angle = (i / count) * 2 * Math.PI - Math.PI / 2;
+            const x = cx + r * Math.cos(angle);
+            const y = cy + r * Math.sin(angle);
+            const num = document.createElement('div');
+            num.className = 'mtp-clock-num' + (values[i] === current ? ' selected' : '');
+            num.textContent = _mode === 'min' ? String(values[i]).padStart(2,'0') : values[i];
+            num.style.left = x + 'px';
+            num.style.top  = y + 'px';
+            num.addEventListener('click', (e) => { e.stopPropagation(); pickValue(values[i]); });
+            clock.appendChild(num);
+        }
+
+        // Hand
+        let handAngle;
+        if (_mode === 'hour') {
+            const idx = values.indexOf(current);
+            handAngle = idx < 0 ? 0 : (idx / 12) * 360;
+        } else {
+            handAngle = (current / 60) * 360;
+        }
+        const handLen = r - 14;
+        hand.style.height  = handLen + 'px';
+        hand.style.transform = `translateX(-50%) rotate(${handAngle}deg)`;
+    }
+
+    function pickValue(val) {
+        if (_mode === 'hour') {
+            _hour = val;
+            // Auto-switch to minute
+            setTimeout(() => { _mode = 'min'; minSeg.classList.add('active'); hourSeg.classList.remove('active'); renderClock(); }, 200);
+        } else {
+            _min = val;
+        }
+        renderClock();
+    }
+
+    // Drag on clock
+    let dragging = false;
+    clock.addEventListener('mousedown', startDrag);
+    clock.addEventListener('touchstart', startDrag, { passive: true });
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('touchmove', onDrag, { passive: true });
+    document.addEventListener('mouseup', () => { dragging = false; });
+    document.addEventListener('touchend', () => { dragging = false; });
+
+    function startDrag(e) { dragging = true; onDrag(e); }
+    function onDrag(e) {
+        if (!dragging) return;
+        const rect = clock.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const px = (e.touches ? e.touches[0].clientX : e.clientX) - cx;
+        const py = (e.touches ? e.touches[0].clientY : e.clientY) - cy;
+        let angle = Math.atan2(py, px) * 180 / Math.PI + 90;
+        if (angle < 0) angle += 360;
+        if (_mode === 'hour') {
+            const rawH = Math.round(angle / 30) % 12 || 12;
+            _hour = rawH;
+        } else {
+            const rawM = Math.round(angle / 6) % 60;
+            _min = rawM;
+        }
+        renderClock();
+    }
+
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeMTP(); });
+})();
+</script>
 </body>
 </html>

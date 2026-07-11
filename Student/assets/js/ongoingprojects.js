@@ -2188,40 +2188,111 @@ function openBookingForm() {
     loadTimeSlots();
 }
 
+let reservedTimeSlots = [];
+
+/* ===========================================
+   INIT TIME PICKER (MTP handles itself via HTML onclick)
+   =========================================== */
+// Time values from MTP are stored as "HH:MM AM/PM" — convert to 24h for comparisons
+function mtpTo24(str) {
+    if (!str) return null;
+    const m = str.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!m) return null;
+    let h = parseInt(m[1]);
+    const min = parseInt(m[2]);
+    const ampm = m[3].toUpperCase();
+    if (ampm === 'AM' && h === 12) h = 0;
+    if (ampm === 'PM' && h !== 12) h += 12;
+    return { h, min, total: h * 60 + min };
+}
+
 /* ===========================================
    SUBMIT BOOKING
    =========================================== */
 
 window.submitBooking = function() {
     const date = document.getElementById("bookingDate") ? document.getElementById("bookingDate").value : "";
-    const from = document.getElementById("fromTime") ? document.getElementById("fromTime").value : "";
-    const to = document.getElementById("toTime") ? document.getElementById("toTime").value : "";
-    const purposeEl = document.getElementById("bookingPurpose");
-    const purpose = purposeEl ? purposeEl.value.trim() : "";
+    const fromRaw = document.getElementById("fromTimePicker") ? document.getElementById("fromTimePicker").value : "";
+    const toRaw   = document.getElementById("toTimePicker")   ? document.getElementById("toTimePicker").value   : "";
 
-    if (date === "") {
-        alert("Please select a booking date.");
+    const showError = (msg) => Swal.fire({ icon: 'error', title: 'Oops!', text: msg, confirmButtonColor: '#4f46e5', confirmButtonText: 'Got it', borderRadius: '16px' });
+
+    if (!date) { showError("Please select a Booking Date."); return; }
+    if (!fromRaw) { showError("Please select a Start Time."); return; }
+    if (!toRaw)   { showError("Please select an End Time.");  return; }
+
+    const fromT = mtpTo24(fromRaw);
+    const toT   = mtpTo24(toRaw);
+
+    if (!fromT || !toT) { showError("Invalid time format. Please re-select the times."); return; }
+    if (toT.total <= fromT.total) { showError("End Time must be after Start Time."); return; }
+
+    const durationMins = toT.total - fromT.total;
+    if (durationMins < 5)   { showError("Minimum reservation time is 5 minutes."); return; }
+    if (durationMins > 240) { showError("Maximum reservation time is 4 hours."); return; }
+
+    // Overlap check against reserved slots
+    let hasOverlap = false;
+    for (const slot of reservedTimeSlots) {
+        const rFrom = mtpTo24(slot.from);
+        const rTo   = mtpTo24(slot.to);
+        
+        if (rFrom && rTo && fromT.total < rTo.total && toT.total > rFrom.total) {
+            hasOverlap = true;
+            break;
+        }
+    }
+    if (hasOverlap) {
+        Swal.fire({ icon: 'warning', title: 'Time Conflict', text: 'Your selected time overlaps with a reserved slot. Please choose a different time.', confirmButtonColor: '#4f46e5', confirmButtonText: 'Change Time' });
         return;
     }
 
-    
+    // Add to My Bookings as "Approval Pending"
+    const tbody     = document.getElementById("bookingTableBody");
+    const equipment     = document.getElementById("bookingEquipment")?.value || "Equipment";
+    const equipmentUnit = document.getElementById("bookingEquipmentUnit")?.value || "Unit";
+    const purpose       = document.getElementById("bookingPurpose")?.value.trim() || "—";
+    const bookingId     = "BK" + Math.floor(Math.random() * 900 + 100);
+    const dateObj       = new Date(date + 'T00:00:00');
+    const formattedDate = dateObj.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }).replace(/ /g, '-');
+    const timeStr       = `${fromRaw} - ${toRaw}`;
 
-    if (purpose === "") {
-        alert("Please enter the purpose of booking.");
-        return;
+    if (tbody) {
+        const tr = document.createElement("tr");
+        tr.dataset.bkId        = bookingId;
+        tr.dataset.bkEquipment = equipment;
+        tr.dataset.bkUnit      = equipmentUnit;
+        tr.dataset.bkDate      = formattedDate;
+        tr.dataset.bkTime      = timeStr;
+        tr.dataset.bkStatus    = "approval-pending";
+        tr.dataset.bkPurpose   = purpose;
+        tr.innerHTML = `
+            <td>${bookingId}</td>
+            <td>${equipment}</td>
+            <td>${equipmentUnit}</td>
+            <td>${formattedDate}</td>
+            <td>${timeStr}</td>
+            <td><span class="status pending">Approval Pending</span></td>
+            <td><button class="btn btn-sm btn-primary" onclick="viewBookingDetails(this)">View</button></td>
+        `;
+        tbody.prepend(tr);
     }
 
-    
-alert(
-    "✅ Booking will be confirmed if the slot is available."
-);
-
-    resetBookingForm();
-    hideAllPages();
-
-    if (myBookingsPage) myBookingsPage.style.display = "block";
-    if (myBookingsTab) myBookingsTab.classList.add("active");
-    if (selectEquipmentTab) selectEquipmentTab.classList.remove("active");
+    Swal.fire({
+        icon: 'success',
+        title: 'Booking Submitted!',
+        html: `Your booking for <strong>${equipment}</strong> on <strong>${formattedDate}</strong> has been sent for <strong>Lab Incharge Approval</strong>.`,
+        confirmButtonColor: '#4f46e5',
+        confirmButtonText: 'Go to My Bookings',
+        timer: 6000,
+        timerProgressBar: true
+    }).then(() => {
+        resetBookingForm();
+        hideAllPages();
+        if (myBookingsPage) myBookingsPage.style.display = "block";
+        if (myBookingsTab)  myBookingsTab.classList.add("active");
+        if (selectEquipmentTab) selectEquipmentTab.classList.remove("active");
+    });
 }
 
 /* ===========================================
@@ -2232,11 +2303,11 @@ function resetBookingForm() {
     const dateEl = document.getElementById("bookingDate");
     if (dateEl) dateEl.value = "";
 
-    const fromEl = document.getElementById("fromTime");
-    if (fromEl) fromEl.innerHTML = '<option value="">Select Time</option>';
+    const fromEl = document.getElementById("fromTimePicker");
+    if (fromEl) fromEl.value = "";
 
-    const toEl = document.getElementById("toTime");
-    if (toEl) toEl.innerHTML = '<option value="">Select Time</option>';
+    const toEl = document.getElementById("toTimePicker");
+    if (toEl) toEl.value = "";
 
     const purposeEl = document.getElementById("bookingPurpose");
     if (purposeEl) purposeEl.value = "";
@@ -2244,14 +2315,50 @@ function resetBookingForm() {
     const slotAvailability = document.getElementById("slotAvailability");
     if (slotAvailability) slotAvailability.innerHTML = "<p>Select a booking date to view equipment availability.</p>";
 
-    availableTimeSlots = [];
+    reservedTimeSlots = [];
 }
 
 /* ===========================================
    VIEW BOOKING DETAILS
    =========================================== */
 
-window.viewBookingDetails = function() {
+window.viewBookingDetails = function(btn) {
+    const row = btn ? btn.closest('tr') : null;
+    if (row) {
+        const id        = row.dataset.bkId        || row.cells[0]?.innerText || '—';
+        const equipment = row.dataset.bkEquipment || row.cells[1]?.innerText || '—';
+        const unit      = row.dataset.bkUnit      || row.cells[2]?.innerText || '—';
+        const date      = row.dataset.bkDate      || row.cells[3]?.innerText || '—';
+        const time      = row.dataset.bkTime      || row.cells[4]?.innerText || '—';
+        const status    = row.dataset.bkStatus    || 'pending';
+        const purpose   = row.dataset.bkPurpose   || '—';
+
+        // Calculate duration from time slot
+        let durationText = '—';
+        const tMatch = time.match(/(\d+):(\d+)\s*(AM|PM)\s*-\s*(\d+):(\d+)\s*(AM|PM)/i);
+        if (tMatch) {
+            const t1 = { h: parseInt(tMatch[1]), m: parseInt(tMatch[2]), ampm: tMatch[3] };
+            const t2 = { h: parseInt(tMatch[4]), m: parseInt(tMatch[5]), ampm: tMatch[6] };
+            const to24 = (t) => { let h = t.h; if (t.ampm.toUpperCase() === 'AM' && h === 12) h = 0; if (t.ampm.toUpperCase() === 'PM' && h !== 12) h += 12; return h * 60 + t.m; };
+            const diff = to24(t2) - to24(t1);
+            if (diff > 0) {
+                const hrs = Math.floor(diff / 60), mins = diff % 60;
+                durationText = hrs > 0 ? (mins > 0 ? `${hrs}h ${mins}m` : `${hrs} Hour${hrs > 1 ? 's' : ''}`) : `${mins} Min`;
+            }
+        }
+
+        const statusLabels = { 'approved': '<span class="status approved">Approved</span>', 'approval-pending': '<span class="status pending">Approval Pending</span>', 'pending': '<span class="status pending">Approval Pending</span>', 'rejected': '<span class="status rejected">Rejected</span>', 'cancelled': '<span class="status cancelled">Cancelled</span>' };
+        const statusHTML = statusLabels[status.toLowerCase()] || `<span class="status pending">${status}</span>`;
+
+        document.getElementById('det-id').textContent        = id;
+        document.getElementById('det-equipment').textContent = equipment;
+        document.getElementById('det-unit').textContent      = unit;
+        document.getElementById('det-date').textContent      = date;
+        document.getElementById('det-time').textContent      = time;
+        document.getElementById('det-duration').textContent  = durationText;
+        document.getElementById('det-purpose').textContent   = purpose;
+        document.getElementById('det-status').innerHTML      = statusHTML;
+    }
     hideAllPages();
     if (bookingDetailsPage) bookingDetailsPage.style.display = "block";
 }
@@ -2311,90 +2418,58 @@ function loadSlotAvailability() {
 
     if (!bookingDateVal) {
         slotContainer.innerHTML = "<p>Select a booking date to view availability.</p>";
+        reservedTimeSlots = [];
         return;
     }
 
-    
-const slots = [
-    "09:00 - 10:30",
-    "11.05 - 11:30",
-    "12:10 - 12:20",
-    "14:00 - 15:00"
-];
-
-
-    const statusList = ["available", "booked", "maintenance"];
     slotContainer.innerHTML = "";
-    availableTimeSlots = [];
-
-    slots.forEach(slot => {
+    reservedTimeSlots = [];
+    const statusList = ["booked", "maintenance"];
+    
+    // Generate 3 to 4 random slots
+    const numSlots = Math.floor(Math.random() * 2) + 3; // 3 or 4
+    
+    // Create random non-overlapping slots
+    let currentMin = 8 * 60; // Start around 8:00 AM
+    
+    for (let i = 0; i < numSlots; i++) {
+        // Random start time after currentMin
+        const startMin = currentMin + Math.floor(Math.random() * 120); 
+        // Random duration between 15 mins and 3 hours
+        const duration = Math.floor(Math.random() * 165) + 15;
+        const endMin = startMin + duration;
+        
+        if (endMin > 23 * 60 + 30) break; 
+        
+        const formatTime = (mins) => {
+            let h = Math.floor(mins / 60);
+            const m = (mins % 60).toString().padStart(2, '0');
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12;
+            return `${String(h).padStart(2, '0')}:${m} ${ampm}`;
+        };
+        
+        const slotFrom = formatTime(startMin);
+        const slotTo = formatTime(endMin);
+        
         const status = statusList[Math.floor(Math.random() * statusList.length)];
-        let statusText = "";
-
-        if (status === "available") {
-            statusText = "Available";
-            availableTimeSlots.push(slot);
-        } else if (status === "booked") {
-            statusText = "Booked";
-        } else {
-            statusText = "Maintenance";
-        }
-
+        const statusText = status === "booked" ? "Booked" : "Maintenance";
+        
+        reservedTimeSlots.push({ from: slotFrom, to: slotTo, status: status });
+        
         slotContainer.innerHTML += `
             <div class="slot-item ${status}">
-                <span class="slot-time">${slot}</span>
+                <span class="slot-time">${slotFrom} - ${slotTo}</span>
                 <span class="slot-status">${statusText}</span>
             </div>
         `;
-    });
-    loadTimeSlots();
-}
+        
+        currentMin = endMin + 30; // at least 30 mins gap
+    }
 
-/* ===========================================
-   LOAD AVAILABLE TIME SLOTS
-   =========================================== */
-
-function loadTimeSlots() {
-    const fromTimeEl = document.getElementById("fromTime");
-    const toTimeEl = document.getElementById("toTime");
-
-    if (!fromTimeEl || !toTimeEl) return;
-
-    fromTimeEl.innerHTML = '<option value="">Select Time</option>';
-    toTimeEl.innerHTML = '<option value="">Select Time</option>';
-
-    availableTimeSlots.forEach(slot => {
-        const startTime = slot.split(" - ")[0];
-        fromTimeEl.innerHTML += `<option value="${startTime}">${startTime}</option>`;
-        toTimeEl.innerHTML += `<option value="${startTime}">${startTime}</option>`;
-    });
-}
-
-/* ===========================================
-   UPDATE TO TIME
-   =========================================== */
-
-if (fromTime) {
-    fromTime.addEventListener("change", function () {
-        if (!toTime) return;
-        toTime.innerHTML = '<option value="">Select Time</option>';
-        const selectedTime = fromTime.value;
-        let startAdding = false;
-
-        availableTimeSlots.forEach(slot => {
-            const times = slot.split(" - ");
-            const startTime = times[0];
-            const endTime = times[1];
-
-            if (startTime === selectedTime) {
-                startAdding = true;
-            }
-
-            if (startAdding) {
-                toTime.innerHTML += `<option value="${endTime}">${endTime}</option>`;
-            }
-        });
-    });
+    if (reservedTimeSlots.length === 0) {
+        slotContainer.innerHTML = "<p>All slots are available today.</p>";
+    }
 }
 
 /* ===========================================
