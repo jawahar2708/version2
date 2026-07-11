@@ -286,6 +286,9 @@ const TOOLS_CATALOG = [
 // Global State
 let componentCart = [];
 let toolCart = [];
+// Persists qty stepper values across catalog re-renders
+const compQtyState = {};
+const toolQtyState = {};
 
 const MY_COMPONENT_REQUESTS = [
     { id: 'CR-104', cartItems: [{name:'Arduino Uno R3',qty:2},{name:'ESP32 Dev Board',qty:1},{name:'Breadboard 830 Points',qty:2},{name:'Jumper Wires (40pcs)',qty:3}], date: '28 May 2025 10:30 AM', status: 'Pending',  purpose: 'Main controller and connectivity for prototype.' },
@@ -315,6 +318,18 @@ const TOOL_RETURNS = [
     { id: 'TR-002', toolName: 'Wire Cutter', requestId: 'TB-021', returnDate: '18 May 2025', condition: 'Good', status: 'Completed' },
     { id: 'TR-003', toolName: 'Multimeter', requestId: 'TB-022', returnDate: '19 May 2025', condition: 'Excellent', status: 'Completed' },
     { id: 'TR-004', toolName: 'Screwdriver Set', requestId: 'TB-022', returnDate: '19 May 2025', condition: 'Good', status: 'Completed' }
+];
+
+// Mock data for equipment bookings that are approved/active (eligible for checkout)
+let MY_EQUIPMENT_BOOKINGS = [
+    { id: 'BK001', equipment: '3D Printer', unit: '3D Printer-01', date: '28-May-2026', timeSlot: '10:00 AM - 12:00 PM', purpose: 'Prototype shell development.', status: 'approved' },
+    { id: 'BK002', equipment: 'Laser Cutter', unit: 'Laser Cutter-02', date: '29-May-2026', timeSlot: '02:00 PM - 04:00 PM', purpose: 'PCB enclosure cutting.', status: 'approved' }
+];
+
+// Mock data for equipment checkout log
+const EQUIPMENT_CHECKOUT_LOG = [
+    { id: 'EKO-001', equipment: '3D Printer', unit: '3D Printer-01', bookingId: 'BK-PREV-01', checkoutDate: '20 May 2026', condition: '—', status: 'Pending Review' },
+    { id: 'EKO-002', equipment: 'CNC Router', unit: 'CNC Router-01', bookingId: 'BK-PREV-02', checkoutDate: '18 May 2026', condition: 'Good', status: 'Completed' }
 ];
 
 /* ============================================================
@@ -355,6 +370,7 @@ window.spaNavigate = function(viewId) {
     if (viewId === 'component-returning') {
         renderComponentReturns();
         renderToolReturns();
+        renderEquipmentCheckout();
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -766,6 +782,8 @@ window.renderComponentCatalog = function() {
 
     container.innerHTML = filtered.map(component => {
         const isSelected = document.querySelector(`.component-select-chk[data-id="${component.id}"]`)?.checked ? 'checked' : '';
+        const qty = compQtyState[component.id] || 1;
+        const atMin = qty <= 1;
         return `
         <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;transition:all 0.3s ease;position:relative;box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
             <!-- Selection Checkbox -->
@@ -786,23 +804,21 @@ window.renderComponentCatalog = function() {
             <!-- Quantity Stepper -->
             <div style="display:flex;gap:8px;width:100%;margin-bottom:12px;align-items:center;justify-content:center;">
                 <div style="display:flex;align-items:center;border:1px solid #cbd5e1;border-radius:6px;overflow:hidden;width:100px;background:#fff;">
-                    <button onclick="adjustQty(${component.id}, -1, 'component')" style="border:none;background:#f8fafc;width:30px;height:32px;font-size:16px;cursor:pointer;color:#475569;font-weight:bold;outline:none;">−</button>
-                    <input type="text" id="comp-qty-${component.id}" value="1" readonly style="border:none;width:40px;height:32px;text-align:center;font-size:13.5px;font-weight:600;color:#0f172a;background:#fff;pointer-events:none;">
-                    <button onclick="adjustQty(${component.id}, 1, 'component')" style="border:none;background:#f8fafc;width:30px;height:32px;font-size:16px;cursor:pointer;color:#475569;font-weight:bold;outline:none;">+</button>
+                    <button type="button" id="comp-minus-${component.id}" onclick="adjustQty(${component.id}, -1, 'component')" ${atMin ? 'disabled' : ''} style="border:none;background:#f8fafc;width:30px;height:32px;font-size:16px;cursor:pointer;color:#475569;font-weight:bold;outline:none;${atMin ? 'opacity:0.35;cursor:not-allowed;' : ''}">−</button>
+                    <input type="text" id="comp-qty-${component.id}" value="${qty}" readonly style="border:none;width:40px;height:32px;text-align:center;font-size:13.5px;font-weight:600;color:#0f172a;background:#fff;pointer-events:none;">
+                    <button type="button" id="comp-plus-${component.id}" onclick="adjustQty(${component.id}, 1, 'component')" style="border:none;background:#f8fafc;width:30px;height:32px;font-size:16px;cursor:pointer;color:#475569;font-weight:bold;outline:none;">+</button>
                 </div>
-                <button onclick="addComponentToCart(${component.id})" class="btn btn-primary" style="padding:0;width:38px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;"><i class="fa-solid fa-cart-plus"></i></button>
+                <button type="button" onclick="addComponentToCart(${component.id})" class="btn btn-primary" style="padding:0;width:38px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;"><i class="fa-solid fa-cart-plus"></i></button>
             </div>
 
-            <button onclick="showComponentDetails(${component.id})" class="btn-text" style="color:#4f46e5;font-size:12.5px;font-weight:600;width:100%;">View Details</button>
+            <button type="button" onclick="showComponentDetails(${component.id})" class="btn-text" style="color:#4f46e5;font-size:12.5px;font-weight:600;width:100%;">View Details</button>
         </div>`;
     }).join('');
 };
 
 window.adjustQty = function(id, delta, type) {
     const isComp = type === 'component';
-    const catalog = isComp ? COMPONENTS_CATALOG : TOOLS_CATALOG;
-    const item = catalog.find(i => i.id === id);
-    if (!item) return;
+    const qtyState = isComp ? compQtyState : toolQtyState;
 
     const inputId = isComp ? `comp-qty-${id}` : `tool-qty-${id}`;
     const input = document.getElementById(inputId);
@@ -812,11 +828,18 @@ window.adjustQty = function(id, delta, type) {
     let newVal = currentVal + delta;
 
     if (newVal < 1) newVal = 1;
-    if (newVal > item.maxPerRequest) {
-        newVal = item.maxPerRequest;
-        showToast(`Maximum limit of ${item.maxPerRequest} reached for ${item.name}`, 'warning');
-    }
+
+    // Persist the value so re-renders don't reset it
+    qtyState[id] = newVal;
     input.value = newVal;
+
+    // Update minus button disabled state (only disable at min)
+    const minusBtn = document.getElementById(`${isComp ? 'comp' : 'tool'}-minus-${id}`);
+    if (minusBtn) {
+        minusBtn.disabled = newVal <= 1;
+        minusBtn.style.opacity = newVal <= 1 ? '0.35' : '1';
+        minusBtn.style.cursor = newVal <= 1 ? 'not-allowed' : 'pointer';
+    }
 };
 
 window.showComponentDetails = function(componentId) {
@@ -834,12 +857,7 @@ window.addComponentToCart = function(id) {
     
     const existing = componentCart.find(item => item.id === id);
     if (existing) {
-        if (existing.quantity + qty > component.maxPerRequest) {
-            existing.quantity = component.maxPerRequest;
-            showToast(`Adjusted quantity to max limit of ${component.maxPerRequest} for ${component.name}`, 'warning');
-        } else {
-            existing.quantity += qty;
-        }
+        existing.quantity += qty;
     } else {
         componentCart.push({
             id: component.id,
@@ -851,8 +869,10 @@ window.addComponentToCart = function(id) {
     }
 
     if (qtyInput) qtyInput.value = 1;
+    delete compQtyState[id]; // reset stepper state for this item
     updateComponentCartUI();
     showToast(`${component.name} (${qty}x) added to cart`, 'success');
+    renderComponentCatalog(); // re-render so button states reset
 };
 
 function updateComponentCartUI() {
@@ -1109,11 +1129,7 @@ window.addSelectedComponentsToCart = function() {
 
         const existing = componentCart.find(item => item.id === id);
         if (existing) {
-            if (existing.quantity + qty > component.maxPerRequest) {
-                existing.quantity = component.maxPerRequest;
-            } else {
-                existing.quantity += qty;
-            }
+            existing.quantity += qty;
         } else {
             componentCart.push({
                 id: component.id,
@@ -1126,11 +1142,13 @@ window.addSelectedComponentsToCart = function() {
         addedCount++;
         chk.checked = false; // Uncheck
         if (qtyInput) qtyInput.value = 1;
+        delete compQtyState[id]; // reset stepper state
     });
 
     updateComponentCartUI();
     updateBulkActionBar('component');
     showToast(`Bulk added ${addedCount} component types to cart`, 'success');
+    renderComponentCatalog(); // re-render so steppers reset
 };
 
 window.addSelectedToolsToCart = function() {
@@ -1148,11 +1166,7 @@ window.addSelectedToolsToCart = function() {
 
         const existing = toolCart.find(item => item.id === id);
         if (existing) {
-            if (existing.quantity + qty > tool.maxPerRequest) {
-                existing.quantity = tool.maxPerRequest;
-            } else {
-                existing.quantity += qty;
-            }
+            existing.quantity += qty;
         } else {
             toolCart.push({
                 id: tool.id,
@@ -1165,11 +1179,13 @@ window.addSelectedToolsToCart = function() {
         addedCount++;
         chk.checked = false; // Uncheck
         if (qtyInput) qtyInput.value = 1;
+        delete toolQtyState[id]; // reset stepper state
     });
 
     updateToolCartUI();
     updateBulkActionBar('tool');
     showToast(`Bulk added ${addedCount} tool types to borrow list`, 'success');
+    renderToolCatalog(); // re-render so steppers reset
 };
 
 function showDetailsModal(item, type) {
@@ -1265,14 +1281,14 @@ window.renderToolCatalog = function() {
             <!-- Quantity Stepper -->
             <div style="display:flex;gap:8px;width:100%;margin-bottom:12px;align-items:center;justify-content:center;">
                 <div style="display:flex;align-items:center;border:1px solid #cbd5e1;border-radius:6px;overflow:hidden;width:100px;background:#fff;">
-                    <button onclick="adjustQty(${tool.id}, -1, 'tool')" style="border:none;background:#f8fafc;width:30px;height:32px;font-size:16px;cursor:pointer;color:#475569;font-weight:bold;outline:none;">−</button>
-                    <input type="text" id="tool-qty-${tool.id}" value="1" readonly style="border:none;width:40px;height:32px;text-align:center;font-size:13.5px;font-weight:600;color:#0f172a;background:#fff;pointer-events:none;">
-                    <button onclick="adjustQty(${tool.id}, 1, 'tool')" style="border:none;background:#f8fafc;width:30px;height:32px;font-size:16px;cursor:pointer;color:#475569;font-weight:bold;outline:none;">+</button>
+                    <button type="button" id="tool-minus-${tool.id}" onclick="adjustQty(${tool.id}, -1, 'tool')" ${toolQtyState[tool.id] <= 1 || !toolQtyState[tool.id] ? 'disabled' : ''} style="border:none;background:#f8fafc;width:30px;height:32px;font-size:16px;cursor:pointer;color:#475569;font-weight:bold;outline:none;${toolQtyState[tool.id] <= 1 || !toolQtyState[tool.id] ? 'opacity:0.35;cursor:not-allowed;' : ''}">−</button>
+                    <input type="text" id="tool-qty-${tool.id}" value="${toolQtyState[tool.id] || 1}" readonly style="border:none;width:40px;height:32px;text-align:center;font-size:13.5px;font-weight:600;color:#0f172a;background:#fff;pointer-events:none;">
+                    <button type="button" id="tool-plus-${tool.id}" onclick="adjustQty(${tool.id}, 1, 'tool')" style="border:none;background:#f8fafc;width:30px;height:32px;font-size:16px;cursor:pointer;color:#475569;font-weight:bold;outline:none;">+</button>
                 </div>
-                <button onclick="addToolToCart(${tool.id})" class="btn btn-primary" style="padding:0;width:38px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;"><i class="fa-solid fa-cart-plus"></i></button>
+                <button type="button" onclick="addToolToCart(${tool.id})" class="btn btn-primary" style="padding:0;width:38px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;"><i class="fa-solid fa-cart-plus"></i></button>
             </div>
 
-            <button onclick="showToolDetails(${tool.id})" class="btn-text" style="color:#4f46e5;font-size:12.5px;font-weight:600;width:100%;">View Details</button>
+            <button type="button" onclick="showToolDetails(${tool.id})" class="btn-text" style="color:#4f46e5;font-size:12.5px;font-weight:600;width:100%;">View Details</button>
         </div>`;
     }).join('');
 };
@@ -1296,12 +1312,7 @@ window.addToolToCart = function(id) {
 
     const existing = toolCart.find(item => item.id === id);
     if (existing) {
-        if (existing.quantity + qty > tool.maxPerRequest) {
-            existing.quantity = tool.maxPerRequest;
-            showToast(`Adjusted quantity to max limit of ${tool.maxPerRequest} for ${tool.name}`, 'warning');
-        } else {
-            existing.quantity += qty;
-        }
+        existing.quantity += qty;
     } else {
         toolCart.push({
             id: tool.id,
@@ -1313,8 +1324,10 @@ window.addToolToCart = function(id) {
     }
 
     if (qtyInput) qtyInput.value = 1;
+    delete toolQtyState[id]; // reset stepper state for this item
     updateToolCartUI();
     showToast(`${tool.name} (${qty}x) added to borrow list`, 'success');
+    renderToolCatalog(); // re-render so button states reset
 };
 
 function updateToolCartUI() {
@@ -1561,6 +1574,9 @@ window.switchReturnTab = function(tab) {
     } else if (tab === 'tools') {
         document.getElementById('tab-return-tools').style.display = 'block';
         renderToolReturns();
+    } else if (tab === 'equipment') {
+        document.getElementById('tab-checkout-equipment').style.display = 'block';
+        renderEquipmentCheckout();
     }
 };
 
@@ -1673,6 +1689,200 @@ function renderToolReturns() {
         }
     }
 }
+
+/* ============================================================
+   EQUIPMENT CHECKOUT SYSTEM
+   ============================================================ */
+
+function renderEquipmentCheckout() {
+    const activeList = document.getElementById('active-equipment-bookings-list');
+    const checkoutLogList = document.getElementById('equipment-checkout-log-list');
+
+    // --- Render Active Bookings ---
+    if (activeList) {
+        const activeBookings = MY_EQUIPMENT_BOOKINGS.filter(b => b.status === 'approved');
+        if (activeBookings.length === 0) {
+            activeList.innerHTML = `<tr><td colspan="8" style="padding:24px;text-align:center;color:#94a3b8;font-style:italic;">No active equipment bookings awaiting checkout.</td></tr>`;
+        } else {
+            activeList.innerHTML = activeBookings.map(b => `
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                    <td style="padding:14px 16px;font-weight:700;color:#0f172a;">${b.id}</td>
+                    <td style="padding:14px 16px;color:#0f172a;font-weight:600;">${b.equipment}</td>
+                    <td style="padding:14px 16px;color:#475569;">${b.unit}</td>
+                    <td style="padding:14px 16px;color:#475569;">${b.date}</td>
+                    <td style="padding:14px 16px;color:#475569;">${b.timeSlot}</td>
+                    <td style="padding:14px 16px;text-align:right;">
+                        <button onclick="requestEquipmentCheckout('${b.id}')" class="btn" style="padding:6px 14px;font-size:13px;background:#f0fdf4;border:1px solid #86efac;color:#16a34a;font-weight:600;cursor:pointer;white-space:nowrap;">
+                            <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right:4px;"></i>Checkout Request
+                        </button>
+                    </td>
+                </tr>`).join('');
+        }
+    }
+
+    // --- Render Checkout Log ---
+    if (checkoutLogList) {
+        const statusColors = {
+            'Completed':       { bg: '#d1fae5', text: '#059669' },
+            'Pending Review':  { bg: '#fef9c3', text: '#ca8a04' },
+            'Under Inspection':{ bg: '#eff6ff', text: '#2563eb' }
+        };
+
+        if (EQUIPMENT_CHECKOUT_LOG.length === 0) {
+            checkoutLogList.innerHTML = `<tr><td colspan="7" style="padding:24px;text-align:center;color:#94a3b8;font-style:italic;">No equipment checkout requests submitted yet.</td></tr>`;
+        } else {
+            checkoutLogList.innerHTML = EQUIPMENT_CHECKOUT_LOG.map(r => {
+                const c = statusColors[r.status] || { bg: '#f1f5f9', text: '#64748b' };
+                const conditionHtml = r.condition === '—'
+                    ? `<span style="color:#94a3b8;font-style:italic;">Awaiting Inspection</span>`
+                    : `<span style="background:#f1f5f9;color:#475569;padding:4px 10px;border-radius:6px;font-size:12.5px;font-weight:500;">${r.condition}</span>`;
+                return `
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                    <td style="padding:16px;font-weight:700;color:#0f172a;">${r.id}</td>
+                    <td style="padding:16px;color:#0f172a;font-weight:600;">${r.equipment} <span style="font-size:12px;color:#64748b;font-weight:400;">(${r.unit})</span></td>
+                    <td style="padding:16px;color:#475569;">${r.bookingId}</td>
+                    <td style="padding:16px;color:#475569;">${r.checkoutDate}</td>
+                    <td style="padding:16px;">${conditionHtml}</td>
+                    <td style="padding:16px;"><span style="background:${c.bg};color:${c.text};padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;">${r.status}</span></td>
+                    <td style="padding:16px;text-align:right;"><button onclick="viewEquipmentCheckoutDetails('${r.id}')" class="btn-text" style="color:#4f46e5;font-size:13.5px;font-weight:700;cursor:pointer;">View Details</button></td>
+                </tr>`;
+            }).join('');
+        }
+    }
+}
+
+window.requestEquipmentCheckout = function(bookingId) {
+    const booking = MY_EQUIPMENT_BOOKINGS.find(b => b.id === bookingId);
+    if (!booking) return;
+
+    Swal.fire({
+        icon: 'question',
+        title: 'Submit Checkout Request?',
+        html: `
+            <div style="text-align:left;font-size:14px;line-height:1.7;color:#475569;">
+                <p style="margin:0 0 12px 0;">You are about to submit a <strong>checkout request</strong> for:</p>
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;margin-bottom:12px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:#94a3b8;font-size:12px;font-weight:600;text-transform:uppercase;">Equipment</span><strong>${booking.equipment}</strong></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:#94a3b8;font-size:12px;font-weight:600;text-transform:uppercase;">Unit</span><span>${booking.unit}</span></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:#94a3b8;font-size:12px;font-weight:600;text-transform:uppercase;">Date</span><span>${booking.date}</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:#94a3b8;font-size:12px;font-weight:600;text-transform:uppercase;">Time Slot</span><span>${booking.timeSlot}</span></div>
+                </div>
+                <p style="margin:0;color:#64748b;font-size:13px;"><i class="fa-solid fa-circle-info" style="color:#4f46e5;margin-right:4px;"></i>The Lab Incharge will inspect the equipment and update the condition record.</p>
+            </div>`,
+        showCancelButton: true,
+        confirmButtonColor: '#16a34a',
+        cancelButtonColor: '#94a3b8',
+        confirmButtonText: '<i class="fa-solid fa-arrow-right-from-bracket"></i> Submit Checkout',
+        cancelButtonText: 'Cancel',
+        customClass: { popup: 'swal2-border-radius' }
+    }).then(result => {
+        if (!result.isConfirmed) return;
+
+        // Remove from active bookings
+        MY_EQUIPMENT_BOOKINGS = MY_EQUIPMENT_BOOKINGS.filter(b => b.id !== bookingId);
+
+        // Add to checkout log
+        const checkoutId = `EKO-${String(100 + EQUIPMENT_CHECKOUT_LOG.length + 1).slice(-3)}`;
+        const checkoutDate = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, ' ');
+        EQUIPMENT_CHECKOUT_LOG.unshift({
+            id: checkoutId,
+            equipment: booking.equipment,
+            unit: booking.unit,
+            bookingId: booking.id,
+            checkoutDate: checkoutDate,
+            condition: '—',
+            status: 'Pending Review'
+        });
+
+        // Re-render
+        renderEquipmentCheckout();
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Checkout Request Submitted!',
+            html: `Your checkout request for <strong>${booking.equipment}</strong> has been sent to the <strong>Lab Incharge</strong> for inspection.`,
+            confirmButtonColor: '#16a34a',
+            confirmButtonText: 'Done',
+            timer: 5000,
+            timerProgressBar: true
+        });
+    });
+};
+
+window.viewEquipmentCheckoutDetails = function(checkoutId) {
+    const checkout = EQUIPMENT_CHECKOUT_LOG.find(r => r.id === checkoutId);
+    if (!checkout) return;
+
+    let modal = document.getElementById('details-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'details-modal';
+        modal.className = 'modal-container';
+        document.body.appendChild(modal);
+    }
+
+    const statusColors = {
+        'Completed':        { bg: '#d1fae5', text: '#059669' },
+        'Pending Review':   { bg: '#fef9c3', text: '#ca8a04' },
+        'Under Inspection': { bg: '#eff6ff', text: '#2563eb' }
+    };
+    const sc = statusColors[checkout.status] || { bg: '#f1f5f9', text: '#64748b' };
+
+    const conditionHtml = checkout.condition === '—'
+        ? `<span style="color:#94a3b8;font-style:italic;font-size:13.5px;">Awaiting Lab Incharge Inspection</span>`
+        : `<span style="background:#f1f5f9;color:#475569;padding:4px 12px;border-radius:6px;font-size:13.5px;font-weight:600;">${checkout.condition}</span>`;
+
+    modal.innerHTML = `
+        <div class="modal-backdrop" onclick="closeDetailsModal()" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.6);z-index:9999;backdrop-filter:blur(4px);animation:fadeIn 0.2s ease;"></div>
+        <div class="modal-content" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:95%;max-width:500px;background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);z-index:10000;padding:28px;animation:slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;border-bottom:1px solid #e2e8f0;padding-bottom:14px;">
+                <div>
+                    <h3 style="font-size:18px;font-weight:700;color:#0f172a;margin:0;">Checkout Details: ${checkout.id}</h3>
+                    <span style="font-size:12px;color:#64748b;">Submitted on ${checkout.checkoutDate}</span>
+                </div>
+                <button onclick="closeDetailsModal()" style="border:none;background:none;font-size:22px;color:#94a3b8;cursor:pointer;line-height:1;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                    <span style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Equipment</span>
+                    <strong style="color:#0f172a;">${checkout.equipment}</strong>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                    <span style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Unit</span>
+                    <span style="color:#475569;">${checkout.unit}</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                    <span style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Ref. Booking ID</span>
+                    <span style="color:#475569;font-family:monospace;">${checkout.bookingId}</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                    <span style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Checkout Date</span>
+                    <span style="color:#475569;">${checkout.checkoutDate}</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                    <span style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Condition</span>
+                    ${conditionHtml}
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">
+                    <span style="font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Status</span>
+                    <span style="background:${sc.bg};color:${sc.text};padding:4px 12px;border-radius:20px;font-size:12.5px;font-weight:700;">${checkout.status}</span>
+                </div>
+            </div>
+
+            ${checkout.status === 'Pending Review' ? `
+            <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:#92400e;display:flex;gap:8px;align-items:flex-start;">
+                <i class="fa-solid fa-triangle-exclamation" style="margin-top:2px;"></i>
+                <span>Waiting for Lab Incharge to inspect the equipment and update the condition.</span>
+            </div>` : ''}
+
+            <div style="display:flex;justify-content:flex-end;">
+                <button onclick="closeDetailsModal()" class="btn btn-primary" style="padding:10px 28px;font-weight:600;cursor:pointer;background:#4f46e5;">Close</button>
+            </div>
+        </div>
+    `;
+    modal.style.display = 'block';
+};
 
 window.viewActiveReturnDetails = function(requestId, type) {
     const isComp = type === 'component';
