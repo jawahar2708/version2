@@ -1908,14 +1908,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize first view
     spaNavigate('dashboard');
 
-    // Setup submenu toggles
-    document.querySelectorAll('.submenu-toggle').forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            const parent = this.closest('.menu-item');
-            parent.classList.toggle('active');
-        });
-    });
+
 
     // Render initial views
     renderStageTrackerView(3);

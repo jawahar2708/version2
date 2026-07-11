@@ -132,7 +132,7 @@ a { text-decoration: none; color: inherit; }
   padding-right: 12px;
   gap: 0;
 }
-.sidebar.collapsed .sidebar-logo .logo-text h2,
+.sidebar.collapsed .sidebar-logo .logo-text,
 .sidebar.collapsed .sidebar-logo .logo-text p,
 .sidebar.collapsed .sidebar-menu .menu-text,
 .sidebar.collapsed .sidebar-menu .menu-title,
